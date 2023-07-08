@@ -37,10 +37,12 @@ export default function Register() {
     console.log(userName, userAccount, userPassword);
   }
 
+  function onSubmit() {}
+
   return (
     <>
       <div>
-        <RegisterForm>
+        <RegisterForm onSubmit={onSubmit}>
           <label>이름</label>
           <input
             name="name"
