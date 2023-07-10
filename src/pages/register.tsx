@@ -1,5 +1,8 @@
-import { ChangeEvent, useState } from "react";
+import { User } from "@/@types/types";
+import axios from "axios";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { styled } from "styled-components";
+import { v4 as uuidv4 } from "uuid";
 
 const RegisterForm = styled.form`
   display: flex;
@@ -17,7 +20,7 @@ export default function Register() {
   const [userName, setUserName] = useState("");
   const [userAccount, setUserAccount] = useState("");
   const [userPassword, setUserPassword] = useState("");
-  const [userSex, setUserSex] = useState("남자");
+  const [userSex, setUserSex] = useState(0);
 
   function onInputChange(event: ChangeEvent<HTMLInputElement>) {
     const name = event.target.name;
@@ -37,9 +40,31 @@ export default function Register() {
     console.log(userName, userAccount, userPassword);
   }
 
-  function onSubmit() {}
+  async function registerUser(userData: User) {
+    const API_URL = "http://localhost:3000/api/users/register";
 
-  async function registerUser() {}
+    try {
+      const response = await axios.post(API_URL, userData);
+      console.log(response.data.message);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    console.log(uuidv4());
+
+    const UserDataTemp: User = {
+      id: "abc1",
+      account: userAccount,
+      name: userName,
+      password: userPassword,
+      sex: userSex,
+    };
+    registerUser(UserDataTemp);
+  }
+
   return (
     <>
       <div>
