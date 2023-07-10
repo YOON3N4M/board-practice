@@ -39,6 +39,7 @@ export default function Register() {
 
   function onSubmit() {}
 
+  async function registerUser() {}
   return (
     <>
       <div>
