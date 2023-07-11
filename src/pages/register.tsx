@@ -56,7 +56,7 @@ export default function Register() {
     console.log(uuidv4());
 
     const UserDataTemp: User = {
-      id: "abc1",
+      id: uuidv4(),
       account: userAccount,
       name: userName,
       password: userPassword,

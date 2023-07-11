@@ -11,7 +11,7 @@ export default async function handler(
     try {
       const user = await prisma.user.create({
         data: {
-          id: id,
+          id,
           name,
           account,
           password,
