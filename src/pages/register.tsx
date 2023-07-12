@@ -101,12 +101,7 @@ export default function Register() {
             onChange={onInputChange}
             required
           />
-             <input
-            name="password"
-            value={userPassword}
-            onChange={onInputChange}
-            required
-          />
+
           <select onChange={onSelectChange} name="gender">
             <option>남자</option>
             <option>여자</option>
