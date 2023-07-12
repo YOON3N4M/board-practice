@@ -1,6 +1,7 @@
 import prisma from "@/util/prismaClient";
 import type { NextApiRequest, NextApiResponse } from "next";
 
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -15,7 +16,7 @@ export default async function handler(
           name,
           account,
           password,
-          sex: 0,
+          sex: sex
         },
       });
 
@@ -23,7 +24,15 @@ export default async function handler(
     } catch (err) {
       res.status(500).json({ message: "500, 등록 실패" });
     }
-  } else {
+  } else if (req.method === "GET"){
+    const allUsers = await prisma.user.findMany();
+
+    
+  } 
+  
+  else {
     res.status(405).json({ message: "405, 메소드가 없어" });
   }
+
+
 }
