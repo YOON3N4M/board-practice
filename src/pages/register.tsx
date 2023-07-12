@@ -3,6 +3,8 @@ import axios from "axios";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { styled } from "styled-components";
 import { v4 as uuidv4 } from "uuid";
+import { API_URL_USER_DATA } from "./_app";
+
 
 const RegisterForm = styled.form`
   display: flex;
@@ -40,11 +42,20 @@ export default function Register() {
     console.log(userName, userAccount, userPassword);
   }
 
+  function onSelectChange(event : ChangeEvent<HTMLSelectElement>){
+   const gender = event.target.value;
+
+   if (gender ==="남자"){
+    setUserSex(0);
+   } else {
+    setUserSex(1);
+  }
+  }
+
   async function registerUser(userData: User) {
-    const API_URL = "http://localhost:3000/api/users/register";
 
     try {
-      const response = await axios.post(API_URL, userData);
+      const response = await axios.post(API_URL_USER_DATA, userData);
       console.log(response.data.message);
     } catch (err) {
       console.log(err);
@@ -90,7 +101,13 @@ export default function Register() {
             onChange={onInputChange}
             required
           />
-          <select name="gender">
+             <input
+            name="password"
+            value={userPassword}
+            onChange={onInputChange}
+            required
+          />
+          <select onChange={onSelectChange} name="gender">
             <option>남자</option>
             <option>여자</option>
           </select>
