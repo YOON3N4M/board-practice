@@ -25,7 +25,14 @@ export default async function handler(
       res.status(500).json({ message: "500, 등록 실패" });
     }
   } else if (req.method === "GET"){
-    const allUsers = await prisma.user.findMany();
+    try{
+      const allUsers = await prisma.user.findMany();
+      console.log(allUsers);
+      res.status(200).json(allUsers);
+    } catch(err){
+      res.status(500).json({ message: "500, 가져오기 실패" });
+    }
+
 
     
   } 
