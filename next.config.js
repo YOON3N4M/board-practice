@@ -5,7 +5,7 @@ const nextConfig = {
     return [
       {
         source: "/:path*",
-        destination: "http://192.168.100.76:3000/:path*",
+        destination: "https://board-practice.vercel.app/:path*",
       },
     ];
   }
