@@ -39,21 +39,19 @@ export default function Register() {
         setUserPassword(value);
         break;
     }
-    console.log(userName, userAccount, userPassword);
   }
 
   function onSelectChange(event : ChangeEvent<HTMLSelectElement>){
    const gender = event.target.value;
 
-   if (gender ==="남자"){
-    setUserSex(0);
-   } else {
-    setUserSex(1);
-  }
+    if (gender ==="남자"){
+      setUserSex(0);
+    } else {
+      setUserSex(1);
+    }
   }
 
   async function registerUser(userData: User) {
-
     try {
       const response = await axios.post(API_URL_USER_DATA, userData);
       console.log(response.data.message);
@@ -64,7 +62,6 @@ export default function Register() {
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log(uuidv4());
 
     const UserDataTemp: User = {
       id: uuidv4(),
