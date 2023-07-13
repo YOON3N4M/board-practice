@@ -19,27 +19,50 @@ export default async function handler(
           sex: sex
         },
       });
-
       res.status(200).json({ message: "200, 등록 성공" });
     } catch (err) {
       res.status(500).json({ message: "500, 등록 실패" });
     }
-  } else if (req.method === "GET"){
+  }
+   else if (req.method === "GET"){
     try{
       const allUsers = await prisma.user.findMany();
-      console.log(allUsers);
       res.status(200).json(allUsers);
     } catch(err){
       res.status(500).json({ message: "500, 가져오기 실패" });
     }
-
-
-    
   } 
+  else if (req.method === "DELETE"){
+    console.log(req.body);
+    try{
+      const deleteTarget = await prisma.user.deleteMany({
+        where: {
+          id: req.body
+        }
+      }
+      );
+      res.status(200).json({ message: "200, 삭제 성공" });
+    } catch(err){
+      console.log(err);
+      res.status(500).json({ message: "500, 등록 실패" });
+    }
+  } 
+  else if (req.method === "PUT"){
+    console.log(req.body);
+
+   const updateUser = await prisma.user.update({
+    where: {
+      id:  req.body.data
+    },
+    data: {
+      name: "Franz",
+    },
+  });
+  }
+  
   
   else {
     res.status(405).json({ message: "405, 메소드가 없어" });
   }
-
 
 }
