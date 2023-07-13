@@ -6,11 +6,7 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended"
   ],
-  "plugins": [
-    "@typescript-eslint",
-    "react",
-    "react-hooks"
-  ],
+  "plugins": ["@typescript-eslint", "react", "react-hooks"],
   "env": {
     "browser": true,
     "node": true
@@ -33,4 +29,3 @@
     }
   }
 }
-
