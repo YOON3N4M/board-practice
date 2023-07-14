@@ -10,10 +10,13 @@ export const GlobalStyles = createGlobalStyle`
   font-style: normal;
 }
 html {
-  background-color: #000000;
-  margin: 0;
+ // background-color: #000000;
+  //margin: 0;
   font-family: "S-CoreDream-3Light";
   
+}
+body{
+  margin: 0 0
 }
 
 `;
