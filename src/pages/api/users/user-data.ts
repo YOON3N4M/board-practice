@@ -5,9 +5,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  const { id, name, account, password, sex } = req.body;
   if (req.method === "POST") {
-    const { id, name, account, password, sex } = req.body;
-
     try {
       const user = await prisma.user.create({
         data: {
@@ -30,24 +29,20 @@ export default async function handler(
       res.status(500).json({ message: "500, 가져오기 실패" });
     }
   } else if (req.method === "DELETE") {
-    console.log(req.body);
     try {
       const deleteTarget = await prisma.user.deleteMany({
         where: {
-          id: req.body,
+          id: id,
         },
       });
       res.status(200).json({ message: "200, 삭제 성공" });
     } catch (err) {
-      console.log(err);
       res.status(500).json({ message: "500, 등록 실패" });
     }
   } else if (req.method === "PUT") {
-    console.log(req.body);
-
     const updateUser = await prisma.user.update({
       where: {
-        id: req.body.data,
+        id: id,
       },
       data: {
         //해당부분도 수정 해야함
