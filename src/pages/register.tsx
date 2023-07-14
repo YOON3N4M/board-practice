@@ -5,7 +5,6 @@ import { styled } from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import { API_URL_USER_DATA } from "./_app";
 
-
 const RegisterForm = styled.form`
   display: flex;
   flex-direction: column;
@@ -41,10 +40,10 @@ export default function Register() {
     }
   }
 
-  function onSelectChange(event : ChangeEvent<HTMLSelectElement>){
-   const gender = event.target.value;
+  function onSelectChange(event: ChangeEvent<HTMLSelectElement>) {
+    const gender = event.target.value;
 
-    if (gender ==="남자"){
+    if (gender === "남자") {
       setUserSex(0);
     } else {
       setUserSex(1);
