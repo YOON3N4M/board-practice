@@ -6,6 +6,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const { id, name, account, password, sex } = req.body;
+
   if (req.method === "POST") {
     try {
       const user = await prisma.user.create({
@@ -30,9 +31,9 @@ export default async function handler(
     }
   } else if (req.method === "DELETE") {
     try {
-      const deleteTarget = await prisma.user.deleteMany({
+      const deleteTarget = await prisma.user.delete({
         where: {
-          id: id,
+          id: req.body,
         },
       });
       res.status(200).json({ message: "200, 삭제 성공" });
