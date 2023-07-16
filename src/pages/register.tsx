@@ -1,5 +1,9 @@
-import { ChangeEvent, useState } from "react";
+import { User } from "@/@types/types";
+import axios from "axios";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { styled } from "styled-components";
+import { v4 as uuidv4 } from "uuid";
+import { API_URL_USER_DATA } from "./_app";
 
 const RegisterForm = styled.form`
   display: flex;
@@ -17,7 +21,7 @@ export default function Register() {
   const [userName, setUserName] = useState("");
   const [userAccount, setUserAccount] = useState("");
   const [userPassword, setUserPassword] = useState("");
-  const [userSex, setUserSex] = useState("남자");
+  const [userSex, setUserSex] = useState(0);
 
   function onInputChange(event: ChangeEvent<HTMLInputElement>) {
     const name = event.target.name;
@@ -34,10 +38,39 @@ export default function Register() {
         setUserPassword(value);
         break;
     }
-    console.log(userName, userAccount, userPassword);
   }
 
-  function onSubmit() {}
+  function onSelectChange(event: ChangeEvent<HTMLSelectElement>) {
+    const gender = event.target.value;
+
+    if (gender === "남자") {
+      setUserSex(0);
+    } else {
+      setUserSex(1);
+    }
+  }
+
+  async function registerUser(userData: User) {
+    try {
+      const response = await axios.post(API_URL_USER_DATA, userData);
+      console.log(response.data.message);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const UserDataTemp: User = {
+      id: uuidv4(),
+      account: userAccount,
+      name: userName,
+      password: userPassword,
+      sex: userSex,
+    };
+    registerUser(UserDataTemp);
+  }
 
   return (
     <>
@@ -64,7 +97,8 @@ export default function Register() {
             onChange={onInputChange}
             required
           />
-          <select name="gender">
+
+          <select onChange={onSelectChange} name="gender">
             <option>남자</option>
             <option>여자</option>
           </select>

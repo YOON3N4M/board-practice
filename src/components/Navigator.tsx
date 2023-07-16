@@ -22,6 +22,9 @@ export default function Navigator() {
         <Link legacyBehavior href="/register">
           <a>회원가입</a>
         </Link>
+        <Link legacyBehavior href="/user-list">
+          <a>회원목록</a>
+        </Link>
       </NavigatorContainer>
     </>
   );
