@@ -5,9 +5,18 @@ import { styled } from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import { API_URL_USER_DATA } from "./_app";
 
+const RegisterFormWrapper = styled.div`
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  max-height: 100vh;
+  min-height: 100vh;
+`;
+
 const RegisterForm = styled.form`
   display: flex;
   flex-direction: column;
+  margin: 0 auto;
   input,
   button {
     width: 100px;
@@ -74,7 +83,7 @@ export default function Register() {
 
   return (
     <>
-      <div>
+      <RegisterFormWrapper>
         <RegisterForm onSubmit={onSubmit}>
           <label>이름</label>
           <input
@@ -104,7 +113,7 @@ export default function Register() {
           </select>
           <button type="submit">회원가입</button>
         </RegisterForm>
-      </div>
+      </RegisterFormWrapper>
     </>
   );
 }
