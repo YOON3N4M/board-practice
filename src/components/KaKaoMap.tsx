@@ -18,7 +18,7 @@ export default function KakaoMap({ mapOption }: MapComponentProps) {
       <Script src={KAKAO_API_URL} strategy="beforeInteractive" />
       <Map
         center={mapOption.center}
-        style={{ width: "100%", height: "100%" }}
+        style={{ width: "500px", height: "500px" }}
         level={mapOption.level}
       ></Map>
     </>
