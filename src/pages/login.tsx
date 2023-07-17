@@ -1,5 +1,4 @@
 import { ChangeEvent, useState } from "react";
-import { styled } from "styled-components";
 import { AuthForm, AuthFormWrapper, FormBox } from "./register";
 
 export default function Register() {
