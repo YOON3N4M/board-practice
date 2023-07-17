@@ -6,7 +6,7 @@ const NavigatorContainer = styled.div`
   margin: 0 auto;
   width: 400px;
   justify-content: space-between;
-  //background-color: blue;
+  background-color: blue;
 `;
 
 export default function Navigator() {
