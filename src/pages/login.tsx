@@ -1,17 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import { styled } from "styled-components";
-
-const LoginForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  input,
-  button {
-    width: 100px;
-  }
-  select {
-    width: 100px;
-  }
-`;
+import { AuthForm, AuthFormWrapper, FormBox } from "./register";
 
 export default function Register() {
   const [userAccount, setUserAccount] = useState("");
@@ -32,9 +21,10 @@ export default function Register() {
   }
 
   return (
-    <>
-      <div>
-        <LoginForm>
+    <AuthFormWrapper>
+      <FormBox>
+        <AuthForm>
+          <h2>로그인 하기</h2>
           <label>아이디</label>
           <input
             name="account"
@@ -49,10 +39,9 @@ export default function Register() {
             onChange={onInputChange}
             required
           />
-
           <button type="submit">로그인</button>
-        </LoginForm>
-      </div>
-    </>
+        </AuthForm>
+      </FormBox>
+    </AuthFormWrapper>
   );
 }

@@ -5,7 +5,7 @@ import { styled } from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import { API_URL_USER_DATA } from "./_app";
 
-const RegisterFormWrapper = styled.div`
+export const AuthFormWrapper = styled.div`
   display: flex;
   justify-items: center;
   align-items: center;
@@ -13,16 +13,53 @@ const RegisterFormWrapper = styled.div`
   min-height: 100vh;
 `;
 
-const RegisterForm = styled.form`
+export const FormBox = styled.div`
+  display: flex;
+  margin: 0 auto;
+  padding: 1rem 0.5rem;
+  background-color: gray;
+  border-radius: 4px;
+  overflow: hidden;
+  width: 480px;
+  @media only screen and (max-width: 768px) {
+    width: 100%;
+  }
+`;
+
+export const AuthForm = styled.form`
+  width: 80%;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+
+  h2 {
+    text-align: center;
+  }
+  label {
+    margin-bottom: 5px;
+    font-size: 0.8rem;
+  }
   input,
   button {
-    width: 100px;
+    width: 100%;
+    height: 40px;
+    border-radius: 4px;
+    outline: none;
+    border: 0px;
+    margin-bottom: 15px;
+  }
+  button {
+    cursor: pointer;
   }
   select {
-    width: 100px;
+    width: 25%;
+  }
+  .input-box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: content-box;
+    margin: 0 auto;
   }
 `;
 
@@ -83,37 +120,45 @@ export default function Register() {
 
   return (
     <>
-      <RegisterFormWrapper>
-        <RegisterForm onSubmit={onSubmit}>
-          <label>이름</label>
-          <input
-            name="name"
-            value={userName}
-            onChange={onInputChange}
-            required
-          />
-          <label>아이디</label>
-          <input
-            name="account"
-            value={userAccount}
-            onChange={onInputChange}
-            required
-          />
-          <label>비밀번호</label>
-          <input
-            name="password"
-            value={userPassword}
-            onChange={onInputChange}
-            required
-          />
-
-          <select onChange={onSelectChange} name="gender">
-            <option>남자</option>
-            <option>여자</option>
-          </select>
-          <button type="submit">회원가입</button>
-        </RegisterForm>
-      </RegisterFormWrapper>
+      <AuthFormWrapper>
+        <FormBox>
+          <AuthForm onSubmit={onSubmit}>
+            <h2>계정 만들기</h2>
+            <div className="input-box">
+              <label>이름</label>
+              <input
+                name="name"
+                value={userName}
+                onChange={onInputChange}
+                required
+              />
+            </div>
+            <div className="input-box">
+              <label>아이디</label>
+              <input
+                name="account"
+                value={userAccount}
+                onChange={onInputChange}
+                required
+              />
+            </div>
+            <div className="input-box">
+              <label>비밀번호</label>
+              <input
+                name="password"
+                value={userPassword}
+                onChange={onInputChange}
+                required
+              />
+            </div>
+            <select onChange={onSelectChange} name="gender">
+              <option>남자</option>
+              <option>여자</option>
+            </select>
+            <button type="submit">회원가입</button>
+          </AuthForm>
+        </FormBox>
+      </AuthFormWrapper>
     </>
   );
 }
