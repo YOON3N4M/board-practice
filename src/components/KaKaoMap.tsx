@@ -1,6 +1,4 @@
-import { ThemeT } from "@/pages/map";
-
-import Script from "next/script";
+import { ThemeT } from "@/data/sampleData";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 
 interface MapOptionT {
