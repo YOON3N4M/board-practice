@@ -18,7 +18,7 @@ const Navi = styled.div`
 export default function Navigator() {
   return (
     <>
-      <NavigatorContainer>
+      <NavigatorContainer className="navi">
         <Navi>
           <Link legacyBehavior href="/">
             <a>홈</a>
