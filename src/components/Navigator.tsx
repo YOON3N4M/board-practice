@@ -23,9 +23,9 @@ export default function Navigator() {
           <Link legacyBehavior href="/">
             <a>홈</a>
           </Link>
-
-          <a href="/map">맵</a>
-
+          <Link legacyBehavior href="/map">
+            <a>맵</a>
+          </Link>
           <Link legacyBehavior href="/login">
             <a>로그인</a>
           </Link>

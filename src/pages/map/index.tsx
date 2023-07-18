@@ -1,4 +1,5 @@
 import KakaoMap from "@/components/KaKaoMap";
+import { useState, useEffect } from "react";
 import { styled } from "styled-components";
 
 const MapContainer = styled.div`
