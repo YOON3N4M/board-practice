@@ -1,4 +1,5 @@
 import KakaoMap from "@/components/KaKaoMap";
+import SideNavigator from "@/components/SideNavigator";
 
 import { defaultMapOption, groupArr } from "@/data/sampleData";
 import { useState, useEffect } from "react";
@@ -8,15 +9,6 @@ const MapContainer = styled.div<{ heightvalue: string }>`
   width: 100vw;
   height: ${props => props.heightvalue};
   overflow: hidden;
-`;
-
-const SideNavigator = styled.div<{ heightvalue: string }>`
-  position: absolute;
-  display: flex;
-  width: 80px;
-  height: ${props => props.heightvalue};
-  background-color: #0000ff18;
-  z-index: 1000;
 `;
 
 export default function Map() {
@@ -37,7 +29,7 @@ export default function Map() {
   return (
     <>
       <MapContainer heightvalue={`${ContainerHeightValue}px`}>
-        <SideNavigator heightvalue={`${ContainerHeightValue}px`} />
+        <SideNavigator ContainerHeightValue={ContainerHeightValue} />
         {ContainerHeightValue !== 0 ? (
           <KakaoMap groupArr={groupArr} mapOption={defaultMapOption} />
         ) : null}
