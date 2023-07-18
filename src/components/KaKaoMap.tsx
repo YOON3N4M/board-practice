@@ -1,5 +1,7 @@
+import { ThemeT } from "@/pages/map";
+
 import Script from "next/script";
-import { Map } from "react-kakao-maps-sdk";
+import { Map, MapMarker } from "react-kakao-maps-sdk";
 
 interface MapOptionT {
   center: { lat: number; lng: number };
@@ -8,16 +10,30 @@ interface MapOptionT {
 
 interface MapComponentProps {
   mapOption: MapOptionT;
+  groupArr: ThemeT[];
 }
 
-export default function KakaoMap({ mapOption }: MapComponentProps) {
+export default function KakaoMap({ mapOption, groupArr }: MapComponentProps) {
   return (
     <>
       <Map
         center={mapOption.center}
         style={{ width: "100%", height: "100%" }}
         level={mapOption.level}
-      ></Map>
+      >
+        {groupArr.length !== 0
+          ? groupArr.map(group =>
+              group.positions.map(position => (
+                <MapMarker
+                  key={position.title}
+                  title={position.title}
+                  position={position.position}
+                  image={group.marker}
+                />
+              ))
+            )
+          : null}
+      </Map>
     </>
   );
 }
