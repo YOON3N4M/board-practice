@@ -42,22 +42,22 @@ export const groupArr: ThemeT[] = [
       {
         id: 1,
         title: "카페a",
-        position: { lat: 33.450705, lng: 126.570677 },
+        position: { lat: 36.758479818754196, lng: 126.47641895667431 },
       },
       {
         id: 2,
         title: "카페b",
-        position: { lat: 33.450936, lng: 126.569477 },
+        position: { lat: 36.477656643858246, lng: 126.64399613494022 },
       },
       {
         id: 3,
         title: "카페c",
-        position: { lat: 33.450879, lng: 126.56994 },
+        position: { lat: 37.073313345879626, lng: 127.10183730836599 },
       },
       {
         id: 4,
         title: "카페d",
-        position: { lat: 33.451393, lng: 126.570738 },
+        position: { lat: 36.6811069763739, lng: 127.14714365476813 },
       },
     ],
   },
@@ -69,22 +69,22 @@ export const groupArr: ThemeT[] = [
       {
         id: 1,
         title: "식당a",
-        position: { lat: 33.550705, lng: 126.570677 },
+        position: { lat: 37.51313109639122, lng: 128.7065292590807 },
       },
       {
         id: 2,
         title: "식당b",
-        position: { lat: 33.550936, lng: 126.569477 },
+        position: { lat: 37.25080886027029, lng: 129.22567672017348 },
       },
       {
         id: 3,
         title: "식당c",
-        position: { lat: 33.550879, lng: 126.56994 },
+        position: { lat: 36.939171584572605, lng: 129.36023091108171 },
       },
       {
         id: 4,
         title: "식당d",
-        position: { lat: 33.551393, lng: 126.570738 },
+        position: { lat: 37.80648467751425, lng: 128.82952617286054 },
       },
     ],
   },

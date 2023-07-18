@@ -14,6 +14,11 @@ interface MapComponentProps {
 
 export default function KakaoMap({ mapOption, groupArr }: MapComponentProps) {
   const [positionAtClick, setPositionAtClick] = useState<any>();
+  console.log(positionAtClick);
+
+  useEffect(() => {
+    // const geocoder = new window.kakao.maps.services.Geocoder();
+  }, []);
 
   return (
     <>
