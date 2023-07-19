@@ -50,6 +50,24 @@ export const groupArr: ThemeT[] = [
         position: { lat: 36.758479818754196, lng: 126.47641895667431 },
       },
       {
+        //여기에 addByMember: "수진" 이런식으로 추가 되면 좋을듯
+        id: 1,
+        title: "카페a",
+        position: { lat: 36.758479818754196, lng: 126.47641895667431 },
+      },
+      {
+        //여기에 addByMember: "수진" 이런식으로 추가 되면 좋을듯
+        id: 1,
+        title: "카페a",
+        position: { lat: 36.758479818754196, lng: 126.47641895667431 },
+      },
+      {
+        //여기에 addByMember: "수진" 이런식으로 추가 되면 좋을듯
+        id: 1,
+        title: "카페a",
+        position: { lat: 36.758479818754196, lng: 126.47641895667431 },
+      },
+      {
         id: 2,
         title: "카페b",
         position: { lat: 36.477656643858246, lng: 126.64399613494022 },

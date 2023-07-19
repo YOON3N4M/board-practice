@@ -24,6 +24,9 @@ const MemberBox = styled.div`
   padding: 5px 10px;
   border-bottom: 1px solid #6962627a;
   .user-profile-image-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-right: 10px;
   }
   .member-right {
@@ -46,6 +49,13 @@ const UserProfileImage = styled.div`
   height: 64px;
   border-radius: 50%;
   background-color: #5555cc;
+`;
+
+const BookmarkImage = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #eee01a;
 `;
 
 const BookmarkBox = styled.div`
@@ -100,14 +110,21 @@ export default function PanelContents({
     return (
       <>
         {bookmarkArr.map(bookmark => (
-          <BookmarkBox key={bookmark.themeTitle}>
-            <h2>{bookmark.themeTitle}</h2>
-            <div className="bookmark-list">
-              {bookmark.positions.map(position => (
-                <span key={position.title}>{position.title}</span>
-              ))}
+          <MemberBox key={bookmark.themeTitle}>
+            <div className="user-profile-image-box">
+              <BookmarkImage />
             </div>
-          </BookmarkBox>
+            <div className="member-right">
+              <div>
+                <span className="user-name">{bookmark.themeTitle}</span>
+              </div>
+              <div>
+                <span className="user-added">
+                  북마크 : {bookmark.positions.length} 개
+                </span>
+              </div>
+            </div>
+          </MemberBox>
         ))}
       </>
     );
@@ -121,7 +138,7 @@ export default function PanelContents({
       </>
     );
   }
-  //최종출력
+  //최종 렌더링
   return (
     <PanelWarp>
       <div className="panel-title">
