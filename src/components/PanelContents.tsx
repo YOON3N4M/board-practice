@@ -1,4 +1,4 @@
-import { member } from "@/data/sampleData";
+import { groupArr, member } from "@/data/sampleData";
 import { useState } from "react";
 import { styled } from "styled-components";
 
@@ -48,6 +48,13 @@ const UserProfileImage = styled.div`
   background-color: #5555cc;
 `;
 
+const BookmarkBox = styled.div`
+  .bookmark-list {
+    display: flex;
+    flex-direction: column;
+  }
+`;
+
 interface PanelContentsPropsT {
   selectedContents: string;
 }
@@ -86,17 +93,46 @@ export default function PanelContents({
       </>
     );
   }
+  //즐겨찾기
+  function Bookmark() {
+    const bookmarkArr = groupArr;
 
+    return (
+      <>
+        {bookmarkArr.map(bookmark => (
+          <BookmarkBox key={bookmark.themeTitle}>
+            <h2>{bookmark.themeTitle}</h2>
+            <div className="bookmark-list">
+              {bookmark.positions.map(position => (
+                <span key={position.title}>{position.title}</span>
+              ))}
+            </div>
+          </BookmarkBox>
+        ))}
+      </>
+    );
+  }
+
+  //설정
+  function Setting() {
+    return (
+      <>
+        <button>이 그룹에서 나가기</button>
+      </>
+    );
+  }
   //최종출력
   return (
     <PanelWarp>
       <div className="panel-title">
-        <h2>멤버</h2>
+        <h2>{selectedContents}</h2>
       </div>
       {
         {
           멤버: <Member />,
           검색: <Search />,
+          즐겨찾기: <Bookmark />,
+          설정: <Setting />,
         }[selectedContents]
       }
     </PanelWarp>
