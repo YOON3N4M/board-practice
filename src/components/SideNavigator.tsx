@@ -51,7 +51,8 @@ export default function SideNavigator({
   const [isPanelOn, setIsPanelOn] = useState(false);
   const [selectedContents, setSelectedContents] = useState("");
 
-  function onMenuClick(event: React.MouseEvent<HTMLButtonElement>) {
+  function onMenuClick(event: any) {
+    //타입을 지정하면 event.target.name 에 타입 오류가 나서 any로 일단 처리
     setSelectedContents(event.target.name);
     setIsPanelOn(true);
   }
