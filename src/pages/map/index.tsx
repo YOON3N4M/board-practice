@@ -2,8 +2,8 @@ import KakaoMap from "@/components/KakaoMap";
 import SideNavigator from "@/components/SideNavigator";
 
 import { defaultMapOption, groupArr } from "@/data/sampleData";
-import { off } from "process";
-import { useState, useEffect, useRef } from "react";
+
+import { useState, useEffect } from "react";
 import { styled } from "styled-components";
 
 const MapContainer = styled.div<{ heightvalue: string }>`
