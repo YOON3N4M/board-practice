@@ -19,13 +19,24 @@ interface MapComponentProps {
 }
 
 export default function KakaoMap({ mapOption, groupArr }: MapComponentProps) {
-  const [positionAtClick, setPositionAtClick] = useState<any>();
-  //console.log(positionAtClick);
+  const [coords, setCoords] = useState<any>();
+  console.log(coords);
 
+  //좌표를 주소로 바꿔주는 메소드
   const geocoder = new window.kakao.maps.services.Geocoder();
-  console.log(geocoder);
-  //useEffect 수정예정
 
+  const callback = function (result: any, status: any) {
+    if (status === kakao.maps.services.Status.OK) {
+      console.log("지역 명칭 : " + result[0].adr);
+      console.log("행정구역 코드 : " + result[0].code);
+    }
+    console.log(result, "상태");
+  };
+
+  //useEffect 수정예정
+  useEffect(() => {
+    geocoder.coord2Address(127.31402, 36.49751, callback);
+  }, [coords]);
   return (
     <>
       <Map
@@ -33,13 +44,13 @@ export default function KakaoMap({ mapOption, groupArr }: MapComponentProps) {
         style={{ width: "100%", height: "100%" }}
         level={mapOption.level}
         onClick={(_t, mouseEvent) =>
-          setPositionAtClick({
+          setCoords({
             lat: mouseEvent.latLng.getLat(),
             lng: mouseEvent.latLng.getLng(),
           })
         }
       >
-        {positionAtClick && <MapMarker position={positionAtClick} />}
+        {coords && <MapMarker position={coords} />}
         {groupArr.length !== 0
           ? groupArr.map(group =>
               group.positions.map(position => (
