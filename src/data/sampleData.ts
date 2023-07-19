@@ -34,7 +34,7 @@ export const markerObj = {
   },
 };
 
-export const member = ["수진", "태훈", "소진", "민정", "영은", "보미"];
+export const member = ["세남", "세용", "찬영", "정빈", "정우", "지수","형철","형근","현우"];
 
 export const groupArr: ThemeT[] = [
   {
@@ -44,6 +44,7 @@ export const groupArr: ThemeT[] = [
     member: member,
     positions: [
       {
+        //여기에 addByMember: "수진" 이런식으로 추가 되면 좋을듯
         id: 1,
         title: "카페a",
         position: { lat: 36.758479818754196, lng: 126.47641895667431 },
