@@ -5,6 +5,7 @@ const NavigatorContainer = styled.div`
   width: 100vw;
   //background-color: red;
   padding: 1rem 0;
+  border-bottom: 1px solid #6b6b6ba6;
 `;
 
 const Navi = styled.div`
