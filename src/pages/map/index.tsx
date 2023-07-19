@@ -1,4 +1,4 @@
-import KakaoMap from "@/components/KaKaoMap";
+import KakaoMap from "@/components/KakaoMap";
 import SideNavigator from "@/components/SideNavigator";
 
 import { defaultMapOption, groupArr } from "@/data/sampleData";
