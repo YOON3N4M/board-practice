@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
+import { StateContext } from "@/util/StateContext";
 
 const StyledSection = styled.section<{
   backgroundcolor?: string;

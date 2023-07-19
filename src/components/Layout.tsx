@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Navigator from "./Navigator";
 import { GlobalStyles } from "@/styles/GlobalStyles";
+import { StateContext } from "@/util/StateContext";
 
 const AppContainer = styled.div`
   margin: 0;
@@ -11,13 +12,16 @@ const AppContainer = styled.div`
 `;
 
 export default function Layout({ children }: React.PropsWithChildren) {
+  const test = "test";
   return (
     <>
-      <GlobalStyles />
-      <AppContainer>
-        <Navigator />
-        {children}
-      </AppContainer>
+      <StateContext.Provider value={{ test }}>
+        <GlobalStyles />
+        <AppContainer>
+          <Navigator />
+          {children}
+        </AppContainer>
+      </StateContext.Provider>
     </>
   );
 }

@@ -8,6 +8,7 @@ export interface ThemeT {
   themeTitle: string;
   marker: MarkerT;
   positions: PositionT[];
+  member: string[];
 }
 
 export interface MarkerT {
@@ -33,11 +34,14 @@ export const markerObj = {
   },
 };
 
+export const member = ["수진", "태훈", "소진", "민정", "영은", "보미"];
+
 export const groupArr: ThemeT[] = [
   {
     themeTitle: "카페 투어",
     //노란별
     marker: markerObj.baseballRed,
+    member: member,
     positions: [
       {
         id: 1,
@@ -65,6 +69,7 @@ export const groupArr: ThemeT[] = [
     themeTitle: "식당",
     //야구공
     marker: markerObj.yellowStar,
+    member: member,
     positions: [
       {
         id: 1,
