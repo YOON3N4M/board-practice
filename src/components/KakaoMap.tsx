@@ -4,7 +4,8 @@ import { Map, MapMarker } from "react-kakao-maps-sdk";
 
 declare global {
   interface Window {
-    kakao: any;
+    // kakao.maps.d.ts 를 추가 하면서 필요 없어짐
+    // kakao: any;
   }
 }
 
@@ -35,7 +36,7 @@ export default function KakaoMap({ mapOption, groupArr }: MapComponentProps) {
 
   //useEffect 수정예정
   useEffect(() => {
-    geocoder.coord2Address(127.31402, 36.49751, callback);
+    geocoder.coord2Address(126.93990862062978, 37.56496830314491, callback);
   }, [coords]);
   return (
     <>
