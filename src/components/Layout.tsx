@@ -14,16 +14,13 @@ const AppContainer = styled.div`
 `;
 
 export default function Layout({ children }: React.PropsWithChildren) {
-  const [themeState, setThemeState] = useState<ThemeT[]>();
   return (
     <>
-      <StateContext.Provider value={{ themeState, setThemeState }}>
-        <GlobalStyles />
-        <AppContainer>
-          <Navigator />
-          {children}
-        </AppContainer>
-      </StateContext.Provider>
+      <GlobalStyles />
+      <AppContainer>
+        <Navigator />
+        {children}
+      </AppContainer>
     </>
   );
 }

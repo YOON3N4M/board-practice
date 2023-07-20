@@ -1,4 +1,5 @@
 import KakaoMap from "@/components/KakaoMap";
+import Modal from "@/components/Modal";
 import SideNavigator from "@/components/SideNavigator";
 
 import { defaultMapOption, themeArr } from "@/data/sampleData";
@@ -16,9 +17,8 @@ const MapContainer = styled.div<{ heightvalue: string }>`
 export default function Map() {
   const [ContainerHeightValue, setContainerHeightValue] = useState(0);
   const [isScriptLoading, setIsScriptLoading] = useState(true);
+  const [isModalOn, setIsModalOn] = useState(false);
 
-  const data = useContext(StateContext);
-  console.log(data);
   //자동으로 스크롤이 없는 지도를 만들기 위해 선언 (근데 가끔 스크롤이 생김 왜지?)
 
   function setHTMLHeight() {
@@ -52,10 +52,15 @@ export default function Map() {
   return (
     <>
       <MapContainer heightvalue={`${ContainerHeightValue}px`}>
-        <SideNavigator ContainerHeightValue={ContainerHeightValue} />
-        {ContainerHeightValue !== 0 && isScriptLoading === false ? (
-          <KakaoMap themeArr={themeArr} mapOption={defaultMapOption} />
-        ) : null}
+        {isModalOn && (
+          <Modal isModalOn={isModalOn} setIsModalOn={setIsModalOn} />
+        )}
+        <StateContext.Provider value={{ setIsModalOn }}>
+          <SideNavigator ContainerHeightValue={ContainerHeightValue} />
+          {ContainerHeightValue !== 0 && isScriptLoading === false ? (
+            <KakaoMap themeArr={themeArr} mapOption={defaultMapOption} />
+          ) : null}
+        </StateContext.Provider>
       </MapContainer>
     </>
   );
