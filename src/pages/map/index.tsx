@@ -18,7 +18,7 @@ export default function Map() {
   const [ContainerHeightValue, setContainerHeightValue] = useState(0);
   const [isScriptLoading, setIsScriptLoading] = useState(true);
   const [isModalOn, setIsModalOn] = useState(false);
-
+  const [selectedAddress, setSelectedAddress] = useState("");
   //자동으로 스크롤이 없는 지도를 만들기 위해 선언 (근데 가끔 스크롤이 생김 왜지?)
 
   function setHTMLHeight() {
@@ -53,9 +53,15 @@ export default function Map() {
     <>
       <MapContainer heightvalue={`${ContainerHeightValue}px`}>
         {isModalOn && (
-          <Modal isModalOn={isModalOn} setIsModalOn={setIsModalOn} />
+          <Modal
+            selectedAddress={selectedAddress}
+            isModalOn={isModalOn}
+            setIsModalOn={setIsModalOn}
+          />
         )}
-        <StateContext.Provider value={{ setIsModalOn }}>
+        <StateContext.Provider
+          value={{ setIsModalOn, selectedAddress, setSelectedAddress }}
+        >
           <SideNavigator ContainerHeightValue={ContainerHeightValue} />
           {ContainerHeightValue !== 0 && isScriptLoading === false ? (
             <KakaoMap themeArr={themeArr} mapOption={defaultMapOption} />

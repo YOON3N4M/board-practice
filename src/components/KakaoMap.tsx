@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { ThemeT } from "@/data/sampleData";
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
 import { styled } from "styled-components";
 import SimpleAddressBox from "./SimpleAddressBox";
+import { StateContext } from "@/util/StateContext";
 
 declare global {
   interface Window {
@@ -57,6 +58,8 @@ export default function KakaoMap({ mapOption, themeArr }: MapComponentProps) {
   //이벤트 버블링 현상때문에 작동에 제한을 두기 위함.
   const [isOtherComponentOn, setIsOtherComponentOn] = useState(false);
 
+  const contextData = useContext(StateContext);
+
   function onMapClick(mouseEvent: any) {
     if (isOtherComponentOn) return;
     setIsOtherComponentOn(true);
@@ -74,6 +77,7 @@ export default function KakaoMap({ mapOption, themeArr }: MapComponentProps) {
     const callback: any = function (result: AddressResult[], status: any) {
       if (status === kakao.maps.services.Status.OK) {
         setAddressInfo(result[0].address.address_name);
+        contextData.setSelectedAddress(result[0].address.address_name);
       }
     };
     geocoder.coord2Address(coords.lng, coords.lat, callback);
