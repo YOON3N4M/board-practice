@@ -1,4 +1,6 @@
 import { styled } from "styled-components";
+import { useContext } from "react";
+import { StateContext } from "@/util/StateContext";
 
 const SmallAddressBox = styled.div`
   background-color: #bbbbbb;
@@ -43,6 +45,7 @@ export default function SimpleAddressBox({
       setIsOtherComponentOn(false);
     }, 100);
   }
+  const data = useContext(StateContext);
 
   return (
     <>
@@ -58,7 +61,7 @@ export default function SimpleAddressBox({
             <span>{addressInfo}</span>
           </div>
           <div className="small-address-box-bottom-row">
-            <button>등록하기</button>
+            <button onClick={() => data.setIsModalOn(true)}>등록하기</button>
           </div>
         </SmallAddressBox>
       )}

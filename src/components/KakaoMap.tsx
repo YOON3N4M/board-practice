@@ -77,7 +77,6 @@ export default function KakaoMap({ mapOption, themeArr }: MapComponentProps) {
       }
     };
     geocoder.coord2Address(coords.lng, coords.lat, callback);
-    console.log("주소!");
   }
 
   //useEffect 수정예정
