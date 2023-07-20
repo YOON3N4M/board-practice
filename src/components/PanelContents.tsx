@@ -1,4 +1,4 @@
-import { groupArr, member } from "@/data/sampleData";
+import { themeArr, member } from "@/data/sampleData";
 import { useState } from "react";
 import { styled } from "styled-components";
 
@@ -105,7 +105,7 @@ export default function PanelContents({
   }
   //즐겨찾기
   function Bookmark() {
-    const bookmarkArr = groupArr;
+    const bookmarkArr = themeArr;
 
     return (
       <>

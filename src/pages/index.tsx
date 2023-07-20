@@ -17,6 +17,23 @@ const StyledSection = styled.section<{
   * {
     text-align: center;
   }
+  .parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+    width: 500px;
+    height: 500px;
+    cursor: pointer;
+  }
+  .child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffd000;
+    width: 300px;
+    height: 300px;
+  }
 `;
 
 const MainPageImage = styled.div`
@@ -45,6 +62,13 @@ export default function Home() {
 
       <StyledSection flexdirection="row">
         <h2>장소에 대한 이야기를 나눠요</h2>
+      </StyledSection>
+      <StyledSection flexdirection="row">
+        <div onClick={() => console.log("부모박스")} className="parent">
+          <div className="child">
+            <button onClick={() => console.log("자식버튼")}>버튼</button>
+          </div>
+        </div>
       </StyledSection>
     </>
   );

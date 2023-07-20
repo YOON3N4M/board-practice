@@ -2,6 +2,8 @@ import styled from "styled-components";
 import Navigator from "./Navigator";
 import { GlobalStyles } from "@/styles/GlobalStyles";
 import { StateContext } from "@/util/StateContext";
+import { useState } from "react";
+import { ThemeT } from "@/data/sampleData";
 
 const AppContainer = styled.div`
   margin: 0;
@@ -12,10 +14,10 @@ const AppContainer = styled.div`
 `;
 
 export default function Layout({ children }: React.PropsWithChildren) {
-  const test = "test";
+  const [themeState, setThemeState] = useState<ThemeT[]>();
   return (
     <>
-      <StateContext.Provider value={{ test }}>
+      <StateContext.Provider value={{ themeState, setThemeState }}>
         <GlobalStyles />
         <AppContainer>
           <Navigator />
