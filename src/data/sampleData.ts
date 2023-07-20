@@ -36,7 +36,7 @@ export const markerObj = {
 
 export const member = ["세남", "세용", "찬영", "정빈", "정우", "지수","형철","형근","현우"];
 
-export const groupArr: ThemeT[] = [
+export const themeArr: ThemeT[] = [
   {
     themeTitle: "카페 투어",
     //노란별

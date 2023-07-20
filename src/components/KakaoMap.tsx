@@ -1,6 +1,8 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { ThemeT } from "@/data/sampleData";
-import { Map, MapMarker } from "react-kakao-maps-sdk";
+import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
+import { styled } from "styled-components";
+import SimpleAddressBox from "./SimpleAddressBox";
 
 declare global {
   interface Window {
@@ -21,10 +23,10 @@ interface coords {
 
 interface MapComponentProps {
   mapOption: MapOptionT;
-  groupArr: ThemeT[];
+  themeArr: ThemeT[];
 }
 
-interface AdressResult {
+interface AddressResult {
   address: {
     address_name: string;
     main_address_no: string;
@@ -48,50 +50,83 @@ interface AdressResult {
     zone_no: string;
   };
 }
-export default function KakaoMap({ mapOption, groupArr }: MapComponentProps) {
+
+export default function KakaoMap({ mapOption, themeArr }: MapComponentProps) {
   const [coords, setCoords] = useState<coords>();
-  const [addressInfo, setAddressInfo] = useState({});
+  const [addressInfo, setAddressInfo] = useState<any>();
+  //이벤트 버블링 현상때문에 작동에 제한을 두기 위함.
+  const [isOtherComponentOn, setIsOtherComponentOn] = useState(false);
 
-  //좌표를 주소로 바꿔주는 메소드
-  const geocoder = new window.kakao.maps.services.Geocoder();
+  function onMapClick(mouseEvent: any) {
+    if (isOtherComponentOn) return;
+    setIsOtherComponentOn(true);
+    setCoords({
+      lat: mouseEvent.latLng.getLat(),
+      lng: mouseEvent.latLng.getLng(),
+    });
+  }
+  //지도 클릭시 주소 반환
+  function getAddressByCoords() {
+    if (coords === undefined) return;
+    //이걸로 하니까 깜빡거림
+    const geocoder = new window.kakao.maps.services.Geocoder();
 
-  const callback: any = function (result: AdressResult[], status: any) {
-    if (status === kakao.maps.services.Status.OK) {
-      console.log("지역 명칭 : " + result[0].address.address_name);
-      console.log("행정구역 코드 : " + result[0].address.region_3depth_name);
-    }
-    console.log(result, "상태");
-  };
+    const callback: any = function (result: AddressResult[], status: any) {
+      if (status === kakao.maps.services.Status.OK) {
+        setAddressInfo(result[0].address.address_name);
+      }
+    };
+    geocoder.coord2Address(coords.lng, coords.lat, callback);
+    console.log("주소!");
+  }
 
   //useEffect 수정예정
   useEffect(() => {
-    if (coords === undefined) return;
-
-    geocoder.coord2Address(coords.lng, coords.lat, callback);
+    getAddressByCoords();
   }, [coords]);
+
   return (
     <>
       <Map
         center={mapOption.center}
-        style={{ width: "100%", height: "100%" }}
+        style={{ width: "100%", height: "100%", zIndex: 0 }}
         level={mapOption.level}
-        onClick={(_t, mouseEvent) =>
-          setCoords({
-            lat: mouseEvent.latLng.getLat(),
-            lng: mouseEvent.latLng.getLng(),
-          })
-        }
+        onClick={(_t, mouseEvent) => {
+          onMapClick(mouseEvent);
+        }}
       >
-        {coords && <MapMarker position={coords} />}
-        {groupArr.length !== 0
-          ? groupArr.map(group =>
+        {coords && (
+          <>
+            {" "}
+            <MapMarker position={coords} />
+            <CustomOverlayMap // 커스텀 오버레이를 표시할 Container
+              // 커스텀 오버레이가 표시될 위치입니다
+              position={coords}
+              // 커스텀 오버레이가에 대한 확장 옵션
+              xAnchor={0.3}
+              yAnchor={0.91}
+            >
+              <SimpleAddressBox
+                setCoords={setCoords}
+                setIsOtherComponentOn={setIsOtherComponentOn}
+                addressInfo={addressInfo}
+                setAddressInfo={setAddressInfo}
+              />
+            </CustomOverlayMap>
+          </>
+        )}
+        {themeArr.length !== 0
+          ? themeArr.map(group =>
               group.positions.map(position => (
-                <MapMarker
-                  key={position.title}
-                  title={position.title}
-                  position={position.position}
-                  image={group.marker}
-                />
+                <>
+                  {" "}
+                  <MapMarker
+                    key={position.title}
+                    title={position.title}
+                    position={position.position}
+                    image={group.marker}
+                  />
+                </>
               ))
             )
           : null}
