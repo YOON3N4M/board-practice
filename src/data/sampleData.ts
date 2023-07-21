@@ -1,5 +1,5 @@
 export interface MapDataT {
-  mapId: number;
+  id: number;
   member: string[];
   theme: ThemeT[];
 }
@@ -7,13 +7,14 @@ export interface MapDataT {
 export interface ThemeT {
   themeTitle: string;
   marker: MarkerT;
-  positions: PositionT[];
+  positions?: PositionT[];
   member?: string[];
 }
 export interface PositionT {
   id: number;
   title: string;
   position: { lat: number; lng: number };
+  addedBy?: string
 }
 
 export interface MarkerT {

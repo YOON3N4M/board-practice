@@ -125,7 +125,7 @@ export default function KakaoMap({
 
         {mapData.length !== 0
           ? mapData[0].theme.map(theme =>
-              theme.positions.map(position => (
+              theme?.positions?.map(position => (
                 <>
                   {" "}
                   <MapMarker

@@ -19,7 +19,7 @@ const MapContainer = styled.div<{ heightvalue: string }>`
   height: ${props => props.heightvalue};
   overflow: hidden;
 `;
-
+export const API_URL_MAP = "http://localhost:4000/map";
 export default function Map() {
   const [ContainerHeightValue, setContainerHeightValue] = useState(0);
   const [isScriptLoading, setIsScriptLoading] = useState(true);
@@ -28,7 +28,7 @@ export default function Map() {
   const [mapDataFromDB, setMapDataFromDB] = useState<MapDataT[]>([]);
 
   //임시 api URL
-  const API_URL_MAP = "http://localhost:4000/map";
+
   //자동으로 스크롤이 없는 지도를 만들기 위해 선언 (근데 가끔 스크롤이 생김 왜지?)
   function setHTMLHeight() {
     const naviElement: HTMLElement | null = document.querySelector(".navi");
