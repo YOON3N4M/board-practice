@@ -1,14 +1,19 @@
-export interface PositionT {
-  id: number;
-  title: string;
-  position: { lat: number; lng: number };
+export interface MapDataT {
+  mapId: number;
+  member: string[];
+  theme: ThemeT[];
 }
 
 export interface ThemeT {
   themeTitle: string;
   marker: MarkerT;
   positions: PositionT[];
-  member: string[];
+  member?: string[];
+}
+export interface PositionT {
+  id: number;
+  title: string;
+  position: { lat: number; lng: number };
 }
 
 export interface MarkerT {
@@ -34,7 +39,17 @@ export const markerObj = {
   },
 };
 
-export const member = ["세남", "세용", "찬영", "정빈", "정우", "지수","형철","형근","현우"];
+export const member = [
+  "세남",
+  "세용",
+  "찬영",
+  "정빈",
+  "정우",
+  "지수",
+  "형철",
+  "형근",
+  "현우",
+];
 
 export const themeArr: ThemeT[] = [
   {

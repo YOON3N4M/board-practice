@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { ThemeT } from "@/data/sampleData";
+import { MapDataT, ThemeT } from "@/data/sampleData";
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
 import { styled } from "styled-components";
 import SimpleAddressBox from "./SimpleAddressBox";
@@ -24,7 +24,7 @@ interface coords {
 
 interface MapComponentProps {
   mapOption: MapOptionT;
-  themeArr: ThemeT[];
+  mapDataFromDB: MapDataT[];
 }
 
 interface AddressResult {
@@ -52,7 +52,11 @@ interface AddressResult {
   };
 }
 
-export default function KakaoMap({ mapOption, themeArr }: MapComponentProps) {
+export default function KakaoMap({
+  mapOption,
+  mapDataFromDB,
+}: MapComponentProps) {
+  const [mapData, setMapData] = useState<MapDataT[]>(mapDataFromDB);
   const [coords, setCoords] = useState<coords>();
   const [addressInfo, setAddressInfo] = useState<any>();
   //이벤트 버블링 현상때문에 작동에 제한을 두기 위함.
@@ -118,16 +122,17 @@ export default function KakaoMap({ mapOption, themeArr }: MapComponentProps) {
             </CustomOverlayMap>
           </>
         )}
-        {themeArr.length !== 0
-          ? themeArr.map(group =>
-              group.positions.map(position => (
+
+        {mapData.length !== 0
+          ? mapData[0].theme.map(theme =>
+              theme.positions.map(position => (
                 <>
                   {" "}
                   <MapMarker
                     key={position.title}
                     title={position.title}
                     position={position.position}
-                    image={group.marker}
+                    image={theme.marker}
                   />
                 </>
               ))

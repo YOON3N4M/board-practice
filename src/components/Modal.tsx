@@ -1,5 +1,7 @@
+import { MapDataT } from "@/data/sampleData";
+import { StateContext } from "@/util/StateContext";
 import { motion } from "framer-motion";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { styled } from "styled-components";
 
 const ModalBackground = styled(motion.div)`
@@ -28,6 +30,9 @@ const ModalWindow = styled.div`
   .submit-position-form {
     display: flex;
     flex-direction: column;
+    .member-row {
+      display: flex;
+    }
   }
 `;
 
@@ -42,14 +47,24 @@ export default function Modal({
   setIsModalOn,
   selectedAddress,
 }: Props) {
+  const contextData = useContext(StateContext);
+  const mapData: MapDataT = contextData.mapDataFromDB[0];
   // 테스트 후 이름 바꿔야함
   function Form() {
     const [positionName, setPositionName] = useState("");
+    const [selectedMember, setSelectedMember] = useState([]);
+
+    function handleSelectedMember() {}
     return (
       <>
         <form className="submit-position-form">
           <input placeholder="장소의 별명을 입력하세요"></input>
           <span>주소:{selectedAddress}</span>
+          <div className="member-row">
+            {mapData.member.map(name => (
+              <button>{name}</button>
+            ))}
+          </div>
         </form>
       </>
     );
@@ -62,6 +77,7 @@ export default function Modal({
           <button onClick={() => setIsModalOn(false)} className="modal-close">
             닫기
           </button>
+
           <Form />
         </ModalWindow>
       </ModalBackground>
