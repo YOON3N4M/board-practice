@@ -109,6 +109,9 @@ export default function PanelContents({
 
     return (
       <>
+        <MemberBox>
+          <h2>새 즐겨찾기 목록 추가하기 +</h2>
+        </MemberBox>
         {bookmarkArr.map(bookmark => (
           <MemberBox key={bookmark.themeTitle}>
             <div className="user-profile-image-box">
