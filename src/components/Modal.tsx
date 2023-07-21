@@ -51,20 +51,55 @@ export default function Modal({
   const mapData: MapDataT = contextData.mapDataFromDB[0];
   // 테스트 후 이름 바꿔야함
   function Form() {
-    const [positionName, setPositionName] = useState("");
-    const [selectedMember, setSelectedMember] = useState([]);
+    const [positionTitle, setPositionTitle] = useState("");
+    const [selectedMember, setSelectedMember] = useState<string[]>([]);
 
-    function handleSelectedMember() {}
+    function handleSelectedMember(event: any) {
+      const justClickedName: string = event.target.value;
+      const isExist = selectedMember.includes(justClickedName);
+      if (!isExist) {
+        setSelectedMember(prev => [...prev, justClickedName]);
+      } else {
+        const removedArr = selectedMember.filter(
+          name => name !== justClickedName
+        );
+
+        setSelectedMember(removedArr);
+      }
+    }
     return (
       <>
         <form className="submit-position-form">
+          <label>테마</label>
+          <select>
+            {mapData.theme.map((theme, idx) => (
+              <option key={idx}>{theme.themeTitle}</option>
+            ))}
+          </select>
           <input placeholder="장소의 별명을 입력하세요"></input>
           <span>주소:{selectedAddress}</span>
           <div className="member-row">
-            {mapData.member.map(name => (
-              <button>{name}</button>
+            {selectedMember.map(name => (
+              <span key={name}>{name}</span>
             ))}
           </div>
+          <div className="member-row">
+            {mapData.member.map((name, idx) => (
+              <button
+                onClick={event => handleSelectedMember(event)}
+                key={idx}
+                type="button"
+                value={name}
+              >
+                {name}
+              </button>
+            ))}
+          </div>
+          <button>사진 추가하기</button>
+          <label>메모</label>
+          <textarea></textarea>
+
+          <button>등록하기!</button>
         </form>
       </>
     );
