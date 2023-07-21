@@ -52,6 +52,8 @@ interface AddressResult {
   };
 }
 
+export const UNDEFINED_ADDRESS = "주소 정보가 없습니다.";
+
 export default function KakaoMap({
   mapOption,
   mapDataFromDB,
@@ -84,6 +86,8 @@ export default function KakaoMap({
 
         setAddressInfo(adrressResult);
         contextData.setSelectedAddress(adrressResult);
+      } else {
+        setAddressInfo(UNDEFINED_ADDRESS);
       }
     };
     geocoder.coord2Address(coords.lng, coords.lat, callback);
