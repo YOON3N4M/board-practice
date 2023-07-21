@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import PanelContents from "./PanelContents";
 
-const FloatingContainer = styled.div`
-  height: 100%;
+const FloatingContainer = styled.div<{ heightvalue: string }>`
   display: flex;
+  height: ${props => props.heightvalue};
   position: absolute;
   z-index: 1000;
 `;
@@ -14,7 +14,7 @@ const SideNavigatorContainer = styled.div<{ heightvalue: string }>`
   display: flex;
   flex-direction: column;
   width: 80px;
-  //height: ${props => props.heightvalue};
+  max-height: ${props => props.heightvalue};
   background-color: #ffffff;
   z-index: 1100;
   padding: 100px 5px;
@@ -64,7 +64,7 @@ export default function SideNavigator({
 
   return (
     <>
-      <FloatingContainer>
+      <FloatingContainer heightvalue={`${ContainerHeightValue}px`}>
         <SideNavigatorContainer heightvalue={`${ContainerHeightValue}px`}>
           <button name="멤버" onClick={event => onMenuClick(event)}>
             멤버

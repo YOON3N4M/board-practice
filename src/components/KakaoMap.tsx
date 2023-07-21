@@ -80,8 +80,10 @@ export default function KakaoMap({
 
     const callback: any = function (result: AddressResult[], status: any) {
       if (status === kakao.maps.services.Status.OK) {
-        setAddressInfo(result[0].address.address_name);
-        contextData.setSelectedAddress(result[0].address.address_name);
+        const adrressResult = result[0].address.address_name;
+
+        setAddressInfo(adrressResult);
+        contextData.setSelectedAddress(adrressResult);
       }
     };
     geocoder.coord2Address(coords.lng, coords.lat, callback);

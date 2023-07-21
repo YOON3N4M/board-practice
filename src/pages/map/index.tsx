@@ -60,7 +60,7 @@ export default function Map() {
   }
   useEffect(() => {
     setHTMLHeight();
-    getMapDataFromDB();
+    // getMapDataFromDB();
     setScriptLoad();
   }, []);
 
