@@ -72,8 +72,8 @@ export default function SideNavigator({
           <button name="검색" onClick={event => onMenuClick(event)}>
             검색
           </button>
-          <button name="즐겨찾기" onClick={event => onMenuClick(event)}>
-            즐겨찾기
+          <button name="테마" onClick={event => onMenuClick(event)}>
+            테마
           </button>
           <button name="설정" onClick={event => onMenuClick(event)}>
             설정
