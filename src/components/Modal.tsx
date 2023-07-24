@@ -57,10 +57,10 @@ export default function Modal({
     function handleTitleInput(event: React.ChangeEvent<HTMLInputElement>) {
       setPositionTitle(event.target.value);
 
-      const positionTemp: PositionT = {
-        id: 2,
-        title: positionTitle,
-      };
+      // const positionTemp: PositionT = {
+      //   id: 2,
+      //   title: positionTitle,
+      // };
     }
 
     function handleSelectedMember(event: any) {

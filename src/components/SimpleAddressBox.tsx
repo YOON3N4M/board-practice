@@ -45,7 +45,7 @@ export default function SimpleAddressBox({
       setIsOtherComponentOn(false);
     }, 100);
   }
-  const data = useContext(StateContext);
+  const { setIsModalOn } = useContext(StateContext);
 
   return (
     <>
@@ -62,7 +62,7 @@ export default function SimpleAddressBox({
           </div>
           <div className="small-address-box-bottom-row">
             {addressInfo === ""}
-            <button onClick={() => data.setIsModalOn(true)}>등록하기</button>
+            <button onClick={() => setIsModalOn(true)}>등록하기</button>
           </div>
         </SmallAddressBox>
       )}
