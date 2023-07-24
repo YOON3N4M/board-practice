@@ -1,4 +1,4 @@
-import { MapDataT } from "@/data/sampleData";
+import { MapDataT, PositionT } from "@/@types/types";
 import { StateContext } from "@/util/StateContext";
 import { motion } from "framer-motion";
 import React, { useState, useContext } from "react";
@@ -54,6 +54,15 @@ export default function Modal({
     const [positionTitle, setPositionTitle] = useState("");
     const [selectedMember, setSelectedMember] = useState<string[]>([]);
 
+    function handleTitleInput(event: React.ChangeEvent<HTMLInputElement>) {
+      setPositionTitle(event.target.value);
+
+      const positionTemp: PositionT = {
+        id: 2,
+        title: positionTitle,
+      };
+    }
+
     function handleSelectedMember(event: any) {
       const justClickedName: string = event.target.value;
       const isExist = selectedMember.includes(justClickedName);
@@ -63,10 +72,10 @@ export default function Modal({
         const removedArr = selectedMember.filter(
           name => name !== justClickedName
         );
-
         setSelectedMember(removedArr);
       }
     }
+
     return (
       <>
         <form className="submit-position-form">
@@ -76,7 +85,11 @@ export default function Modal({
               <option key={idx}>{theme.themeTitle}</option>
             ))}
           </select>
-          <input placeholder="장소의 별명을 입력하세요"></input>
+          <input
+            value={positionTitle}
+            onChange={handleTitleInput}
+            placeholder="장소의 별명을 입력하세요"
+          ></input>
           <span>주소:{selectedAddress}</span>
           <div className="member-row">
             {selectedMember.map(name => (

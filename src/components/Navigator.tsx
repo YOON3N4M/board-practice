@@ -3,9 +3,9 @@ import { styled } from "styled-components";
 
 const NavigatorContainer = styled.div`
   width: 100vw;
-  //background-color: red;
+  background-color: rgb(88, 101, 242);
   padding: 1rem 0;
-  border-bottom: 1px solid #6b6b6ba6;
+  // border-bottom: 1px solid #6b6b6ba6;
 `;
 
 const Navi = styled.div`

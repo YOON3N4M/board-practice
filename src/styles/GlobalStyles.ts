@@ -18,6 +18,9 @@ html {
 body{
   margin: 0 0
 }
-
+a{
+  text-decoration: none;
+  color: white
+}
 
 `;

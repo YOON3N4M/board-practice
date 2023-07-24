@@ -43,50 +43,6 @@
               "addedBy": "세남"
             }
           ]
-        },
-        {
-          "themeTitle": "안녕",
-          "marker": {
-            "src": "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
-            "size": {
-              "width": 24,
-              "height": 35
-            }
-          },
-          "positions": []
-        },
-        {
-          "themeTitle": "ㅁㄴㅇㅁㄴㅇ",
-          "marker": {
-            "src": "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
-            "size": {
-              "width": 24,
-              "height": 35
-            }
-          },
-          "positions": []
-        },
-        {
-          "themeTitle": "이거왜",
-          "marker": {
-            "src": "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
-            "size": {
-              "width": 24,
-              "height": 35
-            }
-          },
-          "positions": []
-        },
-        {
-          "themeTitle": "강릉",
-          "marker": {
-            "src": "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
-            "size": {
-              "width": 24,
-              "height": 35
-            }
-          },
-          "positions": []
         }
       ]
     }

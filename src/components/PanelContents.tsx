@@ -1,4 +1,5 @@
-import { themeArr, member, ThemeT } from "@/data/sampleData";
+import { ThemeT } from "@/@types/types";
+import { themeArr, member } from "@/data/sampleData";
 import { API_URL_MAP } from "@/pages/map";
 import { StateContext } from "@/util/StateContext";
 import axios from "axios";

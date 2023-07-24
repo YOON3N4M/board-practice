@@ -1,13 +1,9 @@
+import { MapDataT } from "@/@types/types";
 import KakaoMap from "@/components/KakaoMap";
 import Modal from "@/components/Modal";
 import SideNavigator from "@/components/SideNavigator";
 
-import {
-  MapDataT,
-  ThemeT,
-  defaultMapOption,
-  themeArr,
-} from "@/data/sampleData";
+import { defaultMapOption } from "@/data/sampleData";
 import { StateContext } from "@/util/StateContext";
 import axios from "axios";
 
@@ -23,8 +19,9 @@ export const API_URL_MAP = "http://localhost:4000/map";
 export default function Map() {
   const [ContainerHeightValue, setContainerHeightValue] = useState(0);
   const [isScriptLoading, setIsScriptLoading] = useState(true);
-  const [isModalOn, setIsModalOn] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState("");
+  //useContext로 내려줄 상태들
+  const [isModalOn, setIsModalOn] = useState(false);
   const [mapDataFromDB, setMapDataFromDB] = useState<MapDataT[]>([]);
 
   //임시 api URL
@@ -60,7 +57,7 @@ export default function Map() {
   }
   useEffect(() => {
     setHTMLHeight();
-    // getMapDataFromDB();
+    getMapDataFromDB();
     setScriptLoad();
   }, []);
 

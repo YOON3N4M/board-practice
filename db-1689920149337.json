@@ -1,0 +1,99 @@
+{
+  "marker": [
+    {
+      "id": 1,
+      "title": "첫 메모 제목",
+      "body": "첫 메모 내용"
+    }
+  ],
+  "map": [
+    {
+      "id": 1,
+      "mapId": 1,
+      "member": [
+        "세남",
+        "세용",
+        "찬영",
+        "정빈",
+        "정우",
+        "지수",
+        "형철",
+        "형근",
+        "현우"
+      ],
+      "theme": [
+        {
+          "themeTitle": "여행",
+          "marker": {
+            "src": "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
+            "size": {
+              "width": 24,
+              "height": 35
+            }
+          },
+          "positions": [
+            {
+              "id": 1,
+              "title": "응암 러브하우스",
+              "position": {
+                "lat": 37.6021102,
+                "lng": 126.90858
+              },
+              "member": [
+                "세남",
+                "세용",
+                "정빈",
+                "정우"
+              ],
+              "addedBy": "세남"
+            }
+          ]
+        },
+        {
+          "themeTitle": "안녕",
+          "marker": {
+            "src": "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
+            "size": {
+              "width": 24,
+              "height": 35
+            }
+          },
+          "positions": []
+        },
+        {
+          "themeTitle": "ㅁㄴㅇㅁㄴㅇ",
+          "marker": {
+            "src": "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
+            "size": {
+              "width": 24,
+              "height": 35
+            }
+          },
+          "positions": []
+        },
+        {
+          "themeTitle": "이거왜",
+          "marker": {
+            "src": "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
+            "size": {
+              "width": 24,
+              "height": 35
+            }
+          },
+          "positions": []
+        },
+        {
+          "themeTitle": "강릉",
+          "marker": {
+            "src": "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
+            "size": {
+              "width": 24,
+              "height": 35
+            }
+          },
+          "positions": []
+        }
+      ]
+    }
+  ]
+}
