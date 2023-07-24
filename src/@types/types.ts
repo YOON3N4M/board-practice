@@ -27,3 +27,7 @@ export interface PositionT {
   position: { lat: number; lng: number };
   addedBy?: string;
 }
+export interface coordsT {
+  lat: number;
+  lng: number;
+}
