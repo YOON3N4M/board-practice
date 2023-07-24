@@ -47,10 +47,33 @@ export default function Modal({ isModalOn, setIsModalOn }: Props) {
   // 테스트 후 이름 바꿔야함
   function Form() {
     const [positionTitle, setPositionTitle] = useState("");
+    const [positionMemo, setPositionMemo] = useState("");
     const [selectedMember, setSelectedMember] = useState<string[]>([]);
 
     function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
       event.preventDefault();
+
+      const positionTemp: PositionT = {
+        title: positionTitle,
+        address: selectedAddress,
+        coords: coords,
+        // #issue id, addedBy 변경 해야함
+        id: 2,
+        addedBy: "세남",
+        member: selectedMember,
+        positionMemo: positionMemo,
+      };
+
+      // const updatedMapData ={
+      //   ...mapDataFromDB[0],
+      //   theme:
+      // }
+    }
+
+    function handlePositionMemoText(
+      event: React.ChangeEvent<HTMLTextAreaElement>
+    ) {
+      setPositionMemo(event.target.value);
     }
 
     function handleTitleInput(event: React.ChangeEvent<HTMLInputElement>) {
@@ -58,13 +81,15 @@ export default function Modal({ isModalOn, setIsModalOn }: Props) {
 
       const positionTemp: PositionT = {
         title: positionTitle,
-        position: coords,
-        //temp
+        address: selectedAddress,
+        coords: coords,
+        // #issue id, addedBy 변경 해야함
         id: 2,
         addedBy: "세남",
         member: selectedMember,
-        address: selectedAddress,
+        positionMemo: positionMemo,
       };
+
       console.log(positionTemp);
     }
 
@@ -127,7 +152,10 @@ export default function Modal({ isModalOn, setIsModalOn }: Props) {
           </div>
           <button>사진 추가하기</button>
           <label>메모</label>
-          <textarea></textarea>
+          <textarea
+            onChange={handlePositionMemoText}
+            value={positionMemo}
+          ></textarea>
 
           <button>등록하기!</button>
         </form>
