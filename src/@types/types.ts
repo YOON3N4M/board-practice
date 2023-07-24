@@ -24,11 +24,12 @@ export interface MarkerT {
 export interface PositionT {
   id: number;
   title: string;
-  position: { lat: number; lng: number };
+  coords: coordsT;
   addedBy?: string;
   //sampData수정하고 옵셔널 제거
   member?: string[];
   address?: string;
+  positionMemo?: string;
 }
 export interface coordsT {
   lat: number;

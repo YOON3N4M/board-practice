@@ -126,7 +126,7 @@ export default function KakaoMap({ mapOption }: MapComponentProps) {
                   <MapMarker
                     key={position.title}
                     title={position.title}
-                    position={position.position}
+                    position={position.coords}
                     image={theme.marker}
                   />
                 </>
