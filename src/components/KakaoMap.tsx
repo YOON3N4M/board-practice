@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
-import { MapDataT, ThemeT } from "@/data/sampleData";
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
 import { styled } from "styled-components";
 import SimpleAddressBox from "./SimpleAddressBox";
 import { StateContext } from "@/util/StateContext";
+import { MapDataT } from "@/@types/types";
 
 declare global {
   interface Window {
@@ -82,10 +82,10 @@ export default function KakaoMap({
 
     const callback: any = function (result: AddressResult[], status: any) {
       if (status === kakao.maps.services.Status.OK) {
-        const adrressResult = result[0].address.address_name;
+        const addressResult = result[0].address.address_name;
 
-        setAddressInfo(adrressResult);
-        contextData.setSelectedAddress(adrressResult);
+        setAddressInfo(addressResult);
+        contextData.setSelectedAddress(addressResult);
       } else {
         setAddressInfo(UNDEFINED_ADDRESS);
       }

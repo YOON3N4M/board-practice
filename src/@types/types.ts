@@ -5,3 +5,25 @@ export interface User {
   password: string;
   sex: number;
 }
+//지도 관련
+export interface MapDataT {
+  id: number;
+  member: string[];
+  theme: ThemeT[];
+}
+export interface ThemeT {
+  themeTitle: string;
+  marker: MarkerT;
+  positions?: PositionT[];
+  member?: string[];
+}
+export interface MarkerT {
+  src: string;
+  size: { width: number; height: number };
+}
+export interface PositionT {
+  id: number;
+  title: string;
+  position: { lat: number; lng: number };
+  addedBy?: string;
+}

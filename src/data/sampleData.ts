@@ -1,26 +1,4 @@
-export interface MapDataT {
-  id: number;
-  member: string[];
-  theme: ThemeT[];
-}
 
-export interface ThemeT {
-  themeTitle: string;
-  marker: MarkerT;
-  positions?: PositionT[];
-  member?: string[];
-}
-export interface PositionT {
-  id: number;
-  title: string;
-  position: { lat: number; lng: number };
-  addedBy?: string
-}
-
-export interface MarkerT {
-  src: string;
-  size: { width: number; height: number };
-}
 
 //////////////////////////////////////////////
 
