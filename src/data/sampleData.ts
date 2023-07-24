@@ -1,6 +1,6 @@
-
-
 //////////////////////////////////////////////
+
+import { ThemeT } from "@/@types/types";
 
 export const defaultMapOption = {
   center: { lat: 35.98818056, lng: 127.9281444 },

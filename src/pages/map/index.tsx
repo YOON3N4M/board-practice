@@ -1,4 +1,4 @@
-import { MapDataT } from "@/@types/types";
+import { MapDataT, coordsT } from "@/@types/types";
 import KakaoMap from "@/components/KakaoMap";
 import Modal from "@/components/Modal";
 import SideNavigator from "@/components/SideNavigator";
@@ -20,10 +20,10 @@ export default function Map() {
   const [ContainerHeightValue, setContainerHeightValue] = useState(0);
   const [isScriptLoading, setIsScriptLoading] = useState(true);
   const [selectedAddress, setSelectedAddress] = useState("");
-  //useContext로 내려줄 상태들
+  //useContext로 관리할 상태
   const [isModalOn, setIsModalOn] = useState(false);
   const [mapDataFromDB, setMapDataFromDB] = useState<MapDataT[]>([]);
-
+  const [coords, setCoords] = useState<coordsT>();
   //임시 api URL
 
   //자동으로 스크롤이 없는 지도를 만들기 위해 선언 (근데 가끔 스크롤이 생김 왜지?)
@@ -71,6 +71,8 @@ export default function Map() {
             setSelectedAddress,
             mapDataFromDB,
             setMapDataFromDB,
+            coords,
+            setCoords,
           }}
         >
           {" "}

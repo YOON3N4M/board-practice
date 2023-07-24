@@ -3,7 +3,7 @@ import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
 import { styled } from "styled-components";
 import SimpleAddressBox from "./SimpleAddressBox";
 import { StateContext } from "@/util/StateContext";
-import { MapDataT } from "@/@types/types";
+import { MapDataT, coordsT } from "@/@types/types";
 
 declare global {
   interface Window {
@@ -15,11 +15,6 @@ declare global {
 interface MapOptionT {
   center: { lat: number; lng: number };
   level: number;
-}
-
-interface coords {
-  lat: number;
-  lng: number;
 }
 
 interface MapComponentProps {
@@ -58,13 +53,12 @@ export default function KakaoMap({
   mapOption,
   mapDataFromDB,
 }: MapComponentProps) {
+  const contextData = useContext(StateContext);
+  const { coords, setCoords } = contextData;
   const [mapData, setMapData] = useState<MapDataT[]>(mapDataFromDB);
-  const [coords, setCoords] = useState<coords>();
   const [addressInfo, setAddressInfo] = useState<any>();
   //이벤트 버블링 현상때문에 작동에 제한을 두기 위함.
   const [isOtherComponentOn, setIsOtherComponentOn] = useState(false);
-
-  const contextData = useContext(StateContext);
 
   function onMapClick(mouseEvent: any) {
     if (isOtherComponentOn) return;
