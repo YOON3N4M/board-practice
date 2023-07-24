@@ -78,11 +78,7 @@ export default function Map() {
         >
           {" "}
           {isModalOn && (
-            <Modal
-              selectedAddress={selectedAddress}
-              isModalOn={isModalOn}
-              setIsModalOn={setIsModalOn}
-            />
+            <Modal isModalOn={isModalOn} setIsModalOn={setIsModalOn} />
           )}
           <SideNavigator ContainerHeightValue={ContainerHeightValue} />
           {ContainerHeightValue !== 0 && isScriptLoading === false ? (
