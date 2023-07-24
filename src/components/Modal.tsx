@@ -39,28 +39,33 @@ const ModalWindow = styled.div`
 interface Props {
   isModalOn: boolean;
   setIsModalOn: React.Dispatch<React.SetStateAction<boolean>>;
-  selectedAddress: string;
 }
 
-export default function Modal({
-  isModalOn,
-  setIsModalOn,
-  selectedAddress,
-}: Props) {
-  const { mapDataFromDB } = useContext(StateContext);
+export default function Modal({ isModalOn, setIsModalOn }: Props) {
+  const { mapDataFromDB, coords, selectedAddress } = useContext(StateContext);
 
   // 테스트 후 이름 바꿔야함
   function Form() {
     const [positionTitle, setPositionTitle] = useState("");
     const [selectedMember, setSelectedMember] = useState<string[]>([]);
 
+    function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
+      event.preventDefault();
+    }
+
     function handleTitleInput(event: React.ChangeEvent<HTMLInputElement>) {
       setPositionTitle(event.target.value);
 
-      // const positionTemp: PositionT = {
-      //   id: 2,
-      //   title: positionTitle,
-      // };
+      const positionTemp: PositionT = {
+        title: positionTitle,
+        position: coords,
+        //temp
+        id: 2,
+        addedBy: "세남",
+        member: selectedMember,
+        address: selectedAddress,
+      };
+      console.log(positionTemp);
     }
 
     function handleSelectedMember(event: any) {
@@ -78,7 +83,7 @@ export default function Modal({
 
     return (
       <>
-        <form className="submit-position-form">
+        <form onSubmit={handleFormSubmit} className="submit-position-form">
           <label>테마</label>
           <select>
             {mapDataFromDB[0].theme.map((theme: ThemeT, idx: number) => (
@@ -89,12 +94,24 @@ export default function Modal({
             value={positionTitle}
             onChange={handleTitleInput}
             placeholder="장소의 별명을 입력하세요"
+            required
           ></input>
           <span>주소:{selectedAddress}</span>
           <div className="member-row">
             {selectedMember.map(name => (
               <span key={name}>{name}</span>
             ))}
+          </div>
+          <div className="member-row">
+            <button
+              onClick={() => setSelectedMember(mapDataFromDB[0].member)}
+              type="button"
+            >
+              전체 선택
+            </button>
+            <button onClick={() => setSelectedMember([])} type="button">
+              전체 선택해제
+            </button>
           </div>
           <div className="member-row">
             {mapDataFromDB[0].member.map((name: string, idx: number) => (
@@ -125,7 +142,6 @@ export default function Modal({
           <button onClick={() => setIsModalOn(false)} className="modal-close">
             닫기
           </button>
-
           <Form />
         </ModalWindow>
       </ModalBackground>

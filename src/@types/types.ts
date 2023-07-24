@@ -26,6 +26,9 @@ export interface PositionT {
   title: string;
   position: { lat: number; lng: number };
   addedBy?: string;
+  //sampData수정하고 옵셔널 제거
+  member?: string[];
+  address?: string;
 }
 export interface coordsT {
   lat: number;
