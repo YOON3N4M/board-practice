@@ -5,8 +5,8 @@ import SideNavigator from "@/components/SideNavigator";
 
 import { defaultMapOption } from "@/data/sampleData";
 import { StateContext } from "@/util/StateContext";
-import axios from "axios";
 
+import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import { styled } from "styled-components";
 
@@ -15,7 +15,9 @@ const MapContainer = styled.div<{ heightvalue: string }>`
   height: ${props => props.heightvalue};
   overflow: hidden;
 `;
+//임시 api URL
 export const API_URL_MAP = "http://localhost:4000/map";
+
 export default function Map() {
   const [ContainerHeightValue, setContainerHeightValue] = useState(0);
   const [isScriptLoading, setIsScriptLoading] = useState(true);
@@ -24,7 +26,6 @@ export default function Map() {
   const [isModalOn, setIsModalOn] = useState(false);
   const [mapDataFromDB, setMapDataFromDB] = useState<MapDataT[]>([]);
   const [coords, setCoords] = useState<coordsT>();
-  //임시 api URL
 
   //자동으로 스크롤이 없는 지도를 만들기 위해 선언 (근데 가끔 스크롤이 생김 왜지?)
   function setHTMLHeight() {
@@ -85,10 +86,7 @@ export default function Map() {
           )}
           <SideNavigator ContainerHeightValue={ContainerHeightValue} />
           {ContainerHeightValue !== 0 && isScriptLoading === false ? (
-            <KakaoMap
-              mapDataFromDB={mapDataFromDB}
-              mapOption={defaultMapOption}
-            />
+            <KakaoMap mapOption={defaultMapOption} />
           ) : null}
         </StateContext.Provider>
       </MapContainer>

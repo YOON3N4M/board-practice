@@ -1,3 +1,4 @@
+import { MapDataT } from "@/@types/types";
 import { createContext } from "react";
 
 interface StateContextT {

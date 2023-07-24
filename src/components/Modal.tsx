@@ -1,4 +1,4 @@
-import { MapDataT, PositionT } from "@/@types/types";
+import { MapDataT, PositionT, ThemeT } from "@/@types/types";
 import { StateContext } from "@/util/StateContext";
 import { motion } from "framer-motion";
 import React, { useState, useContext } from "react";
@@ -47,8 +47,8 @@ export default function Modal({
   setIsModalOn,
   selectedAddress,
 }: Props) {
-  const contextData = useContext(StateContext);
-  const mapData: MapDataT = contextData.mapDataFromDB[0];
+  const { mapDataFromDB } = useContext(StateContext);
+
   // 테스트 후 이름 바꿔야함
   function Form() {
     const [positionTitle, setPositionTitle] = useState("");
@@ -81,7 +81,7 @@ export default function Modal({
         <form className="submit-position-form">
           <label>테마</label>
           <select>
-            {mapData.theme.map((theme, idx) => (
+            {mapDataFromDB[0].theme.map((theme: ThemeT, idx: number) => (
               <option key={idx}>{theme.themeTitle}</option>
             ))}
           </select>
@@ -97,7 +97,7 @@ export default function Modal({
             ))}
           </div>
           <div className="member-row">
-            {mapData.member.map((name, idx) => (
+            {mapDataFromDB[0].member.map((name: string, idx: number) => (
               <button
                 onClick={event => handleSelectedMember(event)}
                 key={idx}
