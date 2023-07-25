@@ -9,6 +9,10 @@ interface StateContextT {
   setMapDataFromDB?: any;
   coords?: any;
   setCoords?: any;
+  testPositionArr?: any;
+  setTestPositionArr?: any;
+  selectedModal: any;
+  setSelectedModal: any;
 }
 
 const DefalutState = {
@@ -19,6 +23,10 @@ const DefalutState = {
   setMapDataFromDB: undefined,
   coords: undefined,
   setCoords: undefined,
+  testPositionArr: undefined,
+  setTestPositionArr: undefined,
+  selectedModal: undefined,
+  setSelectedModal: undefined,
 };
 
 export const StateContext = createContext<StateContextT>(DefalutState);
