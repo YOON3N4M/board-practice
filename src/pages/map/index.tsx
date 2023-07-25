@@ -1,4 +1,4 @@
-import { MapDataT, coordsT } from "@/@types/types";
+import { MapDataT, PositionT, coordsT } from "@/@types/types";
 import KakaoMap from "@/components/KakaoMap";
 import Modal from "@/components/Modal";
 import SideNavigator from "@/components/SideNavigator";
@@ -18,14 +18,20 @@ const MapContainer = styled.div<{ heightvalue: string }>`
 //임시 api URL
 export const API_URL_MAP = "http://localhost:4000/map";
 
+export const MODAL_TYPE_ADD_POSITION = "addPosition";
+export const MODAL_TYPE_SHOW_POSITION = "showPosition";
+
 export default function Map() {
   const [ContainerHeightValue, setContainerHeightValue] = useState(0);
   const [isScriptLoading, setIsScriptLoading] = useState(true);
   const [selectedAddress, setSelectedAddress] = useState("");
+
   //useContext로 관리할 상태
   const [isModalOn, setIsModalOn] = useState(false);
   const [mapDataFromDB, setMapDataFromDB] = useState<MapDataT[]>([]);
   const [coords, setCoords] = useState<coordsT>();
+  const [testPositionArr, setTestPositionArr] = useState<PositionT[]>([]);
+  const [selectedModal, setSelectedModal] = useState("");
 
   //자동으로 스크롤이 없는 지도를 만들기 위해 선언 (근데 가끔 스크롤이 생김 왜지?)
   function setHTMLHeight() {
@@ -55,6 +61,11 @@ export default function Map() {
     const response = await axios
       .get(API_URL_MAP)
       .then(res => setMapDataFromDB(res.data));
+
+    //test코드임
+    const responseTest = await axios
+      .get("http://localhost:4000/positions/")
+      .then(res => setTestPositionArr(res.data));
   }
   useEffect(() => {
     setHTMLHeight();
@@ -74,6 +85,10 @@ export default function Map() {
             setMapDataFromDB,
             coords,
             setCoords,
+            testPositionArr,
+            setTestPositionArr,
+            selectedModal,
+            setSelectedModal,
           }}
         >
           {" "}

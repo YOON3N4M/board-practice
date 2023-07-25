@@ -48,7 +48,7 @@ export default function Home() {
       <StyledSection backgroundcolor="#e5bc7187" flexdirection="column">
         <h1>지도로 한눈에 보는 우리 모임의 추억</h1>
         <span>저번에 갔던 숙소 어디였지?, 이 음식 어디서 먹었더라?</span>
-        <span>여행을 함께 재밌게 기록할 수 있는 방법 없을까?</span>
+        <span>모두가 함께 여행을 기록할 수 있는 방법 없을까?</span>
         <div>
           <button>로그인</button>
           <button>회원가입</button>
@@ -57,7 +57,10 @@ export default function Home() {
 
       <StyledSection flexdirection="row">
         <MainPageImage></MainPageImage>
-        <h2>추억의 장소를 함께 저장해요</h2>
+        <div>
+          <h2>추억의 장소를 함께 기록해요</h2>
+          <span>특별했던 경험, 여행지의 음식들을 떠올려 보세요!</span>
+        </div>
       </StyledSection>
 
       <StyledSection flexdirection="row">

@@ -1,9 +1,10 @@
 import { styled } from "styled-components";
 import { useContext } from "react";
 import { StateContext } from "@/util/StateContext";
+import { MODAL_TYPE_ADD_POSITION } from "@/pages/map";
 
 const SmallAddressBox = styled.div`
-  background-color: #bbbbbb;
+  background-color: #ffffff;
   padding: 1rem 1rem;
   //transform: translateY(-60px);
   border-radius: 4px;
@@ -14,6 +15,11 @@ const SmallAddressBox = styled.div`
     justify-content: right;
     button {
       cursor: pointer;
+      border: 0px;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      background-color: #a7c9cf52;
+      margin-top: 10px;
     }
     z-index: 2000;
   }
@@ -37,6 +43,8 @@ export default function SimpleAddressBox({
   addressInfo,
   setAddressInfo,
 }: Props) {
+  const { setSelectedModal } = useContext(StateContext);
+
   function handlingRender() {
     setCoords(undefined);
     //이벤트 버블링을 위한 임시방편 ...
@@ -46,6 +54,11 @@ export default function SimpleAddressBox({
     }, 100);
   }
   const { setIsModalOn } = useContext(StateContext);
+
+  function handleAddButton() {
+    setIsModalOn(true);
+    setSelectedModal(MODAL_TYPE_ADD_POSITION);
+  }
 
   return (
     <>
@@ -62,7 +75,7 @@ export default function SimpleAddressBox({
           </div>
           <div className="small-address-box-bottom-row">
             {addressInfo === ""}
-            <button onClick={() => setIsModalOn(true)}>등록하기</button>
+            <button onClick={handleAddButton}>등록하기</button>
           </div>
         </SmallAddressBox>
       )}

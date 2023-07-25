@@ -1,5 +1,7 @@
 import { MapDataT, PositionT, ThemeT } from "@/@types/types";
+import { MODAL_TYPE_ADD_POSITION, MODAL_TYPE_SHOW_POSITION } from "@/pages/map";
 import { StateContext } from "@/util/StateContext";
+import axios from "axios";
 import { motion } from "framer-motion";
 import React, { useState, useContext } from "react";
 import { styled } from "styled-components";
@@ -21,7 +23,7 @@ const ModalWindow = styled.div`
   justify-content: center;
   padding: 5rem 0;
   width: 500px;
-
+  border-radius: 4px;
   background-color: white;
   .modal-close {
     position: absolute;
@@ -34,6 +36,19 @@ const ModalWindow = styled.div`
       display: flex;
     }
   }
+  .modal-add-member-button {
+    color: rgb(28, 56, 41);
+    border: 0px;
+    margin-right: 1px;
+    background-color: rgb(219, 237, 219);
+    cursor: pointer;
+  }
+`;
+
+const ShowPositionContainer = styled.div`
+  h1 {
+    text-align: left;
+  }
 `;
 
 interface Props {
@@ -42,15 +57,23 @@ interface Props {
 }
 
 export default function Modal({ isModalOn, setIsModalOn }: Props) {
-  const { mapDataFromDB, coords, selectedAddress } = useContext(StateContext);
+  const {
+    mapDataFromDB,
+    coords,
+    selectedAddress,
+    testPositionArr,
+    setTestPositionArr,
+    selectedModal,
+  } = useContext(StateContext);
+  if (!isModalOn) return null;
 
   // 테스트 후 이름 바꿔야함
-  function Form() {
+  function AddPositionModal() {
     const [positionTitle, setPositionTitle] = useState("");
     const [positionMemo, setPositionMemo] = useState("");
     const [selectedMember, setSelectedMember] = useState<string[]>([]);
 
-    function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
+    async function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
       event.preventDefault();
 
       const positionTemp: PositionT = {
@@ -58,11 +81,18 @@ export default function Modal({ isModalOn, setIsModalOn }: Props) {
         address: selectedAddress,
         coords: coords,
         // #issue id, addedBy 변경 해야함
-        id: 2,
+
         addedBy: "세남",
         member: selectedMember,
         positionMemo: positionMemo,
       };
+
+      //test 코드임
+      const TEST_URL = "http://localhost:4000/positions/";
+      const response = await axios
+        .post(TEST_URL, positionTemp)
+        .then(res => setTestPositionArr((prev: any) => [...prev, positionTemp]))
+        .catch(err => console.log(err));
 
       // const updatedMapData ={
       //   ...mapDataFromDB[0],
@@ -145,22 +175,44 @@ export default function Modal({ isModalOn, setIsModalOn }: Props) {
                 key={idx}
                 type="button"
                 value={name}
+                className="modal-add-member-button"
               >
                 {name}
               </button>
             ))}
           </div>
-          <button>사진 추가하기</button>
+          <button type="button">사진 추가하기</button>
           <label>메모</label>
           <textarea
             onChange={handlePositionMemoText}
             value={positionMemo}
           ></textarea>
 
-          <button>등록하기!</button>
+          <button type="submit">등록하기!</button>
         </form>
       </>
     );
+  }
+
+  function ShowPositionModal() {
+    return (
+      <>
+        <ShowPositionContainer>
+          <h1>경주</h1>
+        </ShowPositionContainer>
+      </>
+    );
+  }
+
+  //issue 모달 선택 (sideNavigator랑 다른 방식의 조건부 렌더링인데 추후 둘중 한가지 방식으로 통일 요망)
+  let ModalContents;
+
+  switch (selectedModal) {
+    case MODAL_TYPE_ADD_POSITION:
+      ModalContents = <AddPositionModal />;
+      break;
+    case MODAL_TYPE_SHOW_POSITION:
+      ModalContents = <ShowPositionModal />;
   }
 
   return (
@@ -170,7 +222,7 @@ export default function Modal({ isModalOn, setIsModalOn }: Props) {
           <button onClick={() => setIsModalOn(false)} className="modal-close">
             닫기
           </button>
-          <Form />
+          {ModalContents}
         </ModalWindow>
       </ModalBackground>
     </>

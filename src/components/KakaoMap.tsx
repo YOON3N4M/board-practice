@@ -3,7 +3,8 @@ import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
 import { styled } from "styled-components";
 import SimpleAddressBox from "./SimpleAddressBox";
 import { StateContext } from "@/util/StateContext";
-import { MapDataT, ThemeT, coordsT } from "@/@types/types";
+import { MapDataT, PositionT, ThemeT, coordsT } from "@/@types/types";
+import { MODAL_TYPE_SHOW_POSITION } from "@/pages/map";
 
 declare global {
   interface Window {
@@ -50,7 +51,14 @@ export const UNDEFINED_ADDRESS = "주소 정보가 없습니다.";
 
 export default function KakaoMap({ mapOption }: MapComponentProps) {
   const contextData = useContext(StateContext);
-  const { coords, setCoords, mapDataFromDB } = contextData;
+  const {
+    coords,
+    setCoords,
+    mapDataFromDB,
+    testPositionArr,
+    setSelectedModal,
+    setIsModalOn,
+  } = contextData;
   const [addressInfo, setAddressInfo] = useState<any>();
   //이벤트 버블링 현상때문에 작동에 제한을 두기 위함.
   const [isOtherComponentOn, setIsOtherComponentOn] = useState(false);
@@ -117,9 +125,30 @@ export default function KakaoMap({ mapOption }: MapComponentProps) {
             </CustomOverlayMap>
           </>
         )}
+        {/* 여기에 테스트 코드 넣고 테스트 해보기*/}
+        {testPositionArr.length !== 0
+          ? testPositionArr.map((position: PositionT) => (
+              <MapMarker
+                key={position.title}
+                title={position.title}
+                position={position.coords}
+                image={{
+                  src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
+                  size: {
+                    width: 24,
+                    height: 35,
+                  },
+                }}
+                onClick={() => {
+                  setSelectedModal(MODAL_TYPE_SHOW_POSITION);
+                  setIsModalOn(true);
+                }}
+              />
+            ))
+          : null}
 
         {mapDataFromDB.length !== 0
-          ? mapDataFromDB[0].theme.map((theme: ThemeT) =>
+          ? mapDataFromDB[0]?.theme?.map((theme: ThemeT) =>
               theme?.positions?.map(position => (
                 <>
                   {" "}
