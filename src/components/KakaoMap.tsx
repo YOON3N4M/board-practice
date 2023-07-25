@@ -58,6 +58,7 @@ export default function KakaoMap({ mapOption }: MapComponentProps) {
     testPositionArr,
     setSelectedModal,
     setIsModalOn,
+    setSelectedPosition,
   } = contextData;
   const [addressInfo, setAddressInfo] = useState<any>();
   //이벤트 버블링 현상때문에 작동에 제한을 두기 위함.
@@ -142,6 +143,7 @@ export default function KakaoMap({ mapOption }: MapComponentProps) {
                 onClick={() => {
                   setSelectedModal(MODAL_TYPE_SHOW_POSITION);
                   setIsModalOn(true);
+                  setSelectedPosition(position);
                 }}
               />
             ))
