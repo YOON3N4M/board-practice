@@ -32,6 +32,7 @@ export default function Map() {
   const [coords, setCoords] = useState<coordsT>();
   const [testPositionArr, setTestPositionArr] = useState<PositionT[]>([]);
   const [selectedModal, setSelectedModal] = useState("");
+  const [selectedPosition, setSelectedPosition] = useState<PositionT>();
 
   //자동으로 스크롤이 없는 지도를 만들기 위해 선언 (근데 가끔 스크롤이 생김 왜지?)
   function setHTMLHeight() {
@@ -89,6 +90,8 @@ export default function Map() {
             setTestPositionArr,
             selectedModal,
             setSelectedModal,
+            selectedPosition,
+            setSelectedPosition,
           }}
         >
           {" "}

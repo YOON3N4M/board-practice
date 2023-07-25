@@ -64,6 +64,7 @@ export default function Modal({ isModalOn, setIsModalOn }: Props) {
     testPositionArr,
     setTestPositionArr,
     selectedModal,
+    selectedPosition,
   } = useContext(StateContext);
   if (!isModalOn) return null;
 
@@ -81,7 +82,7 @@ export default function Modal({ isModalOn, setIsModalOn }: Props) {
         address: selectedAddress,
         coords: coords,
         // #issue id, addedBy 변경 해야함
-
+        id: 0,
         addedBy: "세남",
         member: selectedMember,
         positionMemo: positionMemo,
@@ -198,7 +199,7 @@ export default function Modal({ isModalOn, setIsModalOn }: Props) {
     return (
       <>
         <ShowPositionContainer>
-          <h1>경주</h1>
+          <h1>{selectedPosition.title}</h1>
         </ShowPositionContainer>
       </>
     );

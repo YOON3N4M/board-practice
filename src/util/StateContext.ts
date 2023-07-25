@@ -13,6 +13,8 @@ interface StateContextT {
   setTestPositionArr?: any;
   selectedModal: any;
   setSelectedModal: any;
+  selectedPosition: any;
+  setSelectedPosition: any;
 }
 
 const DefalutState = {
@@ -27,6 +29,8 @@ const DefalutState = {
   setTestPositionArr: undefined,
   selectedModal: undefined,
   setSelectedModal: undefined,
+  selectedPosition: undefined,
+  setSelectedPosition: undefined,
 };
 
 export const StateContext = createContext<StateContextT>(DefalutState);
