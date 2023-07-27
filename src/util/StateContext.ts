@@ -1,4 +1,4 @@
-import { MapDataT } from "@/@types/types";
+import { MapDataT, PositionT } from "@/@types/types";
 import { createContext } from "react";
 
 interface StateContextT {
@@ -13,11 +13,11 @@ interface StateContextT {
   setTestPositionArr?: any;
   selectedModal: any;
   setSelectedModal: any;
-  selectedPosition: any;
+  selectedPosition: PositionT | undefined;
   setSelectedPosition: any;
 }
 
-const DefalutState = {
+const defaultState = {
   setIsModalOn: undefined,
   selectedAddress: undefined,
   setSelectedAddress: undefined,
@@ -33,4 +33,4 @@ const DefalutState = {
   setSelectedPosition: undefined,
 };
 
-export const StateContext = createContext<StateContextT>(DefalutState);
+export const StateContext = createContext<StateContextT>(defaultState);

@@ -15,6 +15,7 @@ const ModalBackground = styled(motion.div)`
   height: 100%;
   background-color: #00000090;
   z-index: 5000;
+  cursor: pointer;
 `;
 
 const ModalWindow = styled.div`
@@ -29,26 +30,32 @@ const ModalWindow = styled.div`
     position: absolute;
     left: 100%;
   }
+  .flex-row-div {
+    display: flex;
+    flex-direction: row;
+  }
   .submit-position-form {
     display: flex;
     flex-direction: column;
-    .member-row {
-      display: flex;
-    }
-  }
-  .modal-add-member-button {
-    color: rgb(28, 56, 41);
-    border: 0px;
-    margin-right: 1px;
-    background-color: rgb(219, 237, 219);
-    cursor: pointer;
   }
 `;
 
 const ShowPositionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   h1 {
     text-align: left;
+    margin: 0px;
+    margin-bottom: 5px;
   }
+`;
+
+export const NotionticMemberButton = styled.button`
+  color: rgb(28, 56, 41);
+  border: 0px;
+  margin-right: 1px;
+  background-color: rgb(219, 237, 219);
+  cursor: pointer;
 `;
 
 interface Props {
@@ -153,12 +160,12 @@ export default function Modal({ isModalOn, setIsModalOn }: Props) {
             required
           ></input>
           <span>주소:{selectedAddress}</span>
-          <div className="member-row">
+          <div className="flex-row-div">
             {selectedMember.map(name => (
               <span key={name}>{name}</span>
             ))}
           </div>
-          <div className="member-row">
+          <div className="flex-row-div">
             <button
               onClick={() => setSelectedMember(mapDataFromDB[0].member)}
               type="button"
@@ -169,17 +176,16 @@ export default function Modal({ isModalOn, setIsModalOn }: Props) {
               전체 선택해제
             </button>
           </div>
-          <div className="member-row">
+          <div className="flex-row-div">
             {mapDataFromDB[0].member.map((name: string, idx: number) => (
-              <button
-                onClick={event => handleSelectedMember(event)}
+              <NotionticMemberButton
+                onClick={handleSelectedMember}
                 key={idx}
                 type="button"
                 value={name}
-                className="modal-add-member-button"
               >
                 {name}
-              </button>
+              </NotionticMemberButton>
             ))}
           </div>
           <button type="button">사진 추가하기</button>
@@ -199,7 +205,14 @@ export default function Modal({ isModalOn, setIsModalOn }: Props) {
     return (
       <>
         <ShowPositionContainer>
-          <h1>{selectedPosition.title}</h1>
+          <h1>{selectedPosition?.title}</h1>
+          <span>{selectedPosition?.address}</span>
+          <div className="flex-row-div">
+            {selectedPosition?.member?.map(name => (
+              <NotionticMemberButton>{name}</NotionticMemberButton>
+            ))}
+          </div>
+          <p>{selectedPosition?.positionMemo}</p>
         </ShowPositionContainer>
       </>
     );

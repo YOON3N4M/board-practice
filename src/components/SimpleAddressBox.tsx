@@ -10,6 +10,10 @@ const SmallAddressBox = styled.div`
   border-radius: 4px;
   display: flex;
   flex-direction: column;
+  .small-address-box-top-row {
+    display: flex;
+    flex-direction: column;
+  }
   .small-address-box-bottom-row {
     display: flex;
     justify-content: right;
@@ -70,7 +74,7 @@ export default function SimpleAddressBox({
           >
             닫기
           </button>
-          <div>
+          <div className="small-address-box-top-row">
             <span>{addressInfo}</span>
           </div>
           <div className="small-address-box-bottom-row">
