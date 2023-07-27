@@ -7,7 +7,7 @@ export default function Search() {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [searchResult, setSearchResult] = useState([]);
 
-  const { setCoords } = useContext(StateContext);
+  const { setCoords, setIsOtherComponentOn } = useContext(StateContext);
 
   const places = new kakao.maps.services.Places();
 
@@ -28,6 +28,7 @@ export default function Search() {
 
   function handleResultClick(result: SearchResultT) {
     setCoords({ lat: result.y, lng: result.x });
+    setIsOtherComponentOn(true);
   }
 
   return (
