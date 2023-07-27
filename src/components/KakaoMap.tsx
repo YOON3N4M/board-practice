@@ -59,13 +59,15 @@ export default function KakaoMap({ mapOption }: MapComponentProps) {
     setSelectedModal,
     setIsModalOn,
     setSelectedPosition,
+    isOtherComponentOn,
+    setIsOtherComponentOn,
   } = contextData;
   const [addressInfo, setAddressInfo] = useState<any>();
   //이벤트 버블링 현상때문에 작동에 제한을 두기 위함.
-  const [isOtherComponentOn, setIsOtherComponentOn] = useState(false);
 
   function onMapClick(mouseEvent: any) {
     if (isOtherComponentOn) return;
+    //issue 이거 지도 전역으로 올려야함
     setIsOtherComponentOn(true);
     setCoords({
       lat: mouseEvent.latLng.getLat(),
