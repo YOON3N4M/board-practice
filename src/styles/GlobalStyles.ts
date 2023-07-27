@@ -1,4 +1,13 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, styled } from "styled-components";
+
+export const StyledFlexRowBox = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+export const StyledFlexColumnBox = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 export const GlobalStyles = createGlobalStyle`
 
@@ -22,5 +31,6 @@ a{
   text-decoration: none;
   color: white
 }
+
 
 `;

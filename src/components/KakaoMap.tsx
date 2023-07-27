@@ -148,22 +148,6 @@ export default function KakaoMap({ mapOption }: MapComponentProps) {
               />
             ))
           : null}
-
-        {mapDataFromDB.length !== 0
-          ? mapDataFromDB[0]?.theme?.map((theme: ThemeT) =>
-              theme?.positions?.map(position => (
-                <>
-                  {" "}
-                  <MapMarker
-                    key={position.title}
-                    title={position.title}
-                    position={position.coords}
-                    image={theme.marker}
-                  />
-                </>
-              ))
-            )
-          : null}
       </Map>
     </>
   );
