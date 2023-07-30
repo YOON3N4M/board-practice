@@ -33,7 +33,7 @@ export default async function handler(
     try {
       const deleteTarget = await prisma.user.delete({
         where: {
-          user_id: req.body,
+          //user_id: req.body,
         },
       });
       res.status(200).json({ message: "200, 삭제 성공" });
@@ -43,7 +43,7 @@ export default async function handler(
   } else if (req.method === "PUT") {
     const updateUser = await prisma.user.update({
       where: {
-        user_id: id,
+        //user_id: id,
       },
       data: {
         //해당부분도 수정 해야함

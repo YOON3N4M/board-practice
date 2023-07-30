@@ -10,21 +10,39 @@ datasource db {
 
 model User {
   user_no       Int     @default(autoincrement())
-  user_id       String  @db.VarChar(100)
-  user_name     String? @db.VarChar(100)
-  user_account  String  @db.VarChar(100)
-  user_password String  @db.VarChar(195)
+  user_id       String
+  user_name     String?
+  user_account  String
+  user_password String
   user_sex      Int
 
   @@id([user_no, user_id, user_account, user_password, user_sex])
 }
 
 model main_board {
+  main_board_no    Int     @default(autoincrement())
+  main_board_id    String
   user_id          String
   user_account     String
   user_name        String
-  group_theme_name String?
-  main_board_id    String
+  main_board_title String? @db.VarChar(100)
+  place_name       String? @db.VarChar(100)
+  main_board_memo  String? @db.VarChar(2000)
+  main_board_img   Bytes?
+  group_id         String?
+  group_theme_id   String?
+  location_address String?
+  main_board_lng   Float?
+  main_board_lat   Float?
 
-  @@id([user_id, user_account, user_name, main_board_id])
+  @@id([main_board_no, main_board_id, user_id, user_account, user_name])
+}
+
+model User_group {
+  user_id        Int
+  group_theme_id String
+  group_id       String?
+  group_name     String  @db.VarChar(100)
+
+  @@id([user_id, group_theme_id])
 }
