@@ -15,7 +15,7 @@ export default function Member() {
   const { mapDataFromDB } = useContext(StateContext);
   //const { member } = mapDataFromDB[0];
   const member: any = [];
-
+  const test = "깃충돌 테스트";
   return (
     <>
       {member.length !== 0 &&
