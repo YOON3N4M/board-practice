@@ -28,7 +28,6 @@ export default async function handler(
         try {
           const main_board = await prisma.main_board.create({
             data: {
-                main_board_no : main_board_no, 
                 main_board_id : main_board_id, 
                 user_id : user_id, 
                 user_account :user_account,
