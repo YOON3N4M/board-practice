@@ -15,10 +15,9 @@ datasource db {
 
 
 model User {
-  id       String @id
-  name     String
-  account  String
-  password String
-  sex      Int
+  user_id       String @id
+  user_name     String
+  user_account  String
+  user_password String
+  user_sex      Int
 }
-
