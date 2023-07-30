@@ -30,7 +30,7 @@ model main_board {
   main_board_memo  String? @db.VarChar(2000)
   main_board_img   Bytes?
   group_id         String?
-  group_theme_id   String?
+  group_theme_name String?
   location_address String?
   main_board_lng   Float?
   main_board_lat   Float?
@@ -39,10 +39,10 @@ model main_board {
 }
 
 model User_group {
-  user_id        Int
-  group_theme_id String
-  group_id       String?
-  group_name     String  @db.VarChar(100)
+  group_id         String
+  group_name       String? @db.VarChar(100)
+  group_theme_name String
+  user_id          Int
 
-  @@id([user_id, group_theme_id])
+  @@id([group_theme_name, user_id, group_id])
 }
