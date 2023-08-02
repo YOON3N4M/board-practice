@@ -149,9 +149,9 @@ export default function Modal({ isModalOn, setIsModalOn }: Props) {
         <form onSubmit={handleFormSubmit} className="submit-position-form">
           <label>테마</label>
           <select>
-            {mapDataFromDB[0].theme.map((theme: ThemeT, idx: number) => (
+            {/* {mapDataFromDB[0].theme.map((theme: ThemeT, idx: number) => (
               <option key={idx}>{theme.themeTitle}</option>
-            ))}
+            ))} */}
           </select>
           <input
             value={positionTitle}
@@ -177,7 +177,7 @@ export default function Modal({ isModalOn, setIsModalOn }: Props) {
             </button>
           </div>
           <div className="flex-row-div">
-            {mapDataFromDB[0].member.map((name: string, idx: number) => (
+            {/* {mapDataFromDB[0].member.map((name: string, idx: number) => (
               <NotionticMemberButton
                 onClick={handleSelectedMember}
                 key={idx}
@@ -186,7 +186,7 @@ export default function Modal({ isModalOn, setIsModalOn }: Props) {
               >
                 {name}
               </NotionticMemberButton>
-            ))}
+            ))} */}
           </div>
           <button type="button">사진 추가하기</button>
           <label>메모</label>

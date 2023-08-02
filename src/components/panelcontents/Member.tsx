@@ -13,26 +13,28 @@ const UserProfileImage = styled.div`
 
 export default function Member() {
   const { mapDataFromDB } = useContext(StateContext);
-  const { member } = mapDataFromDB[0];
-
+  //const { member } = mapDataFromDB[0];
+  const member: any = [];
+  const test = "깃충돌 테스트";
   return (
     <>
-      {member.map((nameTemp: string) => (
-        <PaddingBox key={nameTemp}>
-          <div className="user-profile-image-box">
-            <UserProfileImage />
-          </div>
-          <div className="member-right">
-            <div>
-              <span className="user-name">{nameTemp}</span>
-              {nameTemp === "세남" && <span>👑</span>}
+      {member.length !== 0 &&
+        member.map((nameTemp: string) => (
+          <PaddingBox key={nameTemp}>
+            <div className="user-profile-image-box">
+              <UserProfileImage />
             </div>
-            <div>
-              <span className="user-added">등록한 장소 : 1</span>
+            <div className="member-right">
+              <div>
+                <span className="user-name">{nameTemp}</span>
+                {nameTemp === "세남" && <span>👑</span>}
+              </div>
+              <div>
+                <span className="user-added">등록한 장소 : 1</span>
+              </div>
             </div>
-          </div>
-        </PaddingBox>
-      ))}
+          </PaddingBox>
+        ))}
     </>
   );
 }

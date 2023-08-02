@@ -11,11 +11,11 @@ export default async function handler(
     try {
       const user = await prisma.user.create({
         data: {
-          id,
-          name,
-          account,
-          password,
-          sex: sex,
+          user_id: id,
+          user_name: name,
+          user_account: account,
+          user_password: password,
+          user_sex: sex,
         },
       });
       res.status(200).json({ message: "200, 등록 성공" });
@@ -33,7 +33,7 @@ export default async function handler(
     try {
       const deleteTarget = await prisma.user.delete({
         where: {
-          id: req.body,
+          //user_id: req.body,
         },
       });
       res.status(200).json({ message: "200, 삭제 성공" });
@@ -43,11 +43,11 @@ export default async function handler(
   } else if (req.method === "PUT") {
     const updateUser = await prisma.user.update({
       where: {
-        id: id,
+        //user_id: id,
       },
       data: {
         //해당부분도 수정 해야함
-        name: "Franz",
+        user_name: "Franz",
       },
     });
   } else {
