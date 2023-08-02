@@ -208,8 +208,8 @@ export default function Modal({ isModalOn, setIsModalOn }: Props) {
           <h1>{selectedPosition?.title}</h1>
           <span>{selectedPosition?.address}</span>
           <div className="flex-row-div">
-            {selectedPosition?.member?.map(name => (
-              <NotionticMemberButton>{name}</NotionticMemberButton>
+            {selectedPosition?.member?.map((name, idx) => (
+              <NotionticMemberButton key={idx}>{name}</NotionticMemberButton>
             ))}
           </div>
           <p>{selectedPosition?.positionMemo}</p>
