@@ -19,6 +19,7 @@
 .DS_Store
 *.pem
 db.json
+db copy.json
 # debug
 npm-debug.log*
 yarn-debug.log*
