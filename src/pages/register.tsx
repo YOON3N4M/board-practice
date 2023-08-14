@@ -17,7 +17,7 @@ export const FormBox = styled.div`
   display: flex;
   margin: 0 auto;
   padding: 1rem 0.5rem;
-  background-color: gray;
+  background-color: rgb(177, 177, 177);
   border-radius: 4px;
   overflow: hidden;
   width: 480px;
