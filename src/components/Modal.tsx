@@ -37,6 +37,24 @@ const ModalWindow = styled.div`
   .submit-position-form {
     display: flex;
     flex-direction: column;
+    width: 70%;
+  }
+
+  textarea {
+    margin-bottom: 30px;
+  }
+  label {
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+    color: #222222;
+  }
+  select,
+  input,
+  textarea {
+    border: 0px;
+    border-bottom: 1px solid #a0a0a0;
+    outline: none;
   }
 `;
 
@@ -90,7 +108,7 @@ export default function Modal({ isModalOn, setIsModalOn }: Props) {
         coords: coords,
         // #issue id, addedBy 변경 해야함
         id: 0,
-        addedBy: "세남",
+        addedBy: "세남", //issue: 이 부분 로그인 한 사람 자동 입력 (로그인 구현 후)
         member: selectedMember,
         positionMemo: positionMemo,
       };
@@ -152,14 +170,18 @@ export default function Modal({ isModalOn, setIsModalOn }: Props) {
             {/* {mapDataFromDB[0].theme.map((theme: ThemeT, idx: number) => (
               <option key={idx}>{theme.themeTitle}</option>
             ))} */}
+            <option>여행</option>
           </select>
+          <label>장소의 별명</label>
           <input
             value={positionTitle}
             onChange={handleTitleInput}
             placeholder="장소의 별명을 입력하세요"
             required
           ></input>
-          <span>주소:{selectedAddress}</span>
+          <label>주소</label>
+          <span>{selectedAddress}</span>
+          <label>참여 멤버</label>
           <div className="flex-row-div">
             {selectedMember.map(name => (
               <span key={name}>{name}</span>
@@ -188,6 +210,7 @@ export default function Modal({ isModalOn, setIsModalOn }: Props) {
               </NotionticMemberButton>
             ))} */}
           </div>
+          <label>사진</label>
           <button type="button">사진 추가하기</button>
           <label>메모</label>
           <textarea

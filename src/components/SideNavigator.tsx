@@ -15,7 +15,7 @@ const SideNavigatorContainer = styled.div<{ heightvalue: string }>`
   flex-direction: column;
   width: 80px;
   max-height: ${props => props.heightvalue};
-  background-color: rgb(88, 101, 242);
+  background-color: rgb(177, 177, 177);
   z-index: 1100;
   padding: 100px 5px;
   button {

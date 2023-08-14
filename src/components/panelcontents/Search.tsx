@@ -29,6 +29,7 @@ export default function Search() {
   function handleResultClick(result: SearchResultT) {
     setCoords({ lat: result.y, lng: result.x });
     setIsOtherComponentOn(true);
+    console.log(result);
   }
 
   return (
@@ -44,10 +45,15 @@ export default function Search() {
             //issue 이 부분에서 좌표 말고 카페 이름 같은 정보도 넘기고 싶은데,,
             onClick={() => handleResultClick(result)}
           >
-            <StyledFlexRowBox>
-              <span>{result?.place_name}</span>
-              <span>{result.category_group_name}</span>
-            </StyledFlexRowBox>
+            <StyledFlexColumnBox>
+              <StyledFlexRowBox>
+                <span>{result?.place_name}</span>
+                <span>{result.category_group_name}</span>
+              </StyledFlexRowBox>
+              <StyledFlexRowBox>
+                <small>{result.address_name}</small>
+              </StyledFlexRowBox>
+            </StyledFlexColumnBox>
           </StyledFlexColumnBox>
         ))}
     </>
