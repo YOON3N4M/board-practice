@@ -1,6 +1,6 @@
 import { User } from "@/@types/types";
 import axios from "axios";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import { API_URL_USER_DATA } from "./_app";
@@ -17,16 +17,17 @@ export const FormBox = styled.div`
   display: flex;
   margin: 0 auto;
   padding: 1rem 0.5rem;
-  background-color: rgb(177, 177, 177);
+  background-color: rgb(255, 255, 255);
   border-radius: 4px;
   overflow: hidden;
   width: 480px;
   @media only screen and (max-width: 768px) {
     width: 100%;
   }
+  box-shadow: 4px 12px 30px 6px rgba(0, 0, 0, 0.09);
 `;
 
-export const AuthForm = styled.form`
+export const AuthForm = styled.form<{ $isVerify: boolean }>`
   width: 80%;
   display: flex;
   flex-direction: column;
@@ -48,11 +49,21 @@ export const AuthForm = styled.form`
     border: 0px;
     margin-bottom: 15px;
   }
+  input {
+    padding: 0 1rem;
+    box-sizing: border-box;
+    background-color: #e4e4e4;
+  }
   button {
     cursor: pointer;
+    margin-top: 15px;
   }
   select {
     width: 25%;
+  }
+  small {
+    color: gray;
+    margin-top: -2px;
   }
   .input-box {
     width: 100%;
@@ -61,12 +72,32 @@ export const AuthForm = styled.form`
     box-sizing: content-box;
     margin: 0 auto;
   }
+  .birth-select-row-div {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    select {
+      width: 31%;
+    }
+  }
+  .verify-small {
+    color: ${props => (props.$isVerify ? "#35ca4e" : "red")};
+    font-weight: bold;
+  }
 `;
 
 export default function Register() {
+  const date = new Date();
+
   const [userName, setUserName] = useState("");
+  const [userNickname, setUserNickname] = useState("");
   const [userAccount, setUserAccount] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const [userVerifyPassword, setUserVerifyPassword] = useState("");
+  const [isVerify, setIsVerify] = useState(false);
+  const [userBirth, setUserBirth] = useState();
   const [userSex, setUserSex] = useState(0);
 
   function onInputChange(event: ChangeEvent<HTMLInputElement>) {
@@ -77,11 +108,19 @@ export default function Register() {
       case "name":
         setUserName(value);
         break;
+      case "nickname":
+        setUserNickname(value);
+        break;
       case "account":
         setUserAccount(value);
         break;
       case "password":
         setUserPassword(value);
+        break;
+      case "verify-password":
+        setUserVerifyPassword(value);
+        break;
+      default:
         break;
     }
   }
@@ -98,8 +137,12 @@ export default function Register() {
 
   async function registerUser(userData: User) {
     try {
-      const response = await axios.post(API_URL_USER_DATA, userData);
-      console.log(response.data.message);
+      const response = await axios
+        .post(API_URL_USER_DATA, userData)
+        .then(() => {
+          alert("회원가입이 완료되었습니다.");
+        });
+      //console.log(response.data.message);
     } catch (err) {
       console.log(err);
     }
@@ -107,28 +150,89 @@ export default function Register() {
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
     const UserDataTemp: User = {
       id: uuidv4(),
       account: userAccount,
-      name: userName,
+      username: userName,
+      nickname: userNickname,
       password: userPassword,
-      sex: userSex,
     };
     registerUser(UserDataTemp);
   }
+
+  function BirthSelect() {
+    const thisYear = date.getFullYear();
+    const year = [];
+    const month = [];
+    const day = [];
+    //년
+    for (let i = thisYear; i >= 1940; i--) {
+      year.push(i);
+    }
+    //월
+    for (let i = 1; i <= 12; i++) {
+      month.push(i);
+    }
+    //일
+    for (let i = 1; i <= 31; i++) {
+      day.push(i);
+    }
+
+    return (
+      <>
+        <select>
+          <option>출생연도</option>
+          {year.map(year => (
+            <option key={`year${year}`}>{year}</option>
+          ))}
+        </select>
+        <select>
+          <option>월</option>
+          {month.map(month => (
+            <option key={`month${month}`}>{month}</option>
+          ))}
+        </select>
+        <select>
+          <option>일</option>
+          {day.map(day => (
+            <option key={`day${day}`}>{day}</option>
+          ))}
+        </select>
+      </>
+    );
+  }
+
+  useEffect(() => {
+    if (userPassword === userVerifyPassword) {
+      setIsVerify(true);
+    } else {
+      setIsVerify(false);
+    }
+  }, [userVerifyPassword, userPassword]);
 
   return (
     <>
       <AuthFormWrapper>
         <FormBox>
-          <AuthForm onSubmit={onSubmit}>
+          <AuthForm onSubmit={onSubmit} $isVerify={isVerify}>
             <h2>계정 만들기</h2>
             <div className="input-box">
               <label>이름</label>
               <input
                 name="name"
                 value={userName}
+                onChange={onInputChange}
+                required
+              />
+            </div>
+            <div className="input-box">
+              <label>닉네임</label>
+              <small>
+                서비스 이용시 다른 이용자들에게 보여지는 별명 입니다.
+              </small>
+              <input
+                name="nickname"
+                value={userNickname}
                 onChange={onInputChange}
                 required
               />
@@ -148,13 +252,34 @@ export default function Register() {
                 name="password"
                 value={userPassword}
                 onChange={onInputChange}
+                type="password"
                 required
               />
             </div>
-            <select onChange={onSelectChange} name="gender">
+            <div className="input-box">
+              <label>비밀번호 확인</label>
+              <small className="verify-small">
+                {userPassword !== "" && userVerifyPassword !== "" ? (
+                  <>
+                    {isVerify
+                      ? "비밀번호가 일치합니다."
+                      : "비밀번호가 일치하지 않습니다."}
+                  </>
+                ) : null}
+              </small>
+              <input
+                name="verify-password"
+                value={userVerifyPassword}
+                onChange={onInputChange}
+                type="password"
+                required
+              />
+            </div>
+            <div className="birth-select-row-div"></div>
+            {/* <select onChange={onSelectChange} name="gender">
               <option>남자</option>
               <option>여자</option>
-            </select>
+            </select> */}
             <button type="submit">회원가입</button>
           </AuthForm>
         </FormBox>

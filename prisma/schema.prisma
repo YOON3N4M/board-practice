@@ -11,7 +11,8 @@ datasource db {
 model User {
   id        Int        @id @default(autoincrement())
   username  String
-  email     String
+  nickname  String @unique
+  account   String @unique
   password  String
   memberships Membership[]
 }

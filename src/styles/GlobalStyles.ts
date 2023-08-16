@@ -21,11 +21,11 @@ export const GlobalStyles = createGlobalStyle`
 html {
  // background-color: #000000;
   //margin: 0;
-  font-family: "S-CoreDream-3Light";
-  
+  font-family: "S-CoreDream-3Light";  
 }
 body{
-  margin: 0 0
+  margin: 0 0;
+  background-color: rgb(235, 238, 241);
 }
 a{
   text-decoration: none;

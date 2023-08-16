@@ -5,17 +5,16 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { id, name, account, password, sex } = req.body;
+  const { id, username, nickname, account, password, sex } = req.body;
 
   if (req.method === "POST") {
     try {
       const user = await prisma.user.create({
         data: {
-          user_id: id,
-          user_name: name,
-          user_account: account,
-          user_password: password,
-          user_sex: sex,
+          username: username,
+          account: account,
+          password: password,
+          nickname: nickname,
         },
       });
       res.status(200).json({ message: "200, 등록 성공" });
@@ -47,7 +46,7 @@ export default async function handler(
       },
       data: {
         //해당부분도 수정 해야함
-        user_name: "Franz",
+        // user_name: "Franz",
       },
     });
   } else {

@@ -1,9 +1,10 @@
 export interface User {
-  id: string;
-  name: string;
+  id?: string;
+  username: string;
+  nickname: string;
   account: string;
   password: string;
-  sex: number;
+  //sex: number;
 }
 //지도 관련
 export interface MapDataT {
