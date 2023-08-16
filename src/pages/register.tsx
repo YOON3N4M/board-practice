@@ -19,15 +19,15 @@ export const FormBox = styled.div`
   padding: 1rem 0.5rem;
   background-color: rgb(255, 255, 255);
   border-radius: 4px;
-  overflow: hidden;
+  //overflow: hidden;
   width: 480px;
+  box-shadow: 4px 12px 30px 6px rgba(0, 0, 0, 0.09);
   @media only screen and (max-width: 768px) {
     width: 100%;
   }
-  box-shadow: 4px 12px 30px 6px rgba(0, 0, 0, 0.09);
 `;
 
-export const AuthForm = styled.form<{ $isVerify: boolean }>`
+export const AuthForm = styled.form<{ $isVerify?: boolean }>`
   width: 80%;
   display: flex;
   flex-direction: column;
@@ -57,6 +57,8 @@ export const AuthForm = styled.form<{ $isVerify: boolean }>`
   button {
     cursor: pointer;
     margin-top: 15px;
+    background-color: #34495e;
+    color: white;
   }
   select {
     width: 25%;

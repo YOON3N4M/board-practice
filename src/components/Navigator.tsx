@@ -11,7 +11,7 @@ const NavigatorContainer = styled.div`
 const Navi = styled.div`
   display: flex;
   margin: 0 auto;
-  width: 400px;
+  width: 350px;
   justify-content: space-between;
   // background-color: blue;
 `;

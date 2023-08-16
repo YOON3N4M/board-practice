@@ -36,6 +36,7 @@ export default function Register() {
             name="password"
             value={userPassword}
             onChange={onInputChange}
+            type="password"
             required
           />
           <button type="submit">로그인</button>
