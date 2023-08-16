@@ -187,6 +187,7 @@ export default function Modal({ isModalOn, setIsModalOn }: Props) {
               <span key={name}>{name}</span>
             ))}
           </div>
+          <span></span>
           <div className="flex-row-div">
             <button
               onClick={() => setSelectedMember(mapDataFromDB[0].member)}
