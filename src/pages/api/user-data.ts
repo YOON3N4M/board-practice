@@ -9,7 +9,7 @@ export default async function handler(
 
   if (req.method === "POST") {
     try {
-      const user = await prisma.user.create({
+      const user = await prisma.appuser.create({
         data: {
           username: username,
           account: account,
