@@ -22,7 +22,10 @@ export default function Navigator() {
       <NavigatorContainer className="navi">
         <Navi>
           <Link legacyBehavior href="/">
-            <a>홈</a>
+            <a>헨젤</a>
+          </Link>
+          <Link legacyBehavior href="/group">
+            <a>그룹</a>
           </Link>
           <Link legacyBehavior href="/map">
             <a>맵</a>
@@ -32,9 +35,6 @@ export default function Navigator() {
           </Link>
           <Link legacyBehavior href="/register">
             <a>회원가입</a>
-          </Link>
-          <Link legacyBehavior href="/user-list">
-            <a>회원목록</a>
           </Link>
         </Navi>
       </NavigatorContainer>

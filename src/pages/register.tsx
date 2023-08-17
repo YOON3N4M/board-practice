@@ -4,6 +4,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import { API_URL_USER_DATA } from "./_app";
+import GoogleLogin from "@/components/login/GoogleLogin";
 
 export const AuthFormWrapper = styled.div`
   display: flex;
@@ -15,6 +16,7 @@ export const AuthFormWrapper = styled.div`
 
 export const FormBox = styled.div`
   display: flex;
+  flex-direction: column;
   margin: 0 auto;
   padding: 1rem 0.5rem;
   background-color: rgb(255, 255, 255);
@@ -24,21 +26,6 @@ export const FormBox = styled.div`
   box-shadow: 4px 12px 30px 6px rgba(0, 0, 0, 0.09);
   @media only screen and (max-width: 768px) {
     width: 100%;
-  }
-`;
-
-export const AuthForm = styled.form<{ $isVerify?: boolean }>`
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-
-  h2 {
-    text-align: center;
-  }
-  label {
-    margin-bottom: 5px;
-    font-size: 0.8rem;
   }
   input,
   button {
@@ -60,6 +47,22 @@ export const AuthForm = styled.form<{ $isVerify?: boolean }>`
     background-color: #34495e;
     color: white;
   }
+`;
+
+export const AuthForm = styled.div<{ $isVerify?: boolean }>`
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+
+  h2 {
+    text-align: center;
+  }
+  label {
+    margin-bottom: 5px;
+    font-size: 0.8rem;
+  }
+
   select {
     width: 25%;
   }
@@ -216,73 +219,76 @@ export default function Register() {
     <>
       <AuthFormWrapper>
         <FormBox>
-          <AuthForm onSubmit={onSubmit} $isVerify={isVerify}>
-            <h2>계정 만들기</h2>
-            <div className="input-box">
-              <label>이름</label>
-              <input
-                name="name"
-                value={userName}
-                onChange={onInputChange}
-                required
-              />
-            </div>
-            <div className="input-box">
-              <label>닉네임</label>
-              <small>
-                서비스 이용시 다른 이용자들에게 보여지는 별명 입니다.
-              </small>
-              <input
-                name="nickname"
-                value={userNickname}
-                onChange={onInputChange}
-                required
-              />
-            </div>
-            <div className="input-box">
-              <label>아이디</label>
-              <input
-                name="account"
-                value={userAccount}
-                onChange={onInputChange}
-                required
-              />
-            </div>
-            <div className="input-box">
-              <label>비밀번호</label>
-              <input
-                name="password"
-                value={userPassword}
-                onChange={onInputChange}
-                type="password"
-                required
-              />
-            </div>
-            <div className="input-box">
-              <label>비밀번호 확인</label>
-              <small className="verify-small">
-                {userPassword !== "" && userVerifyPassword !== "" ? (
-                  <>
-                    {isVerify
-                      ? "비밀번호가 일치합니다."
-                      : "비밀번호가 일치하지 않습니다."}
-                  </>
-                ) : null}
-              </small>
-              <input
-                name="verify-password"
-                value={userVerifyPassword}
-                onChange={onInputChange}
-                type="password"
-                required
-              />
-            </div>
-            <div className="birth-select-row-div"></div>
-            {/* <select onChange={onSelectChange} name="gender">
+          <AuthForm $isVerify={isVerify}>
+            <form onSubmit={onSubmit}>
+              <h2>계정 만들기</h2>
+              <div className="input-box">
+                <label>이름</label>
+                <input
+                  name="name"
+                  value={userName}
+                  onChange={onInputChange}
+                  required
+                />
+              </div>
+              <div className="input-box">
+                <label>닉네임</label>
+                <small>
+                  서비스 이용시 다른 이용자들에게 보여지는 별명 입니다.
+                </small>
+                <input
+                  name="nickname"
+                  value={userNickname}
+                  onChange={onInputChange}
+                  required
+                />
+              </div>
+              <div className="input-box">
+                <label>아이디</label>
+                <input
+                  name="account"
+                  value={userAccount}
+                  onChange={onInputChange}
+                  required
+                />
+              </div>
+              <div className="input-box">
+                <label>비밀번호</label>
+                <input
+                  name="password"
+                  value={userPassword}
+                  onChange={onInputChange}
+                  type="password"
+                  required
+                />
+              </div>
+              <div className="input-box">
+                <label>비밀번호 확인</label>
+                <small className="verify-small">
+                  {userPassword !== "" && userVerifyPassword !== "" ? (
+                    <>
+                      {isVerify
+                        ? "비밀번호가 일치합니다."
+                        : "비밀번호가 일치하지 않습니다."}
+                    </>
+                  ) : null}
+                </small>
+                <input
+                  name="verify-password"
+                  value={userVerifyPassword}
+                  onChange={onInputChange}
+                  type="password"
+                  required
+                />
+              </div>
+              <div className="birth-select-row-div"></div>
+              {/* <select onChange={onSelectChange} name="gender">
               <option>남자</option>
               <option>여자</option>
             </select> */}
-            <button type="submit">회원가입</button>
+              <button type="submit">회원가입</button>
+            </form>
+            <GoogleLogin loginOrRegister={"회원가입"} />
           </AuthForm>
         </FormBox>
       </AuthFormWrapper>

@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 import { useState, useEffect, useRef, useContext } from "react";
 import { StateContext } from "@/util/StateContext";
+import { useSession } from "next-auth/react";
 
 const StyledSection = styled.section<{
   backgroundcolor?: string;
@@ -43,6 +44,8 @@ const MainPageImage = styled.div`
 `;
 
 export default function Home() {
+  const session = useSession();
+  console.log(session);
   return (
     <>
       <StyledSection backgroundcolor="#e5bc7187" flexdirection="column">

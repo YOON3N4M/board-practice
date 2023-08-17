@@ -47,15 +47,15 @@ export default function CreateGroup() {
       <AuthFormWrapper>
         <FormBox>
           <StyledCreateGroupForm>
-            <h2>멤버 추가하기</h2>
+            {/* <h2>멤버 추가하기</h2>
             <h4>이제 멤버를 초대 해봅시다!</h4>
             <span></span>
 
             <div className="input-box">
-              <label>아이디로 검색하기</label>
+              <label>아이디로 멤버 검색하기</label>
               <input name="name" required />
             </div>
-            <button type="submit">일단은 넘어가기</button>
+            <button type="submit">일단은 넘어가기</button> */}
             {/* 인덱스2 
             <h2>새로운 테마 만들기</h2>
             <h4>원하는 테마를 만들어보세요!</h4>

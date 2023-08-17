@@ -4,6 +4,7 @@ import { GlobalStyles } from "@/styles/GlobalStyles";
 import { StateContext } from "@/util/StateContext";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import AuthContext from "@/context/AuthContext";
 
 const AppContainer = styled.div`
   margin: 0;
@@ -19,11 +20,13 @@ export default function Layout({ children }: React.PropsWithChildren) {
   console.log(isMapPage);
   return (
     <>
-      <GlobalStyles />
-      <AppContainer>
-        <Navigator />
-        {children}
-      </AppContainer>
+      <AuthContext>
+        <GlobalStyles />
+        <AppContainer>
+          <Navigator />
+          {children}
+        </AppContainer>
+      </AuthContext>
     </>
   );
 }
