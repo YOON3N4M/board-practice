@@ -8,7 +8,7 @@ datasource db {
   relationMode = "prisma"
 }
 
-model User {
+model Appuser {
   id        Int        @id @default(autoincrement())
   username  String
   nickname  String @unique
@@ -26,7 +26,7 @@ model Group {
 }
 
 model Membership {
-  user   User   @relation(fields: [userId], references: [id])
+  user   Appuser   @relation(fields: [userId], references: [id])
   userId Int
   group  Group  @relation(fields: [groupId], references: [id])
   groupId Int
@@ -60,4 +60,50 @@ model Note {
   favorite    Favorite  @relation(fields: [favoriteId], references: [id])
   favoriteId  Int
   content     String
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  nickname      String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
