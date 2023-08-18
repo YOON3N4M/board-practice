@@ -1,7 +1,8 @@
-import { styled } from "styled-components";
+import styled from "@emotion/styled";
 import { useState, useEffect, useRef, useContext } from "react";
 import { StateContext } from "@/util/StateContext";
 import { useSession } from "next-auth/react";
+import { Box, Button } from "@chakra-ui/react";
 
 const StyledSection = styled.section<{
   backgroundcolor?: string;
@@ -53,8 +54,8 @@ export default function Home() {
         <span>저번에 갔던 숙소 어디였지?, 이 음식 어디서 먹었더라?</span>
         <span>모두가 함께 여행을 기록할 수 있는 방법 없을까?</span>
         <div>
-          <button>로그인</button>
-          <button>회원가입</button>
+          <Button size="sm">button</Button>
+          <Button size="sm">회원가입</Button>
         </div>
       </StyledSection>
 
@@ -76,6 +77,7 @@ export default function Home() {
           </div>
         </div>
       </StyledSection>
+      <Box m={2}></Box>
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import styled from "@emotion/styled";
 import { useContext } from "react";
 import { StateContext } from "@/util/StateContext";
 import { MODAL_TYPE_ADD_POSITION } from "@/pages/map";

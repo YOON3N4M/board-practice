@@ -8,7 +8,7 @@ import { StateContext } from "@/util/StateContext";
 
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
-import { styled } from "styled-components";
+import styled from "@emotion/styled";
 
 const MapContainer = styled.div<{ heightvalue: string }>`
   width: 100vw;

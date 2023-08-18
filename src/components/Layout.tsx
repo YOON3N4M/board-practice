@@ -1,10 +1,10 @@
-import styled from "styled-components";
 import Navigator from "./Navigator";
-import { GlobalStyles } from "@/styles/GlobalStyles";
 import { StateContext } from "@/util/StateContext";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import AuthContext from "@/context/AuthContext";
+import GlobalStyles from "@/styles/GlobalStyles";
+import styled from "@emotion/styled";
 
 const AppContainer = styled.div`
   margin: 0;
