@@ -13,6 +13,7 @@ const StyledCreateGroupForm = styled(AuthForm)`
     font-size: 0.9rem;
     color: gray;
   }
+
   .detail-box {
     position: relative;
     margin-bottom: 10px;

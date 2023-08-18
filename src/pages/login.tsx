@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from "react";
 import { AuthForm, AuthFormWrapper, FormBox } from "./register";
 import GoogleLogin from "@/components/login/GoogleLogin";
+import { VStack } from "@chakra-ui/react";
 
 export default function Register() {
   const [userAccount, setUserAccount] = useState("");
@@ -32,7 +33,9 @@ export default function Register() {
               name="account"
               value={userAccount}
               onChange={onInputChange}
+              disabled
               required
+              placeholder="현재 구글 로그인만 지원합니다."
             />
             <label>비밀번호</label>
             <input
@@ -40,11 +43,16 @@ export default function Register() {
               value={userPassword}
               onChange={onInputChange}
               type="password"
+              disabled
               required
             />
-            <button type="submit">로그인</button>
+            <button className="disabled-button" type="submit" disabled>
+              로그인
+            </button>
           </form>
-          <GoogleLogin loginOrRegister={"로그인"} />
+          <VStack mt="5px">
+            <GoogleLogin />
+          </VStack>
         </AuthForm>
       </FormBox>
     </AuthFormWrapper>

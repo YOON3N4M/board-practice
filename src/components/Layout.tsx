@@ -10,8 +10,9 @@ const AppContainer = styled.div`
   margin: 0;
   display: flex;
   flex-direction: column;
-  max-width: 100vw;
   justify-content: center;
+  max-width: 100%;
+  box-sizing: border-box;
 `;
 
 export default function Layout({ children }: React.PropsWithChildren) {
@@ -22,10 +23,8 @@ export default function Layout({ children }: React.PropsWithChildren) {
     <>
       <AuthContext>
         <GlobalStyles />
-        <AppContainer>
-          <Navigator />
-          {children}
-        </AppContainer>
+        <Navigator />
+        <AppContainer>{children}</AppContainer>
       </AuthContext>
     </>
   );

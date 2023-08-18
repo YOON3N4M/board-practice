@@ -41,10 +41,10 @@ export const FormBox = styled.div`
     box-sizing: border-box;
     background-color: #e4e4e4;
   }
-  button {
-    cursor: pointer;
-    margin-top: 15px;
-    background-color: #34495e;
+  .disabled-button {
+    cursor: default;
+
+    background-color: #838383;
     color: white;
   }
 `;
@@ -281,14 +281,16 @@ export default function Register() {
                   required
                 />
               </div>
-              <div className="birth-select-row-div"></div>
+
               {/* <select onChange={onSelectChange} name="gender">
               <option>남자</option>
               <option>여자</option>
             </select> */}
-              <button type="submit">회원가입</button>
+              <button className="disabled-button" type="submit">
+                회원가입
+              </button>
             </form>
-            <GoogleLogin loginOrRegister={"회원가입"} />
+            <GoogleLogin />
           </AuthForm>
         </FormBox>
       </AuthFormWrapper>
