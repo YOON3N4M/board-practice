@@ -1,22 +1,26 @@
+import { Button } from "@chakra-ui/react";
+import styled from "@emotion/styled";
+
 import { useSession, signIn, signOut } from "next-auth/react";
+import { FcGoogle } from "react-icons/fc";
 
-interface Props {
-  loginOrRegister: string;
-}
-
-export default function GoogleLogin({ loginOrRegister }: Props) {
+export default function GoogleLogin() {
   const { data: session } = useSession();
   if (!session) {
     return (
-      <button
+      <Button
         onClick={() =>
           signIn("google", {
             callbackUrl: `${window.location.origin}`,
           })
         }
+        leftIcon={<FcGoogle />}
+        bgColor="#34495e"
+        cursor="pointer"
+        color="white"
       >
-        구글 {loginOrRegister}
-      </button>
+        구글 로그인 or 회원가입
+      </Button>
     );
   }
 }

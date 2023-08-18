@@ -31,6 +31,7 @@ const SmallAddressBox = styled.div`
     position: absolute;
     top: 0%;
     left: 100%;
+    background-color: white;
   }
 `;
 

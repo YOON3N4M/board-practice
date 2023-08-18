@@ -4,15 +4,16 @@ import { StateContext } from "@/util/StateContext";
 import { useSession } from "next-auth/react";
 import { Box, Button } from "@chakra-ui/react";
 
-const StyledSection = styled.section<{
+export const StyledSection = styled.section<{
   backgroundcolor?: string;
   flexdirection: string;
 }>`
   display: flex;
   flex-direction: ${props => props.flexdirection};
-  width: 100vw;
+  width: 100%;
   border: 1px solid black;
-  padding: 15rem 0;
+  padding: 15rem 30%;
+  box-sizing: border-box;
   background-color: ${props =>
     props.backgroundcolor ? props.backgroundcolor : "white"};
 
@@ -46,7 +47,7 @@ const MainPageImage = styled.div`
 
 export default function Home() {
   const session = useSession();
-  console.log(session);
+
   return (
     <>
       <StyledSection backgroundcolor="#e5bc7187" flexdirection="column">
@@ -70,14 +71,6 @@ export default function Home() {
       <StyledSection flexdirection="row">
         <h2>장소에 대한 이야기를 나눠요</h2>
       </StyledSection>
-      <StyledSection flexdirection="row">
-        <div onClick={() => console.log("부모박스")} className="parent">
-          <div className="child">
-            <button onClick={() => console.log("자식버튼")}>버튼</button>
-          </div>
-        </div>
-      </StyledSection>
-      <Box m={2}></Box>
     </>
   );
 }

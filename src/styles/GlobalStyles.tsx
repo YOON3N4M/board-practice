@@ -25,9 +25,11 @@ const style = css`
     font-family: "S-CoreDream-3Light";
   }
   body {
+    width: 100%;
     margin: 0 0;
     background-color: rgb(235, 238, 241);
   }
+
   a {
     text-decoration: none;
     color: white;
