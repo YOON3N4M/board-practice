@@ -1,6 +1,5 @@
 import { useState, useContext } from "react";
-
-import { styled } from "styled-components";
+import styled from "@emotion/styled";
 import { PaddingBox } from "../PanelContents";
 import { StateContext } from "@/util/StateContext";
 

@@ -2,7 +2,7 @@ import { ThemeT } from "@/@types/types";
 import { StateContext } from "@/util/StateContext";
 import { useState, useContext } from "react";
 import { PaddingBox } from "../PanelContents";
-import { styled } from "styled-components";
+import styled from "@emotion/styled";
 import axios from "axios";
 
 const BookmarkImage = styled.div`

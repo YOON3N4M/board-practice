@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import styled from "@emotion/styled";
 import Search from "./panelcontents/Search";
 import Member from "./panelcontents/Member";
 import Setting from "./panelcontents/Setting";

@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import styled from "@emotion/styled";
 import { AuthForm, AuthFormWrapper, FormBox } from "./register";
 import { useState } from "react";
 

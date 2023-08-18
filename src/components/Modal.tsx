@@ -4,7 +4,7 @@ import { StateContext } from "@/util/StateContext";
 import axios from "axios";
 import { motion } from "framer-motion";
 import React, { useState, useContext } from "react";
-import { styled } from "styled-components";
+import styled from "@emotion/styled";
 
 const ModalBackground = styled(motion.div)`
   position: absolute;
