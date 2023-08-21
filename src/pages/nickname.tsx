@@ -26,10 +26,10 @@ export default function Nickname() {
 
   async function handleSubmit(e: any) {
     e.preventDefault();
-    handleChangeNickname();
+    nickNameChangeAPI();
   }
 
-  async function handleChangeNickname() {
+  async function nickNameChangeAPI() {
     if (session === undefined || session === null) return;
 
     const bodyRef = { email: session.user?.email, nickname };
@@ -39,7 +39,8 @@ export default function Nickname() {
         alert("닉네임 설정이 완료 되었습니다.");
       })
       .catch(err => alert("닉네임 설정에 실패했습니다."));
-    //issue 세션 업데이트를 구현 못하겠음... 바로 아래 로직 활용하는 거 같은데,,,
+    // issue 세션 업데이트를 구현 못하겠음... 바로 아래 로직 활용하는 거 같은데,,,
+    // 이게 없으면 새로고침을 해야해서 리소스가,,
     // const a = await update();
   }
 

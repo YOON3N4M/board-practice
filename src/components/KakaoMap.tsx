@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import SimpleAddressBox from "./SimpleAddressBox";
 import { StateContext } from "@/util/StateContext";
 import { MapDataT, PositionT, ThemeT, coordsT } from "@/@types/types";
-import { MODAL_TYPE_SHOW_POSITION } from "@/pages/map";
+import { MODAL_TYPE_SHOW_POSITION } from "@/pages/[...mapId]";
 
 declare global {
   interface Window {
