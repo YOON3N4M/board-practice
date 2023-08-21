@@ -12,6 +12,7 @@ import {
   CardHeader,
   Center,
   VStack,
+  Divider,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
@@ -44,6 +45,7 @@ export default function Group() {
           paddingY={"30px"}
           pl="10px"
           overflowX={"scroll"}
+          mb={"25px"}
         >
           <Card
             borderRadius={"4px"}
@@ -78,6 +80,10 @@ export default function Group() {
             </Center>
           </Card>
         </HStack>
+        <Text fontWeight={"bold"} mb={"10px"}>
+          내 타임라인
+        </Text>
+        <Divider borderBottomWidth={"3px"} borderColor={"black"} />
       </Flex>
     </>
   );
