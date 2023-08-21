@@ -12,6 +12,9 @@ const NavigatorContainer = styled.div`
   box-sizing: border-box;
   justify-content: space-between;
   // border-bottom: 1px solid #6b6b6ba6;
+  .logout {
+    color: white;
+  }
 `;
 
 export default function Navigator() {
@@ -48,7 +51,9 @@ export default function Navigator() {
         </Flex>
         {isSignIn ? (
           <>
-            <button onClick={() => signOut()}>로그아웃</button>
+            <button className="logout" onClick={() => signOut()}>
+              로그아웃
+            </button>
           </>
         ) : (
           <Center color="white">

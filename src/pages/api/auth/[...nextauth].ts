@@ -18,4 +18,21 @@ export default NextAuth({
       },
     }),
   ],
+  callbacks: {
+    async session({ session }: any) {
+      const exUser = await prisma.user.findUnique({
+        where: { email: session.user?.email },
+        select: {
+          id: true,
+          image: true,
+          nickname: true,
+          name: true,
+          email: true,
+          emailVerified: true,
+        },
+      });
+      session.user = exUser;
+      return session;
+    },
+  },
 });

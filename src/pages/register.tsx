@@ -1,7 +1,8 @@
-import { User } from "@/@types/types";
 import axios from "axios";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import styled from "@emotion/styled";
+
+import { User } from "@/@types/types";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { API_URL_USER_DATA } from "./_app";
 import GoogleLogin from "@/components/login/GoogleLogin";
