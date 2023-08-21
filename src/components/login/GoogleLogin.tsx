@@ -15,7 +15,7 @@ export default function GoogleLogin() {
           })
         }
         leftIcon={<FcGoogle />}
-        bgColor="#34495e"
+        bgColor={"blue.800"}
         cursor="pointer"
         color="white"
       >
