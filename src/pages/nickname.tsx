@@ -14,21 +14,26 @@ export default function Nickname() {
     setNickname(e.target.value);
   }
 
+  function isLoggedin() {
+    if (session === undefined) return;
+    if (status !== "authenticated") {
+      alert("로그인이 필요한 서비스 입니다.");
+      router.push("/login");
+    }
+  }
+
   async function handleSubmit(e: any) {
     e.preventDefault();
   }
 
   async function handleChangeNickname() {
     if (session === undefined || session === null) return;
-    const a = await update();
+    //issue 세션 업데이트를 구현 못하겠음... 바로 아래 로직 활용하는 거 같은데,,,
+    // const a = await update();
   }
 
   useEffect(() => {
-    if (session === undefined) return;
-    if (status !== "authenticated") {
-      alert("로그인이 필요한 서비스 입니다.");
-      router.push("login");
-    }
+    isLoggedin();
   }, [session]);
 
   console.log(session);

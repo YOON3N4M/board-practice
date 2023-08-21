@@ -22,7 +22,8 @@ export default function Layout({ children }: React.PropsWithChildren) {
   const session: any = useSession();
 
   //로그인 이후 닉네임 여부 확인 로직
-  useEffect(() => {
+
+  function checkIsExistNicknameDB() {
     if (session.data === undefined) return;
     //로그인 상태가 아니면 탈출
     if (session.status !== "authenticated") return;
@@ -35,6 +36,10 @@ export default function Layout({ children }: React.PropsWithChildren) {
       );
       router.push("/nickname");
     }
+  }
+
+  useEffect(() => {
+    checkIsExistNicknameDB();
   }, [session.data]);
 
   return (
