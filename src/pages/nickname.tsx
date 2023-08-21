@@ -1,7 +1,22 @@
 import { useState, useEffect } from "react";
 import { AuthForm, AuthFormWrapper, FormBox } from "./register";
 import { useSession } from "next-auth/react";
-import { Button, Heading, Text } from "@chakra-ui/react";
+import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  Button,
+  Heading,
+  Text,
+  AlertDescription,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { API_URL_CHANGE_NICKNAME } from "./_app";
@@ -11,6 +26,7 @@ export default function Nickname() {
   const router = useRouter();
 
   const [nickname, setNickname] = useState("");
+  const [isModalOn, setIsModalOn] = useState(false);
 
   function handleInputChange(e: any) {
     setNickname(e.target.value);
@@ -36,12 +52,19 @@ export default function Nickname() {
     const response = await axios
       .put(API_URL_CHANGE_NICKNAME, bodyRef)
       .then(() => {
-        alert("닉네임 설정이 완료 되었습니다.");
+        setIsModalOn(true);
       })
       .catch(err => alert("닉네임 설정에 실패했습니다."));
     // issue 세션 업데이트를 구현 못하겠음... 바로 아래 로직 활용하는 거 같은데,,,
     // 이게 없으면 새로고침을 해야해서 리소스가,,
     // const a = await update();
+  }
+
+  function onClickModalClose() {
+    setIsModalOn(false);
+    setTimeout(() => {
+      router.push("/group");
+    }, 500);
   }
 
   useEffect(() => {
@@ -72,6 +95,7 @@ export default function Nickname() {
                   minLength={2}
                   maxLength={8}
                   placeholder="2글자~8글자 글자수 제한이 있습니다."
+                  required
                 ></input>
                 <Button bgColor={"blue.800"} color={"white"} type="submit">
                   입력
@@ -81,6 +105,38 @@ export default function Nickname() {
           </FormBox>
         </AuthFormWrapper>
       )}
+      <Modal isOpen={isModalOn} onClose={() => setIsModalOn(false)} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalBody>
+            <Alert
+              status="success"
+              variant="subtle"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              textAlign="center"
+              height="200px"
+              bgColor={"white"}
+            >
+              <Text fontSize={"xxx-large"}>🥳</Text>
+              <AlertTitle mt={4} mb={1} fontSize="lg">
+                닉네임이 성공적으로 등록 되었습니다!
+              </AlertTitle>
+              <AlertDescription>그룹 화면으로 이동합니다.</AlertDescription>
+            </Alert>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              bgColor={"blue.800"}
+              color={"white"}
+              onClick={onClickModalClose}
+            >
+              확인
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 }
