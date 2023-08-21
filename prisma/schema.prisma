@@ -7,7 +7,7 @@ datasource db {
   url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
-
+//appuser는 삭제 예정
 model Appuser {
   id        Int        @id @default(autoincrement())
   username  String
@@ -22,6 +22,8 @@ model Group {
   name        String
   map_info    String
   themes      Theme[]
+  group_leader String
+
   memberships Membership[]
 }
 
@@ -52,6 +54,7 @@ model Favorite {
   participants String
   //memo
   //photo
+  //author
   notes       Note[]
 }
 
