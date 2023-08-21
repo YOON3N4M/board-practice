@@ -1,6 +1,6 @@
 import Link from "next/link";
 import styled from "@emotion/styled";
-import { Center, Flex, HStack } from "@chakra-ui/react";
+import { Center, Flex, HStack, Text } from "@chakra-ui/react";
 import { signOut, useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 
@@ -18,7 +18,7 @@ const NavigatorContainer = styled.div`
 `;
 
 export default function Navigator() {
-  const session = useSession();
+  const session: any = useSession();
   const [isSignIn, setIsSignIn] = useState(false);
 
   useEffect(() => {
@@ -43,7 +43,7 @@ export default function Navigator() {
               <Link legacyBehavior href="/group">
                 <a>그룹</a>
               </Link>
-              <Link legacyBehavior href="/map">
+              <Link legacyBehavior href="/map/123">
                 <a>맵</a>
               </Link>
             </>
@@ -51,9 +51,17 @@ export default function Navigator() {
         </Flex>
         {isSignIn ? (
           <>
-            <button className="logout" onClick={() => signOut()}>
-              로그아웃
-            </button>
+            {" "}
+            <HStack>
+              <Text color={"white"}>
+                {session.data?.user.nickname !== null &&
+                  session.data?.user.nickname}{" "}
+                님
+              </Text>
+              <button className="logout" onClick={() => signOut()}>
+                로그아웃
+              </button>{" "}
+            </HStack>
           </>
         ) : (
           <Center color="white">

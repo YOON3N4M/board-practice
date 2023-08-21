@@ -2,7 +2,7 @@ import { MapDataT, PositionT, ThemeT } from "@/@types/types";
 import {
   MODAL_TYPE_ADD_POSITION,
   MODAL_TYPE_SHOW_POSITION,
-} from "@/pages/[...mapId]";
+} from "@/pages/map/[...mapId]";
 import { StateContext } from "@/util/StateContext";
 import axios from "axios";
 import { motion } from "framer-motion";
