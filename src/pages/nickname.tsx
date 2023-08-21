@@ -3,6 +3,8 @@ import { AuthForm, AuthFormWrapper, FormBox } from "./register";
 import { useSession } from "next-auth/react";
 import { Button, Heading, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import axios from "axios";
+import { API_URL_CHANGE_NICKNAME } from "./_app";
 
 export default function Nickname() {
   const { data: session, status, update } = useSession();
@@ -14,7 +16,7 @@ export default function Nickname() {
     setNickname(e.target.value);
   }
 
-  function isLoggedin() {
+  function CheckIsLoggedin() {
     if (session === undefined) return;
     if (status !== "authenticated") {
       alert("로그인이 필요한 서비스 입니다.");
@@ -24,16 +26,25 @@ export default function Nickname() {
 
   async function handleSubmit(e: any) {
     e.preventDefault();
+    handleChangeNickname();
   }
 
   async function handleChangeNickname() {
     if (session === undefined || session === null) return;
+
+    const bodyRef = { email: session.user?.email, nickname };
+    const response = await axios
+      .put(API_URL_CHANGE_NICKNAME, bodyRef)
+      .then(() => {
+        alert("닉네임 설정이 완료 되었습니다.");
+      })
+      .catch(err => alert("닉네임 설정에 실패했습니다."));
     //issue 세션 업데이트를 구현 못하겠음... 바로 아래 로직 활용하는 거 같은데,,,
     // const a = await update();
   }
 
   useEffect(() => {
-    isLoggedin();
+    CheckIsLoggedin();
   }, [session]);
 
   console.log(session);
@@ -61,12 +72,9 @@ export default function Nickname() {
                   maxLength={8}
                   placeholder="2글자~8글자 글자수 제한이 있습니다."
                 ></input>
-                <Button bgColor={"blue.800"} color={"white"}>
+                <Button bgColor={"blue.800"} color={"white"} type="submit">
                   입력
                 </Button>
-                <button type="button" onClick={handleChangeNickname}>
-                  테스트
-                </button>
               </form>
             </AuthForm>
           </FormBox>
