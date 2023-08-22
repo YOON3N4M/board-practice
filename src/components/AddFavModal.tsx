@@ -8,6 +8,27 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import React, { useState, useContext } from "react";
 import styled from "@emotion/styled";
+import { BiMap } from "react-icons/bi";
+import {
+  Badge,
+  Button,
+  ButtonGroup,
+  FormLabel,
+  HStack,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Select,
+  Textarea,
+  VStack,
+} from "@chakra-ui/react";
 
 const ModalBackground = styled(motion.div)`
   position: absolute;
@@ -84,7 +105,11 @@ interface Props {
   setIsModalOn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function Modal({ isModalOn, setIsModalOn }: Props) {
+export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
+  const [positionTitle, setPositionTitle] = useState("");
+  const [positionMemo, setPositionMemo] = useState("");
+  const [selectedMember, setSelectedMember] = useState<string[]>([]);
+
   const {
     mapDataFromDB,
     coords,
@@ -98,10 +123,6 @@ export default function Modal({ isModalOn, setIsModalOn }: Props) {
 
   // 테스트 후 이름 바꿔야함
   function AddPositionModal() {
-    const [positionTitle, setPositionTitle] = useState("");
-    const [positionMemo, setPositionMemo] = useState("");
-    const [selectedMember, setSelectedMember] = useState<string[]>([]);
-
     async function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
       event.preventDefault();
 
@@ -115,13 +136,6 @@ export default function Modal({ isModalOn, setIsModalOn }: Props) {
         member: selectedMember,
         positionMemo: positionMemo,
       };
-
-      //test 코드임
-      const TEST_URL = "http://localhost:4000/positions/";
-      const response = await axios
-        .post(TEST_URL, positionTemp)
-        .then(res => setTestPositionArr((prev: any) => [...prev, positionTemp]))
-        .catch(err => console.log(err));
 
       // const updatedMapData ={
       //   ...mapDataFromDB[0],
@@ -228,23 +242,6 @@ export default function Modal({ isModalOn, setIsModalOn }: Props) {
     );
   }
 
-  function ShowPositionModal() {
-    return (
-      <>
-        <ShowPositionContainer>
-          <h1>{selectedPosition?.title}</h1>
-          <span>{selectedPosition?.address}</span>
-          <div className="flex-row-div">
-            {selectedPosition?.member?.map((name, idx) => (
-              <NotionticMemberButton key={idx}>{name}</NotionticMemberButton>
-            ))}
-          </div>
-          <p>{selectedPosition?.positionMemo}</p>
-        </ShowPositionContainer>
-      </>
-    );
-  }
-
   //issue 모달 선택 (sideNavigator랑 다른 방식의 조건부 렌더링인데 추후 둘중 한가지 방식으로 통일 요망)
   let ModalContents;
 
@@ -252,20 +249,108 @@ export default function Modal({ isModalOn, setIsModalOn }: Props) {
     case MODAL_TYPE_ADD_POSITION:
       ModalContents = <AddPositionModal />;
       break;
-    case MODAL_TYPE_SHOW_POSITION:
-      ModalContents = <ShowPositionModal />;
   }
 
+  const sampleMember = [
+    "길동",
+    "철수",
+    "영희",
+    "보라",
+    "두리",
+    "수지",
+    "영지",
+    "정우",
+    "현우",
+    "상수",
+    "현성",
+    "차미",
+  ];
+  const sampleTheme = ["여행", "카페"];
+  const sampleAddress = "서울특별시 강동구 어쩌구저쩌구";
+
+  function setAllMember(isSetAll: boolean) {
+    if (isSetAll) {
+      setSelectedMember(sampleMember);
+    } else {
+      setSelectedMember([]);
+    }
+  }
+  console.log(selectedAddress);
   return (
     <>
-      <ModalBackground initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-        <ModalWindow>
-          <button onClick={() => setIsModalOn(false)} className="modal-close">
-            닫기
-          </button>
-          {ModalContents}
-        </ModalWindow>
-      </ModalBackground>
+      <Modal isOpen={isModalOn} onClose={() => setIsModalOn(false)}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>즐겨찾기 추가</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <FormLabel>테마</FormLabel>
+            <Select size="sm" mb={"15px"}>
+              {sampleTheme.map((theme, idx) => (
+                <option key={idx} value={theme}>
+                  {theme}
+                </option>
+              ))}
+            </Select>
+            <FormLabel>즐겨찾기 이름</FormLabel>
+            <Input mb={"15px"}></Input>
+            <FormLabel>주소</FormLabel>
+            <InputGroup mb={"15px"}>
+              <InputLeftElement>
+                <BiMap color="gray" />
+              </InputLeftElement>
+              <Input value={selectedAddress} disabled></Input>
+            </InputGroup>
+            <FormLabel>참여 멤버</FormLabel>
+            <ButtonGroup mb={"15px"}>
+              <Button
+                onClick={() => setAllMember(true)}
+                bgColor={"green.100"}
+                size={"xs"}
+              >
+                전체선택
+              </Button>
+              <Button onClick={() => setAllMember(false)} size={"xs"}>
+                전체해제
+              </Button>
+            </ButtonGroup>
+            <HStack flexWrap={"wrap"} wordBreak={"break-word"} mb={"15px"}>
+              {sampleMember.map(member => {
+                const isExist = selectedMember.includes(member);
+                function memberClick() {
+                  if (isExist) {
+                    const filterd = selectedMember.filter(
+                      selected => selected !== member
+                    );
+                    setSelectedMember(filterd);
+                  } else {
+                    setSelectedMember(prev => [...prev, member]);
+                  }
+                }
+                const selectedColor = isExist ? "green.100" : "";
+                return (
+                  <Badge
+                    bgColor={selectedColor}
+                    onClick={memberClick}
+                    cursor={"pointer"}
+                  >
+                    {member}
+                  </Badge>
+                );
+              })}
+            </HStack>
+
+            <FormLabel>메모</FormLabel>
+            <Textarea size={"sm"}></Textarea>
+          </ModalBody>
+          <ModalFooter>
+            <Button bgColor={"blue.800"} color={"white"} mr={"10px"}>
+              등록
+            </Button>
+            <Button onClick={() => setIsModalOn(false)}>취소</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 }
