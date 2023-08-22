@@ -9,6 +9,8 @@ import { motion } from "framer-motion";
 import React, { useState, useContext } from "react";
 import styled from "@emotion/styled";
 import { BiMap } from "react-icons/bi";
+import { AiOutlineCamera } from "react-icons/ai";
+import { MdFavoriteBorder } from "react-icons/md";
 import {
   Badge,
   Button,
@@ -105,10 +107,28 @@ interface Props {
   setIsModalOn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+export const sampleMember = [
+  "길동",
+  "철수",
+  "영희",
+  "보라",
+  "두리",
+  "수지",
+  "영지",
+  "정우",
+  "현우",
+  "상수",
+  "현성",
+  "차미",
+];
+export const sampleTheme = ["여행", "카페"];
+
 export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
+  //db에 올릴 정보
   const [positionTitle, setPositionTitle] = useState("");
-  const [positionMemo, setPositionMemo] = useState("");
   const [selectedMember, setSelectedMember] = useState<string[]>([]);
+  const [positionMemo, setPositionMemo] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
 
   const {
     mapDataFromDB,
@@ -251,21 +271,6 @@ export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
       break;
   }
 
-  const sampleMember = [
-    "길동",
-    "철수",
-    "영희",
-    "보라",
-    "두리",
-    "수지",
-    "영지",
-    "정우",
-    "현우",
-    "상수",
-    "현성",
-    "차미",
-  ];
-  const sampleTheme = ["여행", "카페"];
   const sampleAddress = "서울특별시 강동구 어쩌구저쩌구";
 
   function setAllMember(isSetAll: boolean) {
@@ -275,13 +280,24 @@ export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
       setSelectedMember([]);
     }
   }
+
+  function consoleRef() {
+    const dataRef = {};
+  }
+  function handleDateChange(e: any) {
+    setSelectedDate(e.target.value);
+    console.log(typeof selectedDate, selectedDate);
+  }
+
   console.log(selectedAddress);
   return (
     <>
       <Modal isOpen={isModalOn} onClose={() => setIsModalOn(false)}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>즐겨찾기 추가</ModalHeader>
+          <ModalHeader display={"flex"} alignItems={"center"}>
+            즐겨찾기 추가
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <FormLabel>테마</FormLabel>
@@ -293,14 +309,23 @@ export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
               ))}
             </Select>
             <FormLabel>즐겨찾기 이름</FormLabel>
-            <Input mb={"15px"}></Input>
+            <Input size={"sm"} mb={"15px"}></Input>
             <FormLabel>주소</FormLabel>
             <InputGroup mb={"15px"}>
               <InputLeftElement>
                 <BiMap color="gray" />
               </InputLeftElement>
-              <Input value={selectedAddress} disabled></Input>
+              <Input size={"sm"} value={selectedAddress} disabled></Input>
             </InputGroup>
+            <FormLabel>날짜</FormLabel>
+            <Input
+              //placeholder="Select Date and Time"
+              size="sm"
+              type="date"
+              mb={"15px"}
+              value={selectedDate}
+              onChange={handleDateChange}
+            />
             <FormLabel>참여 멤버</FormLabel>
             <ButtonGroup mb={"15px"}>
               <Button
@@ -339,7 +364,10 @@ export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
                 );
               })}
             </HStack>
-
+            <FormLabel>사진</FormLabel>
+            <Button width={"100%"} height={"80px"} mb={"15px"}>
+              <AiOutlineCamera />
+            </Button>
             <FormLabel>메모</FormLabel>
             <Textarea size={"sm"}></Textarea>
           </ModalBody>

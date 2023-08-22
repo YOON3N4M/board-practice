@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { Center, Flex, HStack, Text } from "@chakra-ui/react";
 import { signOut, useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 const NavigatorContainer = styled.div`
   display: flex;
@@ -19,6 +20,7 @@ const NavigatorContainer = styled.div`
 
 export default function Navigator() {
   const session: any = useSession();
+  const router = useRouter();
   const [isSignIn, setIsSignIn] = useState(false);
 
   useEffect(() => {
@@ -28,49 +30,52 @@ export default function Navigator() {
       setIsSignIn(true);
     }
   }, [session.data]);
+
   return (
     <>
-      <NavigatorContainer className="navi">
-        <Center>
-          <Link legacyBehavior href="/">
-            <a>헨젤</a>
-          </Link>
-        </Center>
-        <Flex justifyContent={"space-between"} w="30%">
-          {isSignIn && (
-            <>
-              {" "}
-              <Link legacyBehavior href="/group">
-                <a>그룹</a>
-              </Link>
-              <Link legacyBehavior href="/map/123">
-                <a>맵</a>
-              </Link>
-            </>
-          )}
-        </Flex>
-        {isSignIn ? (
-          <>
-            {" "}
-            <HStack>
-              <Text color={"white"}>
-                {session.data?.user.nickname !== null &&
-                  session.data?.user.nickname}{" "}
-                님
-              </Text>
-              <button className="logout" onClick={() => signOut()}>
-                로그아웃
-              </button>{" "}
-            </HStack>
-          </>
-        ) : (
-          <Center color="white">
-            <Link legacyBehavior href="/login">
-              <a>로그인</a>
+      {router.pathname.includes("map") ? null : (
+        <NavigatorContainer className="navi">
+          <Center>
+            <Link legacyBehavior href="/">
+              <a>헨젤</a>
             </Link>
           </Center>
-        )}
-      </NavigatorContainer>
+          <Flex justifyContent={"space-between"} w="30%">
+            {isSignIn && (
+              <>
+                {" "}
+                <Link legacyBehavior href="/group">
+                  <a>그룹</a>
+                </Link>
+                <Link legacyBehavior href="/map/123">
+                  <a>맵</a>
+                </Link>
+              </>
+            )}
+          </Flex>
+          {isSignIn ? (
+            <>
+              {" "}
+              <HStack>
+                <Text color={"white"}>
+                  {session.data?.user.nickname !== null &&
+                    session.data?.user.nickname}{" "}
+                  님
+                </Text>
+                <button className="logout" onClick={() => signOut()}>
+                  로그아웃
+                </button>{" "}
+              </HStack>
+            </>
+          ) : (
+            <Center color="white">
+              <Link legacyBehavior href="/login">
+                <a>로그인</a>
+              </Link>
+            </Center>
+          )}
+        </NavigatorContainer>
+      )}
     </>
   );
 }

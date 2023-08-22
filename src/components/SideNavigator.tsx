@@ -2,6 +2,8 @@ import styled from "@emotion/styled";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import PanelContents from "./PanelContents";
+import { useRouter } from "next/router";
+import { IoIosArrowBack } from "react-icons/io";
 
 const FloatingContainer = styled.div<{ heightvalue: string }>`
   display: flex;
@@ -29,12 +31,14 @@ const PanelContainer = styled(motion.div)<{ heightvalue: string }>`
   flex-direction: column;
   width: 400px;
   height: ${props => props.heightvalue};
-  background-color: #d1d1d1c5;
+  background-color: #ffffff;
   z-index: 1000;
   .panel-hide-button {
     position: absolute;
     left: 100%;
     top: 40%;
+    background-color: white;
+    height: 50px;
   }
 `;
 
@@ -48,10 +52,16 @@ export const CONTENTS_SEARCH = "검색";
 export default function SideNavigator({
   ContainerHeightValue,
 }: SideNavigatorProps) {
+  const router = useRouter();
   const [isPanelOn, setIsPanelOn] = useState(false);
   const [selectedContents, setSelectedContents] = useState("");
 
   function onMenuClick(event: any) {
+    //홈 클릭시 홈으로 이동만
+    if (event.target.name === "홈") {
+      router.push("/group");
+      return;
+    }
     //타입을 지정하면 event.target.name 에 타입 오류가 나서 any로 일단 처리
     setSelectedContents(event.target.name);
 
@@ -66,6 +76,9 @@ export default function SideNavigator({
     <>
       <FloatingContainer heightvalue={`${ContainerHeightValue}px`}>
         <SideNavigatorContainer heightvalue={`${ContainerHeightValue}px`}>
+          <button name="홈" onClick={event => onMenuClick(event)}>
+            홈
+          </button>
           <button name="멤버" onClick={event => onMenuClick(event)}>
             멤버
           </button>
@@ -94,7 +107,7 @@ export default function SideNavigator({
                 onClick={() => setIsPanelOn(false)}
                 className="panel-hide-button"
               >
-                닫기
+                <IoIosArrowBack />
               </button>
             </PanelContainer>
           )}

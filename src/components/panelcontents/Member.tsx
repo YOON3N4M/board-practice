@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import styled from "@emotion/styled";
 import { PaddingBox } from "../PanelContents";
 import { StateContext } from "@/util/StateContext";
+import { sampleMember } from "../AddFavModal";
 
 const UserProfileImage = styled.div`
   width: 64px;
@@ -13,12 +14,12 @@ const UserProfileImage = styled.div`
 export default function Member() {
   const { mapDataFromDB } = useContext(StateContext);
   //const { member } = mapDataFromDB[0];
-  const member: any = [];
+
   const test = "깃충돌 테스트";
   return (
     <>
-      {member.length !== 0 &&
-        member.map((nameTemp: string) => (
+      {sampleMember.length !== 0 &&
+        sampleMember.map((nameTemp: string) => (
           <PaddingBox key={nameTemp}>
             <div className="user-profile-image-box">
               <UserProfileImage />
