@@ -17,8 +17,14 @@ export default function Search() {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [searchResult, setSearchResult] = useState([]);
 
-  const { setCoords, setIsOtherComponentOn, selectedPlace, setSelectedPlace } =
-    useContext(StateContext);
+  const {
+    setCoords,
+    setIsOtherComponentOn,
+    selectedAddress,
+    selectedPlace,
+    setSelectedPlace,
+    setCenterCoords,
+  } = useContext(StateContext);
 
   const places = new kakao.maps.services.Places();
 
@@ -41,7 +47,7 @@ export default function Search() {
     setCoords({ lat: result.y, lng: result.x });
     setIsOtherComponentOn(true);
     setSelectedPlace(result.place_name);
-    console.log(result);
+    setCenterCoords({ lat: result.y, lng: result.x });
   }
 
   return (
@@ -72,6 +78,9 @@ export default function Search() {
       <Divider />
       {searchResult.length !== 0 &&
         searchResult.map((result: SearchResultT) => {
+          //추후 문제가 생기면 고유한 값인 id로 분기 처리를 해야함
+          const isClicked = result?.address_name === selectedAddress;
+
           return (
             <>
               <Flex
@@ -84,6 +93,7 @@ export default function Search() {
                 borderColor={"gray.200"}
                 _hover={{ backgroundColor: "#b6cefd5c" }}
                 cursor={"pointer"}
+                bgColor={isClicked ? "#b6cefd5c" : ""}
               >
                 <Flex alignItems={"center"}>
                   <BiMap />
