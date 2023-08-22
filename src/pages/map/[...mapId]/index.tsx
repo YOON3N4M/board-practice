@@ -1,6 +1,6 @@
 import { MapDataT, PositionT, coordsT } from "@/@types/types";
 import KakaoMap from "@/components/KakaoMap";
-import Modal from "@/components/Modal";
+import AddFavModal from "@/components/AddFavModal";
 import SideNavigator from "@/components/SideNavigator";
 
 import { defaultMapOption } from "@/data/sampleData";
@@ -99,7 +99,7 @@ export default function Map() {
         >
           {" "}
           {isModalOn && (
-            <Modal isModalOn={isModalOn} setIsModalOn={setIsModalOn} />
+            <AddFavModal isModalOn={isModalOn} setIsModalOn={setIsModalOn} />
           )}
           <SideNavigator ContainerHeightValue={ContainerHeightValue} />
           {ContainerHeightValue !== 0 && isScriptLoading === false ? (

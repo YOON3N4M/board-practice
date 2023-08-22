@@ -88,6 +88,7 @@ export default function KakaoMap({ mapOption }: MapComponentProps) {
         contextData.setSelectedAddress(addressResult);
       } else {
         setAddressInfo(UNDEFINED_ADDRESS);
+        contextData.setSelectedAddress("-");
       }
     };
     geocoder.coord2Address(coords.lng, coords.lat, callback);
