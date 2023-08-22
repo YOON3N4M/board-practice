@@ -17,6 +17,8 @@ interface StateContextT {
   setSelectedPosition: any;
   isOtherComponentOn: any;
   setIsOtherComponentOn: any;
+  selectedPlace: any;
+  setSelectedPlace: any;
 }
 
 const defaultState = {
@@ -35,6 +37,8 @@ const defaultState = {
   setSelectedPosition: undefined,
   isOtherComponentOn: undefined,
   setIsOtherComponentOn: undefined,
+  selectedPlace: undefined,
+  setSelectedPlace: undefined,
 };
 
 export const StateContext = createContext<StateContextT>(defaultState);

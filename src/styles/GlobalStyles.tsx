@@ -34,6 +34,15 @@ const style = css`
     text-decoration: none;
     color: white;
   }
+  //스크롤바 스타일링
+  *::-webkit-scrollbar {
+    width: 5px;
+    background-color: #ffffff;
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: #b4b4b4;
+    border-radius: 10px;
+  }
 `;
 
 export default function GlobalStyles() {

@@ -20,6 +20,7 @@ import {
 import { useRouter } from "next/router";
 import axios from "axios";
 import { API_URL_CHANGE_NICKNAME } from "./_app";
+import { BiParty } from "react-icons/bi";
 
 export default function Nickname() {
   const { data: session, status, update } = useSession();
@@ -119,7 +120,7 @@ export default function Nickname() {
               height="200px"
               bgColor={"white"}
             >
-              <Text fontSize={"xxx-large"}>🥳</Text>
+              <BiParty size={"5em"} />
               <AlertTitle mt={4} mb={1} fontSize="lg">
                 닉네임이 성공적으로 등록 되었습니다!
               </AlertTitle>
