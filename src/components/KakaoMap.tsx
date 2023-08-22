@@ -18,10 +18,6 @@ interface MapOptionT {
   level: number;
 }
 
-interface MapComponentProps {
-  mapOption: MapOptionT;
-}
-
 interface AddressResult {
   address: {
     address_name: string;
@@ -49,7 +45,7 @@ interface AddressResult {
 
 export const UNDEFINED_ADDRESS = "주소 정보가 없습니다.";
 
-export default function KakaoMap({ mapOption }: MapComponentProps) {
+export default function KakaoMap() {
   const contextData = useContext(StateContext);
   const {
     coords,
@@ -62,6 +58,7 @@ export default function KakaoMap({ mapOption }: MapComponentProps) {
     isOtherComponentOn,
     setIsOtherComponentOn,
     setSelectedPlace,
+    centerCoords,
   } = contextData;
   const [addressInfo, setAddressInfo] = useState<any>();
   //이벤트 버블링 현상때문에 작동에 제한을 두기 위함.
@@ -104,12 +101,13 @@ export default function KakaoMap({ mapOption }: MapComponentProps) {
   return (
     <>
       <Map
-        center={mapOption.center}
+        center={centerCoords}
         style={{ width: "100%", height: "100%", zIndex: 0 }}
-        level={mapOption.level}
+        level={12}
         onClick={(_t, mouseEvent) => {
           onMapClick(mouseEvent);
         }}
+        isPanto={true}
       >
         {coords && (
           <>

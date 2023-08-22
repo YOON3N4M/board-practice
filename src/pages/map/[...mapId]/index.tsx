@@ -3,7 +3,6 @@ import KakaoMap from "@/components/KakaoMap";
 import AddFavModal from "@/components/AddFavModal";
 import SideNavigator from "@/components/SideNavigator";
 
-import { defaultMapOption } from "@/data/sampleData";
 import { StateContext } from "@/util/StateContext";
 
 import axios from "axios";
@@ -35,6 +34,10 @@ export default function Map() {
   const [selectedPosition, setSelectedPosition] = useState<PositionT>();
   const [isOtherComponentOn, setIsOtherComponentOn] = useState(false);
   const [selectedPlace, setSelectedPlace] = useState();
+  const [centerCoords, setCenterCoords] = useState({
+    lat: 35.98818056,
+    lng: 127.9281444,
+  });
   //자동으로 스크롤이 없는 지도를 만들기 위해 선언 (근데 가끔 스크롤이 생김 왜지?)
   function setHTMLHeight() {
     const naviElement: HTMLElement | null = document.querySelector(".navi");
@@ -101,6 +104,8 @@ export default function Map() {
             setIsOtherComponentOn,
             selectedPlace,
             setSelectedPlace,
+            centerCoords,
+            setCenterCoords,
           }}
         >
           {" "}
@@ -109,7 +114,7 @@ export default function Map() {
           )}
           <SideNavigator ContainerHeightValue={ContainerHeightValue} />
           {ContainerHeightValue !== 0 && isScriptLoading === false ? (
-            <KakaoMap mapOption={defaultMapOption} />
+            <KakaoMap />
           ) : null}
         </StateContext.Provider>
       </MapContainer>
