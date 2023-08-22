@@ -2,6 +2,8 @@ import styled from "@emotion/styled";
 import { useContext } from "react";
 import { StateContext } from "@/util/StateContext";
 import { MODAL_TYPE_ADD_POSITION } from "@/pages/map/[...mapId]";
+import { Button, Flex, Text } from "@chakra-ui/react";
+import { GrFormClose } from "react-icons/gr";
 
 const SmallAddressBox = styled.div`
   background-color: #ffffff;
@@ -17,20 +19,10 @@ const SmallAddressBox = styled.div`
   .small-address-box-bottom-row {
     display: flex;
     justify-content: right;
-    button {
-      cursor: pointer;
-      border: 0px;
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
-      background-color: #a7c9cf52;
-      margin-top: 10px;
-    }
+
     z-index: 2000;
   }
   .small-address-box-close {
-    position: absolute;
-    top: 0%;
-    left: 100%;
     background-color: white;
   }
 `;
@@ -48,7 +40,8 @@ export default function SimpleAddressBox({
   addressInfo,
   setAddressInfo,
 }: Props) {
-  const { setSelectedModal } = useContext(StateContext);
+  const { setSelectedModal, selectedAddress, selectedPlace } =
+    useContext(StateContext);
 
   function handlingRender() {
     setCoords(undefined);
@@ -69,18 +62,27 @@ export default function SimpleAddressBox({
     <>
       {addressInfo !== undefined && (
         <SmallAddressBox>
-          <button
-            onClick={() => handlingRender()}
-            className="small-address-box-close"
-          >
-            닫기
-          </button>
-          <div className="small-address-box-top-row">
-            <span>{addressInfo}</span>
-          </div>
+          <Flex justifyContent={"end"}>
+            <button
+              onClick={() => handlingRender()}
+              className="small-address-box-close"
+            >
+              <GrFormClose />
+            </button>
+          </Flex>
+          <Flex direction={"column"} mb={"10px"}>
+            <Text>{selectedPlace}</Text>
+            <Text fontSize={"sm"}>{addressInfo}</Text>
+          </Flex>
           <div className="small-address-box-bottom-row">
-            {addressInfo === ""}
-            <button onClick={handleAddButton}>등록하기</button>
+            <Button
+              color={"white"}
+              bgColor={"blue.800"}
+              size={"xs"}
+              onClick={handleAddButton}
+            >
+              등록하기
+            </Button>
           </div>
         </SmallAddressBox>
       )}

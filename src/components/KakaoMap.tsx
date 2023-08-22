@@ -61,6 +61,7 @@ export default function KakaoMap({ mapOption }: MapComponentProps) {
     setSelectedPosition,
     isOtherComponentOn,
     setIsOtherComponentOn,
+    setSelectedPlace,
   } = contextData;
   const [addressInfo, setAddressInfo] = useState<any>();
   //이벤트 버블링 현상때문에 작동에 제한을 두기 위함.
@@ -73,6 +74,7 @@ export default function KakaoMap({ mapOption }: MapComponentProps) {
       lat: mouseEvent.latLng.getLat(),
       lng: mouseEvent.latLng.getLng(),
     });
+    setSelectedPlace("");
   }
   //지도 클릭시 주소 반환
   function getAddressByCoords() {
