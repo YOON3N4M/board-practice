@@ -6,6 +6,7 @@ import { Button, Flex, Text } from "@chakra-ui/react";
 import { GrFormClose } from "react-icons/gr";
 
 const SmallAddressBox = styled.div`
+  position: relative;
   background-color: #ffffff;
   padding: 1rem 1rem;
   //transform: translateY(-60px);

@@ -138,6 +138,7 @@ export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
     setTestPositionArr,
     selectedModal,
     selectedPosition,
+    selectedPlace,
   } = useContext(StateContext);
   if (!isModalOn) return null;
 
@@ -289,14 +290,14 @@ export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
     console.log(typeof selectedDate, selectedDate);
   }
 
-  console.log(selectedAddress);
+  console.log(selectedPlace);
   return (
     <>
       <Modal isOpen={isModalOn} onClose={() => setIsModalOn(false)}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader display={"flex"} alignItems={"center"}>
-            즐겨찾기 추가
+            {selectedPlace === "" ? "새 즐겨찾기" : selectedPlace}
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
