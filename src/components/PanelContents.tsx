@@ -10,6 +10,7 @@ const PanelWarp = styled.div`
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
+  border-right: 1px solid #e2e8f0;
   .panel-title {
     h2 {
       text-align: center;
