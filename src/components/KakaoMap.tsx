@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
 import styled from "@emotion/styled";
 import SimpleAddressBox from "./SimpleAddressBox";
@@ -47,6 +47,8 @@ export const UNDEFINED_ADDRESS = "주소 정보가 없습니다.";
 
 export default function KakaoMap() {
   const contextData = useContext(StateContext);
+  const [addressInfo, setAddressInfo] = useState<any>();
+  const customOverlayContainer: any = useRef(null);
   const {
     coords,
     setCoords,
@@ -60,8 +62,7 @@ export default function KakaoMap() {
     setSelectedPlace,
     centerCoords,
   } = contextData;
-  const [addressInfo, setAddressInfo] = useState<any>();
-  const [visible, setVisible] = useState(false);
+
   //이벤트 버블링 현상때문에 작동에 제한을 두기 위함.
 
   function onMapClick(mouseEvent: any) {
@@ -98,9 +99,13 @@ export default function KakaoMap() {
   //useEffect 수정예정
   useEffect(() => {
     getAddressByCoords();
-    setTimeout(() => {
-      setVisible(true);
-    }, 1000);
+  }, [coords]);
+
+  useEffect(() => {
+    // console.log("있음");
+    if (customOverlayContainer?.current?.a) {
+      customOverlayContainer.current.a.style.margin = "0px";
+    }
   }, [coords]);
 
   return (
@@ -117,26 +122,17 @@ export default function KakaoMap() {
         {coords && (
           <>
             {" "}
-            {visible && (
-              <>
-                {" "}
-                <MapMarker position={coords} onClick={() => setVisible(true)} />
-                <CustomOverlayMap // 커스텀 오버레이를 표시할 Container
-                  // 커스텀 오버레이가 표시될 위치입니다
-                  position={coords}
-                  // 커스텀 오버레이가에 대한 확장 옵션
-                  xAnchor={0.5}
-                  yAnchor={0.5}
-                >
-                  <SimpleAddressBox
-                    setCoords={setCoords}
-                    setIsOtherComponentOn={setIsOtherComponentOn}
-                    addressInfo={addressInfo}
-                    setAddressInfo={setAddressInfo}
-                  />
-                </CustomOverlayMap>
-              </>
-            )}
+            <>
+              <MapMarker position={coords} />
+              <CustomOverlayMap position={coords} ref={customOverlayContainer}>
+                <SimpleAddressBox
+                  setCoords={setCoords}
+                  setIsOtherComponentOn={setIsOtherComponentOn}
+                  addressInfo={addressInfo}
+                  setAddressInfo={setAddressInfo}
+                />
+              </CustomOverlayMap>
+            </>
           </>
         )}
         {/* 여기에 테스트 코드 넣고 테스트 해보기*/}

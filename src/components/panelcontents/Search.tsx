@@ -13,6 +13,8 @@ import {
 import { useState, useContext, useEffect } from "react";
 import { HiSearch } from "react-icons/hi";
 import { BiMap } from "react-icons/bi";
+import styled from "@emotion/styled/types/base";
+
 export default function Search() {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [searchResult, setSearchResult] = useState([]);

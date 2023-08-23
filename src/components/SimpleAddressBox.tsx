@@ -2,14 +2,15 @@ import styled from "@emotion/styled";
 import { useContext } from "react";
 import { StateContext } from "@/util/StateContext";
 import { MODAL_TYPE_ADD_POSITION } from "@/pages/map/[...mapId]";
-import { Button, Flex, Text } from "@chakra-ui/react";
+import { Button, Flex, Text, HStack } from "@chakra-ui/react";
 import { GrFormClose } from "react-icons/gr";
+import { BiMap } from "react-icons/bi";
 
 const SmallAddressBox = styled.div`
-  position: relative;
   background-color: #ffffff;
-  padding: 1rem 1rem;
+  padding: 0.5rem 1rem;
   //transform: translateY(-60px);
+  margin: 0px;
   border-radius: 4px;
   display: flex;
   flex-direction: column;
@@ -20,7 +21,6 @@ const SmallAddressBox = styled.div`
   .small-address-box-bottom-row {
     display: flex;
     justify-content: right;
-
     z-index: 2000;
   }
   .small-address-box-close {
@@ -72,8 +72,16 @@ export default function SimpleAddressBox({
             </button>
           </Flex>
           <Flex direction={"column"} mb={"10px"}>
-            <Text>{selectedPlace}</Text>
-            <Text fontSize={"sm"}>{addressInfo}</Text>
+            <Text fontWeight={"bold"}>
+              {" "}
+              {selectedPlace === "" ? "" : selectedPlace}
+            </Text>
+            <HStack alignItems={"center"}>
+              <BiMap color="gray" />
+              <Text color={selectedPlace === "" ? "" : "gray"} fontSize={"sm"}>
+                {addressInfo}
+              </Text>
+            </HStack>
           </Flex>
           <div className="small-address-box-bottom-row">
             <Button

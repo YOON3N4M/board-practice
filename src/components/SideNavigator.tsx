@@ -17,13 +17,13 @@ const SideNavigatorContainer = styled.div<{ heightvalue: string }>`
   flex-direction: column;
   width: 80px;
   max-height: ${props => props.heightvalue};
-  background-color: rgb(177, 177, 177);
+  background-color: #ffffffc5;
   z-index: 1100;
   padding: 100px 5px;
   button {
     margin-bottom: 30px;
   }
-  border-right: 1px solid #6b6b6ba6;
+  border-right: 1px solid #e2e8f0;
 `;
 
 const PanelContainer = styled(motion.div)<{ heightvalue: string }>`
