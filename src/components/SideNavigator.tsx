@@ -20,9 +20,9 @@ const SideNavigatorContainer = styled.div<{ heightvalue: string }>`
   width: 80px;
   max-height: ${props => props.heightvalue};
   background-color: #ffffffc5;
+  backdrop-filter: blur(10px);
   z-index: 1100;
   padding: 50px 0px;
-
   border-right: 1px solid #e2e8f0;
   button {
     font-size: 15px;

@@ -5,8 +5,8 @@ import { StateContext } from "@/util/StateContext";
 import { sampleMember } from "../AddFavModal";
 
 const UserProfileImage = styled.div`
-  width: 64px;
-  height: 64px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   background-color: #5555cc;
 `;

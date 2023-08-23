@@ -6,16 +6,18 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
 const NavigatorContainer = styled.div`
+  position: fixed;
   display: flex;
   width: 100%;
-  background-color: rgb(177, 177, 177);
+  background-color: rgba(255, 255, 255, 0.678);
   padding: 1rem 30%;
   box-sizing: border-box;
   justify-content: space-between;
+  z-index: 900;
+  border-bottom: 1px solid #e2e8f0;
+  backdrop-filter: blur(10px);
   // border-bottom: 1px solid #6b6b6ba6;
-  .logout {
-    color: white;
-  }
+  color: black;
 `;
 
 export default function Navigator() {
@@ -57,7 +59,7 @@ export default function Navigator() {
             <>
               {" "}
               <HStack>
-                <Text color={"white"}>
+                <Text color={"black"}>
                   {session.data?.user.nickname !== null &&
                     session.data?.user.nickname}{" "}
                   님
