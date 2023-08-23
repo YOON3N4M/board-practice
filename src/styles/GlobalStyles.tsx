@@ -35,7 +35,7 @@ const style = css`
 
   a {
     text-decoration: none;
-    color: white;
+    color: black;
   }
   //스크롤바 스타일링
   *::-webkit-scrollbar {

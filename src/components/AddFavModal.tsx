@@ -331,7 +331,7 @@ export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
             <ButtonGroup mb={"15px"}>
               <Button
                 onClick={() => setAllMember(true)}
-                bgColor={"green.100"}
+                bgColor={"rgb(219, 237, 219)"}
                 size={"xs"}
               >
                 전체선택
@@ -353,12 +353,13 @@ export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
                     setSelectedMember(prev => [...prev, member]);
                   }
                 }
-                const selectedColor = isExist ? "green.100" : "";
+                const selectedColor = isExist ? "rgb(219, 237, 219)" : "";
                 return (
                   <Badge
                     bgColor={selectedColor}
                     onClick={memberClick}
                     cursor={"pointer"}
+                    p={"3px 9px"}
                   >
                     {member}
                   </Badge>
