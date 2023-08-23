@@ -20,8 +20,11 @@ const style = css`
   }
 
   html {
+    font-family: "S-CoreDream-3Light";
     // background-color: #000000;
     //margin: 0;
+  }
+  * {
     font-family: "S-CoreDream-3Light";
   }
   body {

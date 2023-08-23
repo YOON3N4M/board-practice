@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import PanelContents from "./PanelContents";
 import { useRouter } from "next/router";
 import { IoIosArrowBack } from "react-icons/io";
+import { BiHomeAlt2 } from "react-icons/bi";
+import { Box, Divider, Flex, VStack } from "@chakra-ui/react";
 
 const FloatingContainer = styled.div<{ heightvalue: string }>`
   display: flex;
@@ -19,11 +21,12 @@ const SideNavigatorContainer = styled.div<{ heightvalue: string }>`
   max-height: ${props => props.heightvalue};
   background-color: #ffffffc5;
   z-index: 1100;
-  padding: 100px 5px;
-  button {
-    margin-bottom: 30px;
-  }
+  padding: 50px 0px;
+
   border-right: 1px solid #e2e8f0;
+  button {
+    font-size: 15px;
+  }
 `;
 
 const PanelContainer = styled(motion.div)<{ heightvalue: string }>`
@@ -76,21 +79,29 @@ export default function SideNavigator({
     <>
       <FloatingContainer heightvalue={`${ContainerHeightValue}px`}>
         <SideNavigatorContainer heightvalue={`${ContainerHeightValue}px`}>
-          <button name="홈" onClick={event => onMenuClick(event)}>
-            홈
-          </button>
-          <button name="멤버" onClick={event => onMenuClick(event)}>
-            멤버
-          </button>
-          <button name="검색" onClick={event => onMenuClick(event)}>
-            검색
-          </button>
-          <button name="테마" onClick={event => onMenuClick(event)}>
-            테마
-          </button>
-          <button name="설정" onClick={event => onMenuClick(event)}>
-            설정
-          </button>
+          <VStack spacing={"30px"}>
+            <Flex direction={"column"}>
+              <button name="홈" onClick={event => onMenuClick(event)}>
+                홈
+              </button>
+              <Divider borderColor={"gray.500"} mt={"15px"} />
+            </Flex>
+
+            <VStack spacing={"30px"}>
+              <button name="멤버" onClick={event => onMenuClick(event)}>
+                멤버
+              </button>
+              <button name="검색" onClick={event => onMenuClick(event)}>
+                검색
+              </button>
+              <button name="테마" onClick={event => onMenuClick(event)}>
+                테마
+              </button>
+              <button name="설정" onClick={event => onMenuClick(event)}>
+                설정
+              </button>
+            </VStack>
+          </VStack>
         </SideNavigatorContainer>
         <AnimatePresence>
           {isPanelOn && (
