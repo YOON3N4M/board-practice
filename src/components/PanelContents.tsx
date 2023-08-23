@@ -13,7 +13,7 @@ const PanelWarp = styled.div`
   .panel-title {
     h2 {
       text-align: center;
-      border-bottom: 1px solid #696262c3;
+      border-bottom: 1px solid #e2e8f0;
       margin: 0;
       padding: 20px 0;
     }
@@ -24,7 +24,7 @@ export const PaddingBox = styled.div`
   display: flex;
   //background-color: #6962627a;
   padding: 5px 10px;
-  border-bottom: 1px solid #6962627a;
+  border-bottom: 1px solid #e2e8f0;
   .user-profile-image-box {
     display: flex;
     align-items: center;

@@ -48,13 +48,15 @@ model Theme {
 model Favorite {
   id          Int      @id @default(autoincrement())
   name        String
+  placeName   String?
   theme       Theme    @relation(fields: [themeId], references: [id])
   themeId     Int
   address     String
   participants String
-  //memo
-  //photo
+  //memo?
+  //photo?
   //author
+  //date?
   notes       Note[]
 }
 
