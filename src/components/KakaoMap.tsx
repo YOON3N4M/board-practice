@@ -61,6 +61,7 @@ export default function KakaoMap() {
     centerCoords,
   } = contextData;
   const [addressInfo, setAddressInfo] = useState<any>();
+  const [visible, setVisible] = useState(false);
   //이벤트 버블링 현상때문에 작동에 제한을 두기 위함.
 
   function onMapClick(mouseEvent: any) {
@@ -90,12 +91,16 @@ export default function KakaoMap() {
         contextData.setSelectedAddress("-");
       }
     };
+
     geocoder.coord2Address(coords.lng, coords.lat, callback);
   }
 
   //useEffect 수정예정
   useEffect(() => {
     getAddressByCoords();
+    setTimeout(() => {
+      setVisible(true);
+    }, 1000);
   }, [coords]);
 
   return (
@@ -112,45 +117,29 @@ export default function KakaoMap() {
         {coords && (
           <>
             {" "}
-            <MapMarker position={coords} />
-            <CustomOverlayMap // 커스텀 오버레이를 표시할 Container
-              // 커스텀 오버레이가 표시될 위치입니다
-              position={coords}
-              // 커스텀 오버레이가에 대한 확장 옵션
-              xAnchor={0.3}
-              yAnchor={0.91}
-            >
-              <SimpleAddressBox
-                setCoords={setCoords}
-                setIsOtherComponentOn={setIsOtherComponentOn}
-                addressInfo={addressInfo}
-                setAddressInfo={setAddressInfo}
-              />
-            </CustomOverlayMap>
+            {visible && (
+              <>
+                {" "}
+                <MapMarker position={coords} onClick={() => setVisible(true)} />
+                <CustomOverlayMap // 커스텀 오버레이를 표시할 Container
+                  // 커스텀 오버레이가 표시될 위치입니다
+                  position={coords}
+                  // 커스텀 오버레이가에 대한 확장 옵션
+                  xAnchor={0.5}
+                  yAnchor={0.5}
+                >
+                  <SimpleAddressBox
+                    setCoords={setCoords}
+                    setIsOtherComponentOn={setIsOtherComponentOn}
+                    addressInfo={addressInfo}
+                    setAddressInfo={setAddressInfo}
+                  />
+                </CustomOverlayMap>
+              </>
+            )}
           </>
         )}
         {/* 여기에 테스트 코드 넣고 테스트 해보기*/}
-        {testPositionArr.length !== 0
-          ? testPositionArr.map((position: PositionT) => (
-              <MapMarker
-                key={position.title}
-                title={position.title}
-                position={position.coords}
-                image={{
-                  src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
-                  size: {
-                    width: 24,
-                    height: 35,
-                  },
-                }}
-                onClick={() => {
-                  setSelectedModal(MODAL_TYPE_SHOW_POSITION);
-                  setIsModalOn(true);
-                  setSelectedPosition(position);
-                }}
-              />
-            ))
-          : null}
       </Map>
     </>
   );
