@@ -5,8 +5,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  const { groupId, userId } = req.body;
   if (req.method === "POST") {
-    const { groupId, userId } = req.body;
     try {
       const membership = await prisma.membership.create({
         data: {
@@ -18,6 +18,22 @@ export default async function handler(
     } catch (err) {
       res.status(500).json({ message: "500, 등록 실패" });
       console.log(err);
+    }
+  }
+  if (req.method === "GET") {
+    try {
+      const getMembershipArr = await prisma.membership.findMany({
+        where: {
+          userId: userId,
+        },
+        include: {
+          group: true,
+        },
+      });
+      const groups = getMembershipArr.map(membership => membership.group);
+      res.status(200).json({ groupArr: groups });
+    } catch (err) {
+      res.status(500).json({ message: "500, 등록 실패" });
     }
   }
 }

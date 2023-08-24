@@ -51,3 +51,13 @@ export interface SearchResultT {
   x: string;
   y: string;
 }
+
+// 실제 적용할 타입
+
+export interface GroupT {
+  id: number;
+  name: string;
+  map_info?: string;
+  group_cover: string;
+  group_leader: string;
+}
