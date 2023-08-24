@@ -24,9 +24,11 @@ const style = css`
     // background-color: #000000;
     //margin: 0;
   }
+
   * {
     font-family: "S-CoreDream-3Light";
   }
+
   body {
     width: 100%;
     margin: 0 0;
@@ -37,12 +39,21 @@ const style = css`
     text-decoration: none;
     color: black;
   }
+
   //스크롤바 스타일링
   *::-webkit-scrollbar {
     width: 5px;
     background-color: #ffffff;
   }
   *::-webkit-scrollbar-thumb {
+    background-color: #b4b4b4;
+    border-radius: 10px;
+  }
+  .horizontal-scroll::-webkit-scrollbar {
+    height: 5px;
+    background-color: #ffffff;
+  }
+  .horizontal-scroll::-webkit-scrollbar-thumb {
     background-color: #b4b4b4;
     border-radius: 10px;
   }

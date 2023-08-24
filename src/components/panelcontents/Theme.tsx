@@ -2,6 +2,7 @@ import { ThemeT } from "@/@types/types";
 import { StateContext } from "@/util/StateContext";
 import { useState, useContext } from "react";
 import { PaddingBox } from "../PanelContents";
+import { Input, Button, HStack } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import axios from "axios";
 
@@ -50,8 +51,20 @@ export default function Theme() {
       <PaddingBox>
         {isOnAdd ? (
           <form onSubmit={addNewTheme}>
-            <input onChange={handleInputChange} value={newThemeName} />
-            <button type="submit">추가</button>
+            <HStack>
+              <Input
+                display={"inline"}
+                onChange={handleInputChange}
+                value={newThemeName}
+              />
+              <Button
+                type="submit"
+                backgroundColor={"blue.800"}
+                color={"white"}
+              >
+                추가
+              </Button>
+            </HStack>
           </form>
         ) : (
           <button onClick={() => setIsOnAdd(true)}>새 테마 추가하기 +</button>

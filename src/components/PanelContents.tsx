@@ -3,6 +3,7 @@ import Search from "./panelcontents/Search";
 import Member from "./panelcontents/Member";
 import Setting from "./panelcontents/Setting";
 import Theme from "./panelcontents/Theme";
+import TimeLine from "./panelcontents/TimeLine";
 
 const PanelWarp = styled.div`
   width: 100%;
@@ -65,6 +66,7 @@ export default function PanelContents({
           검색: <Search />,
           테마: <Theme />,
           설정: <Setting />,
+          타임라인: <TimeLine />,
         }[selectedContents]
       }
     </PanelWarp>

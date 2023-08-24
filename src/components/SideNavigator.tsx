@@ -100,6 +100,9 @@ export default function SideNavigator({
               <button name="설정" onClick={event => onMenuClick(event)}>
                 설정
               </button>
+              <button name="타임라인" onClick={event => onMenuClick(event)}>
+                타임라인
+              </button>
             </VStack>
           </VStack>
         </SideNavigatorContainer>
