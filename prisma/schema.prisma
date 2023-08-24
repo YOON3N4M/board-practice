@@ -20,8 +20,8 @@ model Appuser {
 model Group {
   id          Int          @id @default(autoincrement())
   name        String
-  map_info    String
-  themes      Theme[]
+  map_info    String?
+  //themes      Theme[]
   group_leader String
 
   memberships Membership[]
@@ -40,7 +40,7 @@ model Membership {
 model Theme {
   id        Int          @id @default(autoincrement())
   name      String
-  group     Group        @relation(fields: [groupId], references: [id])
+ // group     Group        @relation(fields: [groupId], references: [id])
   groupId   Int
   favorites Favorite[]
 }
@@ -53,10 +53,10 @@ model Favorite {
   themeId     Int
   address     String
   participants String
-  //memo?
-  //photo?
-  //author
-  //date?
+  memo   String?
+  photo String?
+  author String?
+  date String?
   notes       Note[]
 }
 
