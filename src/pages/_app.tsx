@@ -5,6 +5,8 @@ import AuthContext from "@/context/AuthContext";
 
 export const API_URL_USER_DATA = "/api/user-data";
 export const API_URL_CHANGE_NICKNAME = "/api/nickname";
+export const API_URL_CREATE_GROUP = "/api/group";
+export const API_URL_CREATE_MEMBERSHIP = "/api/membership";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
