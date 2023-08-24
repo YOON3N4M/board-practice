@@ -2,12 +2,20 @@ import styled from "@emotion/styled";
 import { AuthForm, AuthFormWrapper, FormBox } from "./register";
 import { useEffect, useState } from "react";
 import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
   Box,
   Button,
   Center,
   Flex,
   FormLabel,
   Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalOverlay,
   Radio,
   RadioGroup,
   Stack,
@@ -19,11 +27,14 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import { API_URL_CREATE_GROUP, API_URL_CREATE_MEMBERSHIP } from "./_app";
+import { BiParty } from "react-icons/bi";
+import { useRouter } from "next/router";
 
 const FadeBox = chakra(motion.div, {});
 
 export default function CreateGroup() {
   const session: any = useSession();
+  const router = useRouter();
 
   const [isVisibleDetail, setIsVisibleDetail] = useState(false);
   const [groupName, setGroupName] = useState("");
@@ -31,6 +42,7 @@ export default function CreateGroup() {
   const [cover, setCover] = useState("색상");
   const [color, setColor] = useState("#397FB5");
   const [isColorPickerOn, setIsColorPickerOn] = useState(false);
+  const [isResultModalOn, setIsResultModalOn] = useState(false);
 
   async function createGroupOnDB() {
     const groupRef = {
@@ -52,7 +64,7 @@ export default function CreateGroup() {
     };
     const membershipRes = await axios
       .post(API_URL_CREATE_MEMBERSHIP, membershipRef)
-      .then(() => console.log("멤버십 등록 완료"));
+      .then(() => setIsResultModalOn(true));
 
     console.log(groupRes);
   }
@@ -68,6 +80,13 @@ export default function CreateGroup() {
       setCover("색상");
     }
   }, [cover]);
+
+  function onClickModalClose() {
+    setIsResultModalOn(false);
+    setTimeout(() => {
+      router.push("/group");
+    }, 500);
+  }
 
   console.log(session);
   return (
@@ -139,6 +158,42 @@ export default function CreateGroup() {
           </Flex>
         </Flex>
       </Center>
+      <Modal
+        isOpen={isResultModalOn}
+        onClose={() => setIsResultModalOn(false)}
+        isCentered
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalBody>
+            <Alert
+              status="success"
+              variant="subtle"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              textAlign="center"
+              height="200px"
+              bgColor={"white"}
+            >
+              <BiParty size={"5em"} />
+              <AlertTitle mt={4} mb={1} fontSize="lg">
+                그룹이 성공적으로 등록 되었습니다.
+              </AlertTitle>
+              <AlertDescription>그룹 화면으로 이동합니다.</AlertDescription>
+            </Alert>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              bgColor={"blue.800"}
+              color={"white"}
+              onClick={onClickModalClose}
+            >
+              확인
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 }
