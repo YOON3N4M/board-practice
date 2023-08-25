@@ -341,7 +341,7 @@ export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
               </Button>
             </ButtonGroup>
             <HStack flexWrap={"wrap"} wordBreak={"break-word"} mb={"15px"}>
-              {sampleMember.map(member => {
+              {sampleMember.map((member, idx) => {
                 const isExist = selectedMember.includes(member);
                 function memberClick() {
                   if (isExist) {
@@ -356,6 +356,7 @@ export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
                 const selectedColor = isExist ? "rgb(219, 237, 219)" : "";
                 return (
                   <Badge
+                    key={idx}
                     bgColor={selectedColor}
                     onClick={memberClick}
                     cursor={"pointer"}
