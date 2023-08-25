@@ -1,4 +1,9 @@
-import { MapDataT, PositionT, coordsT } from "@/@types/types";
+import {
+  MapDataT,
+  MembershipAPIParams,
+  PositionT,
+  coordsT,
+} from "@/@types/types";
 import KakaoMap from "@/components/KakaoMap";
 import AddFavModal from "@/components/AddFavModal";
 import SideNavigator from "@/components/SideNavigator";
@@ -8,6 +13,7 @@ import { StateContext } from "@/util/StateContext";
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import styled from "@emotion/styled";
+import { API_URL_CREATE_MEMBERSHIP } from "@/pages/_app";
 
 const MapContainer = styled.div<{ heightvalue: string }>`
   width: 100vw;
@@ -66,19 +72,19 @@ export default function Map() {
     kakaoMapScript.addEventListener("load", onLoadKakaoAPI);
   }
 
-  async function getMapDataFromDB() {
-    const response = await axios
-      .get(API_URL_MAP)
-      .then(res => setMapDataFromDB(res.data));
-
-    //test코드임
-    const responseTest = await axios
-      .get("http://localhost:4000/positions/")
-      .then(res => setTestPositionArr(res.data));
+  async function getMembersFromDB() {
+    const params: MembershipAPIParams = {
+      groupId: 6,
+      requestType: 2,
+    };
+    const res = await axios
+      .get(API_URL_CREATE_MEMBERSHIP, { params: params })
+      .then(res => console.log(res));
   }
+
   useEffect(() => {
     setHTMLHeight();
-    // getMapDataFromDB();
+    getMembersFromDB();
     setScriptLoad();
   }, []);
 

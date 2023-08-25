@@ -20,7 +20,7 @@ import { useRouter } from "next/router";
 import { FiPlus } from "react-icons/fi";
 import { API_URL_CREATE_MEMBERSHIP } from "../_app";
 import { useState, useEffect } from "react";
-import { GroupT } from "@/@types/types";
+import { GroupT, MembershipAPIParams } from "@/@types/types";
 
 export default function Group() {
   const navigate = useRouter();
@@ -29,17 +29,22 @@ export default function Group() {
   const [ownGroup, setOwnGroup] = useState<GroupT[]>([]);
 
   async function getOwnGroupByDB() {
-    console.log("??");
-    const userId = session.data?.user?.id;
+    const params: MembershipAPIParams = {
+      userId: session.data?.user?.id,
+      requestType: 1,
+    };
 
     const res = await axios
-      .get(API_URL_CREATE_MEMBERSHIP, userId)
+      .get(API_URL_CREATE_MEMBERSHIP, { params: params })
       .then(res => setOwnGroup(res.data.groupArr));
   }
 
   useEffect(() => {
+    if (session.status === "unauthenticated" || session.status === "loading")
+      return;
+
     getOwnGroupByDB();
-  }, []);
+  }, [session.status]);
 
   return (
     <>
@@ -104,9 +109,9 @@ export default function Group() {
           </Card>
 
           {ownGroup.length !== 0 &&
-            ownGroup.map(group => (
+            ownGroup.map((group, idx) => (
               <Card
-                key={group.id}
+                key={idx}
                 borderRadius={"4px"}
                 shadow={""}
                 bgColor="whiteAlpha.800"
