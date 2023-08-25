@@ -27,6 +27,7 @@ model Group {
 
   //그룹 생성일도 있으면 좋을듯
   memberships Membership[]
+  invite Invite[]
 }
 
 model Membership {
@@ -114,4 +115,12 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Invite {
+  inviteCode String @unique
+  groupId Int
+   group  Group  @relation(fields: [groupId], references: [id])
+  expired String
+
 }
