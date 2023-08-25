@@ -61,3 +61,9 @@ export interface GroupT {
   group_cover: string;
   group_leader: string;
 }
+export interface MembershipAPIParams {
+  groupId?: number;
+  userId?: string;
+  /**1은 로그인 유저가 속한 그룹 (userId) , 2는 그룹에 속한 유저 (groupId) */
+  requestType?: number;
+}
