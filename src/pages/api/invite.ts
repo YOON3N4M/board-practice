@@ -30,5 +30,20 @@ export default async function handler(
     } catch (err) {
       res.status(500).json({ message: "500, 등록 실패" });
     }
+  } else if (req.method === "GET") {
+    const { inviteId }: any = req.query;
+
+    try {
+      const invite = await prisma.invite.findUnique({
+        where: {
+          inviteCode: inviteId,
+        },
+        include: {
+          group: true,
+        },
+      });
+
+      res.status(200).json({ message: "200, 등록 성공", group: invite?.group });
+    } catch (err) {}
   }
 }

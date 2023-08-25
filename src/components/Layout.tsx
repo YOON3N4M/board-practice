@@ -21,7 +21,6 @@ export default function Layout({ children }: React.PropsWithChildren) {
   const router = useRouter();
   const isMapPage = router.asPath.includes("/map");
   const session: any = useSession();
-  console.log(isMapPage);
   //로그인 이후 닉네임 여부 확인 로직
 
   function checkIsExistNicknameDB() {
