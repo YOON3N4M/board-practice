@@ -292,6 +292,7 @@ export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
 
   console.log(selectedDate);
   console.log(selectedMember);
+
   return (
     <>
       <Modal isOpen={isModalOn} onClose={() => setIsModalOn(false)}>

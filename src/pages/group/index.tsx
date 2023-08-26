@@ -19,6 +19,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { FiPlus } from "react-icons/fi";
 import { API_URL_CREATE_MEMBERSHIP } from "../_app";
+
 import { useState, useEffect, useContext } from "react";
 import { GroupT, MembershipAPIParams } from "@/@types/types";
 import { GroupContext } from "@/util/StateContext";
@@ -26,6 +27,7 @@ import { GroupContext } from "@/util/StateContext";
 export default function Group() {
   const navigate = useRouter();
   const session: any = useSession();
+
   const contextData = useContext(GroupContext);
 
   const [ownGroup, setOwnGroup] = useState<GroupT[]>([]);

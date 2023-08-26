@@ -1,11 +1,12 @@
-import Navigator from "./Navigator";
 import { GroupContext, StateContext } from "@/util/StateContext";
+
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
 import GlobalStyles from "@/styles/GlobalStyles";
 import styled from "@emotion/styled";
 import { useSession } from "next-auth/react";
+import Navigator from "./Navigator";
 
 const AppContainer = styled.div<{ $isMapPage: boolean }>`
   margin: 0;
@@ -25,6 +26,7 @@ export default function Layout({ children }: React.PropsWithChildren) {
   const [groupData, setGroupData] = useState({});
 
   //로그인 이후 닉네임 여부 확인 로직
+
   function checkIsExistNicknameDB() {
     if (session.data === undefined) return;
     //로그인 상태가 아니면 탈출
@@ -51,6 +53,7 @@ export default function Layout({ children }: React.PropsWithChildren) {
       <GroupContext.Provider value={{ groupData, setGroupData }}>
         <AppContainer $isMapPage={isMapPage}>{children}</AppContainer>
       </GroupContext.Provider>
+      <AppContainer $isMapPage={isMapPage}>{children}</AppContainer>
     </>
   );
 }
