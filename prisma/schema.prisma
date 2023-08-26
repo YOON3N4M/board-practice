@@ -45,15 +45,15 @@ model Theme {
 model Favorite {
   id           Int     @id @default(autoincrement())
   name         String
-  groupid      Int
   themeId      Int
   address      String
   participants String
   author       String?
   date         String?
   memo         String?
-  photo        Bytes?
+  photo        String?
   placeName    String?
+  img          Bytes?
   theme        Theme   @relation(fields: [themeId], references: [id])
   notes        Note[]
 }
