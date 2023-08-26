@@ -88,7 +88,12 @@ export default function Member() {
 
   return (
     <>
-      <Button onClick={() => setIsModalOn(true)} m={"0 auto"} mt={"15px"}>
+      <Button
+        p={"10px 10px"}
+        onClick={() => setIsModalOn(true)}
+        m={"0 auto"}
+        mt={"15px"}
+      >
         새 멤버 초대하기
       </Button>
       {sampleMember.length !== 0 &&

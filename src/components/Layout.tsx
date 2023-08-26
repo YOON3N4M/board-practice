@@ -1,5 +1,5 @@
 import Navigator from "./Navigator";
-import { StateContext } from "@/util/StateContext";
+import { GroupContext, StateContext } from "@/util/StateContext";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
@@ -21,8 +21,10 @@ export default function Layout({ children }: React.PropsWithChildren) {
   const router = useRouter();
   const isMapPage = router.asPath.includes("/map");
   const session: any = useSession();
-  //로그인 이후 닉네임 여부 확인 로직
+  //그룹 데이터 관련 state 추후 리덕스로 빼야 할 수도....
+  const [groupData, setGroupData] = useState({});
 
+  //로그인 이후 닉네임 여부 확인 로직
   function checkIsExistNicknameDB() {
     if (session.data === undefined) return;
     //로그인 상태가 아니면 탈출
@@ -46,7 +48,9 @@ export default function Layout({ children }: React.PropsWithChildren) {
     <>
       <GlobalStyles />
       <Navigator />
-      <AppContainer $isMapPage={isMapPage}>{children}</AppContainer>
+      <GroupContext.Provider value={{ groupData, setGroupData }}>
+        <AppContainer $isMapPage={isMapPage}>{children}</AppContainer>
+      </GroupContext.Provider>
     </>
   );
 }

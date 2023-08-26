@@ -19,12 +19,14 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { FiPlus } from "react-icons/fi";
 import { API_URL_CREATE_MEMBERSHIP } from "../_app";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { GroupT, MembershipAPIParams } from "@/@types/types";
+import { GroupContext } from "@/util/StateContext";
 
 export default function Group() {
   const navigate = useRouter();
   const session: any = useSession();
+  const contextData = useContext(GroupContext);
 
   const [ownGroup, setOwnGroup] = useState<GroupT[]>([]);
 
@@ -46,9 +48,10 @@ export default function Group() {
     getOwnGroupByDB();
   }, [session.status]);
 
+  console.log(contextData);
   return (
     <>
-      <Flex paddingX="30%" direction="column">
+      <Flex m={"0 auto"} direction="column">
         <Tabs mt="15px" mb="30px" position="relative" variant="unstyled">
           <TabList color="gray">
             <Tab _selected={{ color: "black", fontWeight: "bold" }}>
@@ -67,7 +70,7 @@ export default function Group() {
         </Tabs>
         <HStack
           spacing={"15px"}
-          width={"100%"}
+          width={"800px"}
           bgColor={"gray.200"}
           paddingY={"30px"}
           pl="10px"

@@ -45,4 +45,14 @@ const defaultState = {
   setCenterCoords: undefined,
 };
 
+const groupState = {
+  groupData: undefined,
+  setGroupData: undefined,
+};
+
+interface GroupStateT {
+  groupData: any;
+  setGroupData: any;
+}
 export const StateContext = createContext<StateContextT>(defaultState);
+export const GroupContext = createContext<GroupStateT>(groupState);
