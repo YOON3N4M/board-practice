@@ -7,84 +7,78 @@ datasource db {
   url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
-//appuser는 삭제 예정
-model Appuser {
-  id        Int        @id @default(autoincrement())
-  username  String
-  nickname  String @unique
-  account   String @unique
-  password  String
 
+model Appuser {
+  id       Int    @id @default(autoincrement())
+  username String
+  nickname String @unique
+  account  String @unique
+  password String
 }
 
 model Group {
-  id          Int          @id @default(autoincrement())
-  name        String
-  map_info    String?
-  //themes      Theme[]
-  group_cover String
+  id           Int          @id @default(autoincrement())
+  name         String
+  map_info     String?
+  group_cover  String
   group_leader String
-
-  //그룹 생성일도 있으면 좋을듯
-  memberships Membership[]
-  invite Invite[]
+  memberships  Membership[]
+  invite       Invite[]
 }
 
 model Membership {
-  user   User   @relation(fields: [userId], references: [id])
-  userId String 
-  group  Group  @relation(fields: [groupId], references: [id])
-  groupId Int 
+  userId  String
+  groupId Int
+  user    User   @relation(fields: [userId], references: [id])
+  group   Group  @relation(fields: [groupId], references: [id])
 
   @@id([userId, groupId])
-
 }
 
 model Theme {
-  id        Int          @id @default(autoincrement())
+  id        Int        @id @default(autoincrement())
   name      String
- // group     Group        @relation(fields: [groupId], references: [id])
   groupId   Int
   favorites Favorite[]
 }
 
 model Favorite {
-  id          Int      @id @default(autoincrement())
-  name        String
-  placeName   String?
-  theme       Theme    @relation(fields: [themeId], references: [id])
-  themeId     Int
-  address     String
+  id           Int     @id @default(autoincrement())
+  name         String
+  themeId      Int
+  address      String
   participants String
-  memo   String?
-  photo String?
-  author String?
-  date String?
-  notes       Note[]
+  author       String?
+  date         String?
+  memo         String?
+  photo        String?
+  placeName    String?
+  img          Bytes?
+  theme        Theme   @relation(fields: [themeId], references: [id])
+  notes        Note[]
 }
 
 model Note {
-  id          Int       @id @default(autoincrement())
-  favorite    Favorite  @relation(fields: [favoriteId], references: [id])
-  favoriteId  Int
-  content     String
+  id         Int      @id @default(autoincrement())
+  favoriteId Int
+  content    String
+  favorite   Favorite @relation(fields: [favoriteId], references: [id])
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -98,15 +92,15 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  nickname      String?
-  email         String?   @unique
+  id            String       @id @default(cuid())
+  email         String?      @unique
   emailVerified DateTime?
   image         String?
+  name          String?
+  nickname      String?
   accounts      Account[]
   sessions      Session[]
-    memberships Membership[]
+  memberships   Membership[]
 }
 
 model VerificationToken {
@@ -119,8 +113,7 @@ model VerificationToken {
 
 model Invite {
   inviteCode String @unique
-  groupId Int
-   group  Group  @relation(fields: [groupId], references: [id])
-  expired String
-
+  groupId    Int
+  expired    String
+  group      Group  @relation(fields: [groupId], references: [id])
 }
