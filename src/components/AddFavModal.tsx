@@ -293,6 +293,7 @@ export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
   console.log(selectedDate);
   console.log(selectedMember);
   console.log("배포를 위해");
+  console.log("배포를 위해2");
 
   return (
     <>
