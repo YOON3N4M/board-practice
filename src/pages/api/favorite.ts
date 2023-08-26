@@ -5,15 +5,23 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
   ) {
-      const { id, name, groupId} = req.body;
+      const { id, name, themeId, groupid, address, participants, author, date, memo, photo, placeName} = req.body;
       
       if (req.method === "POST") {
           try {
-        const user = await prisma.theme.create({
+        const user = await prisma.favorite.create({
           data: {
             id: id, 
             name: name, 
-            groupId: groupId
+            groupid: groupid,
+            themeId: themeId, 
+            address: address, 
+            participants: participants, 
+            author: author, 
+            date: date, 
+            memo: memo, 
+            photo: photo, 
+            placeName: placeName
           },
         });
         res.status(200).json({ message: "200, 등록 성공" });
@@ -22,28 +30,24 @@ export default async function handler(
       }
     } else if (req.method === "GET") {
       try {
-        const allUsers = await prisma.theme.findMany();
+        const allUsers = await prisma.favorite.findMany();
         res.status(200).json(allUsers);
       } catch (err) {
         res.status(500).json({ message: "500, 가져오기 실패" });
       }
     } else if (req.method === "DELETE") {
       try {
-        const deleteTarget = await prisma.theme.delete({
-          
+        const deleteTarget = await prisma.favorite.delete({
           where: {
-            id: id, 
-            //name: name, 
-            //groupId: groupId
+            //user_id: req.body,
           },
-          
         });
         res.status(200).json({ message: "200, 삭제 성공" });
       } catch (err) {
         res.status(500).json({ message: "500, 등록 실패" });
       }
     } else if (req.method === "PUT") {
-      const updateUser = await prisma.theme.update({
+      const updateUser = await prisma.favorite.update({
         where: {
           //user_id: id,
         },
