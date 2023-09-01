@@ -48,9 +48,6 @@ const MainPageImage = styled.div`
 export default function Home() {
   const session = useSession();
 
-  console.log(process.env.NEXTAUTH_URL);
-  console.log(process.env.GOOGLE_CLIENT_SECRET);
-  console.log(process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET);
   return (
     <>
       <StyledSection backgroundcolor="#e5bc7187" flexdirection="column">
