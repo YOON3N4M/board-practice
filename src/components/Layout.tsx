@@ -53,7 +53,6 @@ export default function Layout({ children }: React.PropsWithChildren) {
       <GroupContext.Provider value={{ groupData, setGroupData }}>
         <AppContainer $isMapPage={isMapPage}>{children}</AppContainer>
       </GroupContext.Provider>
-      <AppContainer $isMapPage={isMapPage}>{children}</AppContainer>
     </>
   );
 }

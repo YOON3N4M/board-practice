@@ -49,9 +49,6 @@ export default function Navigator() {
                 <Link legacyBehavior href="/group">
                   <a>그룹</a>
                 </Link>
-                <Link legacyBehavior href="/map/123">
-                  <a>맵</a>
-                </Link>
               </>
             )}
           </Flex>

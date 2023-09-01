@@ -20,8 +20,6 @@ export default function Register() {
         break;
     }
   }
-
-  console.log(process.env.GOOGLE_CLIENT_ID);
   return (
     <AuthFormWrapper>
       <FormBox>

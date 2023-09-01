@@ -50,7 +50,12 @@ export default function Group() {
     getOwnGroupByDB();
   }, [session.status]);
 
-  console.log(contextData);
+  function handleDragStart() {}
+
+  function handleDrag() {}
+
+  function handleDragEnd() {}
+
   return (
     <>
       <Flex m={"0 auto"} direction="column">
