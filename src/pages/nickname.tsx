@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { AuthForm, AuthFormWrapper, FormBox } from "./register";
 import { useSession } from "next-auth/react";
 import {
@@ -21,11 +21,13 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { API_URL_CHANGE_NICKNAME } from "./_app";
 import { BiParty } from "react-icons/bi";
+import { GroupContext } from "@/util/StateContext";
 
 export default function Nickname() {
   const { data: session, status, update } = useSession();
   const router = useRouter();
-
+  const context = useContext(GroupContext);
+  const { inviteURL } = context;
   const [nickname, setNickname] = useState("");
   const [isModalOn, setIsModalOn] = useState(false);
 
@@ -64,7 +66,11 @@ export default function Nickname() {
   function onClickModalClose() {
     setIsModalOn(false);
     setTimeout(() => {
-      router.push("/group");
+      if (inviteURL === undefined) {
+        router.push("/group");
+      } else {
+        router.push(`http://localhost:3000/invite/${inviteURL}`);
+      }
     }, 500);
   }
 
@@ -73,6 +79,8 @@ export default function Nickname() {
   }, [session]);
 
   console.log(session);
+
+  console.log(inviteURL);
   return (
     <>
       {status === "authenticated" && (
