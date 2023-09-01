@@ -48,11 +48,15 @@ const defaultState = {
 const groupState = {
   groupData: undefined,
   setGroupData: undefined,
+  inviteURL: undefined,
+  setInviteURL: undefined,
 };
 
 interface GroupStateT {
   groupData: any;
   setGroupData: any;
+  inviteURL: any;
+  setInviteURL: any;
 }
 export const StateContext = createContext<StateContextT>(defaultState);
 export const GroupContext = createContext<GroupStateT>(groupState);

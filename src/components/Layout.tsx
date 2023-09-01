@@ -24,6 +24,7 @@ export default function Layout({ children }: React.PropsWithChildren) {
   const session: any = useSession();
   //그룹 데이터 관련 state 추후 리덕스로 빼야 할 수도....
   const [groupData, setGroupData] = useState({});
+  const [inviteURL, setInviteURL] = useState();
 
   //로그인 이후 닉네임 여부 확인 로직
 
@@ -50,7 +51,9 @@ export default function Layout({ children }: React.PropsWithChildren) {
     <>
       <GlobalStyles />
       <Navigator />
-      <GroupContext.Provider value={{ groupData, setGroupData }}>
+      <GroupContext.Provider
+        value={{ groupData, setGroupData, inviteURL, setInviteURL }}
+      >
         <AppContainer $isMapPage={isMapPage}>{children}</AppContainer>
       </GroupContext.Provider>
     </>

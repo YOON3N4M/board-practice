@@ -49,6 +49,18 @@ const style = css`
     background-color: #b4b4b4;
     border-radius: 10px;
   }
+  .horizontal-scroll {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+  }
   .horizontal-scroll::-webkit-scrollbar {
     height: 5px;
     background-color: #ffffff;

@@ -20,17 +20,21 @@ import { useRouter } from "next/router";
 import { FiPlus } from "react-icons/fi";
 import { API_URL_CREATE_MEMBERSHIP } from "../_app";
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { GroupT, MembershipAPIParams } from "@/@types/types";
 import { GroupContext } from "@/util/StateContext";
 
 export default function Group() {
   const navigate = useRouter();
   const session: any = useSession();
-
+  const groupHorizonScroll: any = useRef(null);
   const contextData = useContext(GroupContext);
 
   const [ownGroup, setOwnGroup] = useState<GroupT[]>([]);
+  const [isScrollActive, setIsScrollActive] = useState(false);
+  const [prevScrollX, setPrevScrollX] = useState(0);
+  const [isDrag, setIsDrag] = useState(false);
+  const [clickedScrollX, setClickedScrollX] = useState(0);
 
   async function getOwnGroupByDB() {
     const params: MembershipAPIParams = {
@@ -50,11 +54,35 @@ export default function Group() {
     getOwnGroupByDB();
   }, [session.status]);
 
-  function handleDragStart() {}
+  //횡 스크롤 관련 로직
+  function onGroupCardClick(group: any) {
+    if (isDrag) return;
+    navigate.push(`/map/${group.id}`);
+  }
 
-  function handleDrag() {}
+  function handleDragStart(event: any) {
+    setIsScrollActive(true);
+    setPrevScrollX(event.clientX);
+  }
 
-  function handleDragEnd() {}
+  function handleDrag(event: any) {
+    if (!isScrollActive) return;
+
+    const maxWidth = groupHorizonScroll?.current?.scrollWidth;
+    const xDifference = clickedScrollX - event.clientX;
+    if (xDifference !== 0) {
+      setIsDrag(true);
+    }
+    groupHorizonScroll.current.scrollLeft = prevScrollX + xDifference;
+  }
+
+  function handleDragEnd() {
+    setTimeout(() => {
+      setClickedScrollX(groupHorizonScroll.current.scrollLeft);
+      setIsScrollActive(false);
+      setIsDrag(false);
+    }, 0);
+  }
 
   return (
     <>
@@ -84,6 +112,10 @@ export default function Group() {
           overflowX={"scroll"}
           mb={"25px"}
           className="horizontal-scroll"
+          ref={groupHorizonScroll}
+          onMouseDown={e => handleDragStart(e)}
+          onMouseUp={handleDragEnd}
+          onMouseMove={e => handleDrag(e)}
         >
           <Card
             borderRadius={"4px"}
@@ -131,7 +163,7 @@ export default function Group() {
                 boxShadow={"md"}
                 cursor={"pointer"}
                 onClick={() => {
-                  navigate.push(`/map/${group.id}`);
+                  onGroupCardClick(group);
                 }}
               >
                 <Center w={"100%"} h={"100%"}>

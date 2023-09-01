@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { useState, useEffect, useRef, useContext } from "react";
-import { StateContext } from "@/util/StateContext";
+import { GroupContext, StateContext } from "@/util/StateContext";
 import { useSession } from "next-auth/react";
 import { Box, Button } from "@chakra-ui/react";
 
@@ -47,7 +47,10 @@ const MainPageImage = styled.div`
 
 export default function Home() {
   const session = useSession();
+  const context = useContext(GroupContext);
+  const { inviteURL } = context;
 
+  console.log(inviteURL);
   return (
     <>
       <StyledSection backgroundcolor="#e5bc7187" flexdirection="column">
