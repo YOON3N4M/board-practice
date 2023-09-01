@@ -18,6 +18,7 @@ export default NextAuth({
       },
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async session({ session }: any) {
       const exUser = await prisma.user.findUnique({
