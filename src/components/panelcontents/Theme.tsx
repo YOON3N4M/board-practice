@@ -40,7 +40,7 @@ export default function Theme() {
       .post(API_URL_THEME, themeTemp)
       .then((res: any) => {
         console.log("테마 생성 완료");
-        setGroupTheme((prev): any => [...prev, themeTemp]);
+        setGroupTheme((prev: any) => [...prev, themeTemp]);
       })
       .catch((err: any) => console.log(err));
   }

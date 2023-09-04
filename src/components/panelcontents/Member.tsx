@@ -61,8 +61,11 @@ export default function Member() {
     };
 
     try {
+      const protocol = window.location.protocol;
+      const host = window.location.host;
+
       const res = await axios.post(API_URL_INVITE, data);
-      const URL = `http://localhost:3000/invite/${inviteCode}`;
+      const URL = `${protocol}//${host}/invite/${inviteCode}`;
       setInviteURL(URL);
     } catch (err: any) {
       if (err.response && err.response.status === 400) {
