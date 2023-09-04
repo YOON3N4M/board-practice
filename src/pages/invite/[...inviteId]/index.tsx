@@ -1,8 +1,11 @@
-import { API_URL_INVITE } from "@/pages/_app";
+import { API_URL_CREATE_MEMBERSHIP, API_URL_INVITE } from "@/pages/_app";
 import { GroupContext } from "@/util/StateContext";
 import {
+  Alert,
+  AlertIcon,
   Box,
   Button,
+  Flex,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -27,12 +30,13 @@ interface groupData {
 
 export default function Invite() {
   const router: any = useRouter();
-  const session = useSession();
+  const session: any = useSession();
   const context = useContext(GroupContext);
   const { setInviteURL } = context;
   const [inviteId, setInviteId] = useState("");
   const [groupData, setGroupData] = useState<groupData>();
   const [isModalOn, setIsModalOn] = useState(false);
+  const [status, setStatus] = useState<any>("");
 
   async function CheckInviteIdOnDB() {
     const params = {
@@ -47,6 +51,29 @@ export default function Invite() {
     setTimeout(() => {
       router.push("/");
     }, 500);
+  }
+
+  async function createMembershipOnDB() {
+    if (groupData === undefined) return;
+
+    const membershipRef = {
+      groupId: groupData.id,
+      userId: session?.data?.user?.id,
+    };
+    const membershipRes = await axios
+      .post(API_URL_CREATE_MEMBERSHIP, membershipRef)
+      .then(() => {
+        setStatus("success");
+        setTimeout(() => {
+          router.push("/group");
+        }, 3000);
+      })
+      .catch(err => {
+        setStatus("warning");
+        setTimeout(() => {
+          router.push("/group");
+        }, 3000);
+      });
   }
 
   // params 유효성 확인 로직
@@ -67,6 +94,8 @@ export default function Invite() {
       router.push("/login");
     }
   }, [session]);
+
+  console.log(groupData);
   return (
     <>
       {session.status === "unauthenticated" ? null : (
@@ -94,20 +123,39 @@ export default function Invite() {
                     {groupData.name}
                   </Text>
                   <Text mb={"30px"}>{groupData.name} 그룹에 참여 합니다.</Text>
-                  <Text fontSize={"sm"} color={"gray.400"}>
-                    창을 닫으면 홈으로 이동합니다.
-                  </Text>
-                  <Text></Text>
+                  {status === "" ? (
+                    <Text fontSize={"sm"} color={"gray.400"}>
+                      창을 닫으면 홈으로 이동합니다.
+                    </Text>
+                  ) : (
+                    <Alert
+                      status={status}
+                      borderRadius={"4px"}
+                      flexDirection={"column"}
+                    >
+                      <Flex>
+                        <AlertIcon />
+                        {status === "success"
+                          ? "가입이 성공적으로 완료 되었습니다."
+                          : "이미 가입된 그룹 입니다."}
+                      </Flex>
+                      <Text fontSize={"sm"} color={"gray.500"}>
+                        3 초후 그룹으로 이동합니다.
+                      </Text>
+                    </Alert>
+                  )}
                 </ModalBody>
 
                 <ModalFooter>
-                  <Button
-                    colorScheme="blue"
-                    mr={3}
-                    onClick={() => setIsModalOn(false)}
-                  >
-                    가입
-                  </Button>
+                  {status === "success" ? null : (
+                    <Button
+                      colorScheme="blue"
+                      mr={3}
+                      onClick={() => createMembershipOnDB()}
+                    >
+                      가입
+                    </Button>
+                  )}
                 </ModalFooter>
               </ModalContent>
             </Modal>

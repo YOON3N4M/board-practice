@@ -41,7 +41,7 @@ export default async function handler(
         const groups = getMembershipArr.map(membership => membership.group);
         res.status(200).json({ groupArr: groups });
       } catch (err) {
-        res.status(500).json({ message: "500, 등록 실패" });
+        res.status(500).json({ message: "500, 등록 실패", err: err });
       }
     } else {
       //2면 로그인한 계정기준 계정이 속한 그룹을 모두 가져옴
