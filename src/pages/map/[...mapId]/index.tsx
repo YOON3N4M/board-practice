@@ -36,7 +36,7 @@ export default function Map() {
 
   //useContext로 관리할 상태
   const [isModalOn, setIsModalOn] = useState(false);
-  const [mapDataFromDB, setMapDataFromDB] = useState<MapDataT[]>([]);
+  const [mapDataFromDB, setMapDataFromDB] = useState();
   const [coords, setCoords] = useState<coordsT>();
   const [testPositionArr, setTestPositionArr] = useState<PositionT[]>([]);
   const [selectedModal, setSelectedModal] = useState("");
@@ -48,6 +48,7 @@ export default function Map() {
     lng: 127.9281444,
   });
   const [groupMember, setGroupMember] = useState();
+
   //자동으로 스크롤이 없는 지도를 만들기 위해 선언 (근데 가끔 스크롤이 생김 왜지?)
   function setHTMLHeight() {
     const naviElement: HTMLElement | null = document.querySelector(".navi");
@@ -84,7 +85,10 @@ export default function Map() {
     };
     const res = await axios
       .get(API_URL_CREATE_MEMBERSHIP, { params: params })
-      .then(res => setGroupMember(res.data.userArr));
+      .then(res => {
+        setGroupMember(res.data.userArr);
+        setMapDataFromDB(res.data.group);
+      });
   }
 
   useEffect(() => {

@@ -1,11 +1,12 @@
 import styled from "@emotion/styled";
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useContext } from "react";
+import { motion, AnimatePresence, animate } from "framer-motion";
 import PanelContents from "./PanelContents";
 import { useRouter } from "next/router";
 import { IoIosArrowBack } from "react-icons/io";
 import { BiHomeAlt2 } from "react-icons/bi";
-import { Box, Divider, Flex, VStack } from "@chakra-ui/react";
+import { Box, Divider, Flex, VStack, Text, Center } from "@chakra-ui/react";
+import { StateContext } from "@/util/StateContext";
 
 const FloatingContainer = styled.div<{ heightvalue: string }>`
   display: flex;
@@ -59,6 +60,8 @@ export default function SideNavigator({
   const [isPanelOn, setIsPanelOn] = useState(false);
   const [selectedContents, setSelectedContents] = useState("");
 
+  const { mapDataFromDB } = useContext(StateContext);
+
   function onMenuClick(event: any) {
     //홈 클릭시 홈으로 이동만
     if (event.target.name === "홈") {
@@ -75,15 +78,38 @@ export default function SideNavigator({
     }
   }
 
+  console.log(mapDataFromDB);
   return (
     <>
       <FloatingContainer heightvalue={`${ContainerHeightValue}px`}>
         <SideNavigatorContainer heightvalue={`${ContainerHeightValue}px`}>
           <VStack spacing={"30px"}>
-            <Flex direction={"column"}>
+            <Flex direction={"column"} position={"relative"}>
               <button name="홈" onClick={event => onMenuClick(event)}>
                 홈
               </button>
+              <AnimatePresence>
+                {!isPanelOn && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    key="group-title"
+                  >
+                    <Center
+                      position={"absolute"}
+                      left={"100px"}
+                      minWidth={"150px"}
+                      bgColor={"white"}
+                      p={"13px 10px"}
+                      borderRadius={"4px"}
+                      boxShadow={"md"}
+                    >
+                      <Text>{mapDataFromDB && mapDataFromDB.name}</Text>
+                    </Center>
+                  </motion.div>
+                )}
+              </AnimatePresence>
               <Divider borderColor={"gray.500"} mt={"15px"} />
             </Flex>
 

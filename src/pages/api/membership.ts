@@ -52,10 +52,14 @@ export default async function handler(
           },
           include: {
             user: true,
+            group: true,
           },
         });
-        const users = getMembershipArr.map(membership => membership.user);
-        res.status(200).json({ userArr: users });
+        const users = getMembershipArr.map(
+          (membership): any => membership.user
+        );
+        const group = getMembershipArr.map(membership => membership.group);
+        res.status(200).json({ userArr: users, group: group[0] });
       } catch (err) {
         res.status(500).json({ message: "500, 등록 실패" });
       }
