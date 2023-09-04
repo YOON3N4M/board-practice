@@ -21,6 +21,7 @@ import {
 import axios from "axios";
 import { API_URL_INVITE } from "@/pages/_app";
 import { PiClipboardTextBold } from "react-icons/pi";
+import { UserT } from "@/@types/types";
 
 const UserProfileImage = styled.div`
   width: 40px;
@@ -30,7 +31,7 @@ const UserProfileImage = styled.div`
 `;
 
 export default function Member() {
-  const { mapDataFromDB } = useContext(StateContext);
+  const { groupMember } = useContext(StateContext);
   const [isModalOn, setIsModalOn] = useState(false);
   const [inviteURL, setInviteURL] = useState("");
   const [isCopyOk, setIsCopyOk] = useState(false);
@@ -96,16 +97,15 @@ export default function Member() {
       >
         새 멤버 초대하기
       </Button>
-      {sampleMember.length !== 0 &&
-        sampleMember.map((nameTemp: string) => (
-          <PaddingBox key={nameTemp}>
+      {groupMember.length !== 0 &&
+        groupMember.map((member: UserT) => (
+          <PaddingBox key={member.id}>
             <div className="user-profile-image-box">
               <UserProfileImage />
             </div>
             <div className="member-right">
               <div>
-                <Text fontSize={"15px"}>{nameTemp}</Text>
-                {nameTemp === "세남" && <span>👑</span>}
+                <Text fontSize={"15px"}>{member.nickname}</Text>
               </div>
               <div>
                 <Text fontSize={"11px"}>등록한 장소 : 1</Text>

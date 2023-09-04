@@ -67,3 +67,12 @@ export interface MembershipAPIParams {
   /**1은 로그인 유저가 속한 그룹 (userId) , 2는 그룹에 속한 유저 (groupId) */
   requestType?: number;
 }
+
+export interface UserT {
+  email: string;
+  emailVerified?: any;
+  id?: string;
+  image?: string;
+  name?: string;
+  nickname?: string;
+}

@@ -14,6 +14,7 @@ import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import styled from "@emotion/styled";
 import { API_URL_CREATE_MEMBERSHIP } from "@/pages/_app";
+import { useRouter } from "next/router";
 
 const MapContainer = styled.div<{ heightvalue: string }>`
   width: 100vw;
@@ -27,6 +28,8 @@ export const MODAL_TYPE_ADD_POSITION = "addPosition";
 export const MODAL_TYPE_SHOW_POSITION = "showPosition";
 
 export default function Map() {
+  const router: any = useRouter();
+
   const [ContainerHeightValue, setContainerHeightValue] = useState(0);
   const [isScriptLoading, setIsScriptLoading] = useState(true);
   const [selectedAddress, setSelectedAddress] = useState("");
@@ -44,6 +47,7 @@ export default function Map() {
     lat: 35.98818056,
     lng: 127.9281444,
   });
+  const [groupMember, setGroupMember] = useState();
   //자동으로 스크롤이 없는 지도를 만들기 위해 선언 (근데 가끔 스크롤이 생김 왜지?)
   function setHTMLHeight() {
     const naviElement: HTMLElement | null = document.querySelector(".navi");
@@ -73,20 +77,25 @@ export default function Map() {
   }
 
   async function getMembersFromDB() {
+    console.log(typeof router?.query?.mapId[0]);
     const params: MembershipAPIParams = {
-      groupId: 6,
+      groupId: router?.query?.mapId[0],
       requestType: 2,
     };
     const res = await axios
       .get(API_URL_CREATE_MEMBERSHIP, { params: params })
-      .then(res => console.log(res));
+      .then(res => setGroupMember(res.data.userArr));
   }
 
   useEffect(() => {
     setHTMLHeight();
-    getMembersFromDB();
     setScriptLoad();
   }, []);
+
+  useEffect(() => {
+    if (router?.query?.mapId === undefined) return;
+    getMembersFromDB();
+  }, [router?.query]);
 
   return (
     <>
@@ -112,6 +121,7 @@ export default function Map() {
             setSelectedPlace,
             centerCoords,
             setCenterCoords,
+            groupMember,
           }}
         >
           {" "}

@@ -21,6 +21,7 @@ interface StateContextT {
   setSelectedPlace: any;
   centerCoords: any;
   setCenterCoords: any;
+  groupMember: any;
 }
 
 const defaultState = {
@@ -43,6 +44,7 @@ const defaultState = {
   setSelectedPlace: undefined,
   centerCoords: undefined,
   setCenterCoords: undefined,
+  groupMember: undefined,
 };
 
 const groupState = {
