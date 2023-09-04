@@ -2,57 +2,24 @@ import prisma from "@/util/prismaClient";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
-    req: NextApiRequest,
-    res: NextApiResponse
-  ) {
-      const { id, name, groupId} = req.body;
-      
-      if (req.method === "POST") {
-          try {
-        const user = await prisma.theme.create({
-          data: {
-            id: id, 
-            name: name, 
-            groupId: groupId
-          },
-        });
-        res.status(200).json({ message: "200, 등록 성공" });
-      } catch (err) {
-        res.status(500).json({ message: "500, 등록 실패" });
-      }
-    } else if (req.method === "GET") {
-      try {
-        const allUsers = await prisma.theme.findMany();
-        res.status(200).json(allUsers);
-      } catch (err) {
-        res.status(500).json({ message: "500, 가져오기 실패" });
-      }
-    } else if (req.method === "DELETE") {
-      try {
-        const deleteTarget = await prisma.theme.delete({
-          
-          where: {
-            id: id, 
-            //name: name, 
-            //groupId: groupId
-          },
-          
-        });
-        res.status(200).json({ message: "200, 삭제 성공" });
-      } catch (err) {
-        res.status(500).json({ message: "500, 등록 실패" });
-      }
-    } else if (req.method === "PUT") {
-      const updateUser = await prisma.theme.update({
-        where: {
-          //user_id: id,
-        },
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  console.log(req.body);
+  const { themeTitle, groupId, marker } = req.body;
+
+  if (req.method === "POST") {
+    try {
+      const theme = await prisma.theme.create({
         data: {
-          //해당부분도 수정 해야함
-          // user_name: "Franz",
+          name: themeTitle,
+          groupId,
+          marker,
         },
       });
-    } else {
-      res.status(405).json({ message: "405, 메소드가 없어" });
+      res.status(200).json({ message: "200, 등록 성공" });
+    } catch (err) {
+      res.status(500).json({ message: "500, 등록 실패" });
     }
   }
+}

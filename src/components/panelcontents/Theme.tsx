@@ -5,6 +5,7 @@ import { PaddingBox } from "../PanelContents";
 import { Input, Button, HStack } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import axios from "axios";
+import { API_URL_THEME } from "@/pages/_app";
 
 const BookmarkImage = styled.div`
   width: 40px;
@@ -18,34 +19,33 @@ export default function Theme() {
   const [newThemeName, setNewThemeName] = useState("");
 
   const { mapDataFromDB, setMapDataFromDB } = useContext(StateContext);
-
+  const [groupTheme, setGroupTheme] = useState<any>([]);
   function handleInputChange(event: any) {
     setNewThemeName(event.target.value);
   }
 
+  const STAR_MARKER =
+    "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+
+  const MARKER_SIZE_REGULAR = { width: 24, height: 35 };
   async function addNewTheme(event: any) {
     event.preventDefault();
-    const themeTemp: ThemeT = {
+    const themeTemp = {
       themeTitle: newThemeName,
-      marker: {
-        //마커 이미지 db에 올리고 해당 부분 선택할 수 있게 수정 해야함.
-        src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
-        size: { width: 24, height: 35 },
-      },
-      positions: [],
-    };
-
-    const updatedMapData = {
-      ...mapDataFromDB[0],
-      //id 실제 db로 바꾸면 필요함 id 값
-      theme: [...mapDataFromDB[0].theme, themeTemp],
+      marker: STAR_MARKER,
+      groupId: mapDataFromDB.id,
     };
 
     await axios
-      .put(`http://localhost:4000/map/1`, updatedMapData)
-      .then((res: any) => setMapDataFromDB(updatedMapData))
+      .post(API_URL_THEME, themeTemp)
+      .then((res: any) => {
+        console.log("테마 생성 완료");
+        setGroupTheme((prev): any => [...prev, themeTemp]);
+      })
       .catch((err: any) => console.log(err));
   }
+
+  console.log(mapDataFromDB.id);
   return (
     <>
       <PaddingBox>
@@ -70,27 +70,25 @@ export default function Theme() {
           <button onClick={() => setIsOnAdd(true)}>새 테마 추가하기 +</button>
         )}
       </PaddingBox>
-      {mapDataFromDB[0]?.theme?.length !== 0 ? (
-        mapDataFromDB[0]?.theme?.map((theme: any) => (
-          <PaddingBox key={theme.themeTitle}>
-            <div className="user-profile-image-box">
-              <BookmarkImage />
-            </div>
-            <div className="member-right">
-              <div>
-                <span className="user-name">{theme.themeTitle}</span>
+      {groupTheme.length !== 0
+        ? groupTheme.map((theme: any) => (
+            <PaddingBox key={theme.themeTitle}>
+              <div className="user-profile-image-box">
+                <BookmarkImage />
               </div>
-              <div>
-                <span className="user-added">
-                  장소 : {theme?.positions?.length} 개
-                </span>
+              <div className="member-right">
+                <div>
+                  <span className="user-name">{theme.themeTitle}</span>
+                </div>
+                <div>
+                  <span className="user-added">
+                    장소 : {theme?.positions?.length} 개
+                  </span>
+                </div>
               </div>
-            </div>
-          </PaddingBox>
-        ))
-      ) : (
-        <h1>없어</h1>
-      )}
+            </PaddingBox>
+          ))
+        : null}
     </>
   );
 }

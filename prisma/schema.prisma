@@ -41,7 +41,7 @@ model Theme {
   name      String
   groupId   Int
   favorites Favorite[]
-  
+  marker String
 }
 
 model Favorite {
