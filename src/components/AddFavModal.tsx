@@ -141,6 +141,7 @@ export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
     selectedModal,
     selectedPosition,
     selectedPlace,
+    groupMember,
   } = useContext(StateContext);
 
   const sampleAddress = "서울특별시 강동구 어쩌구저쩌구";
@@ -224,8 +225,8 @@ export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
               </Button>
             </ButtonGroup>
             <HStack flexWrap={"wrap"} wordBreak={"break-word"} mb={"15px"}>
-              {sampleMember.map((member, idx) => {
-                const isExist = selectedMember.includes(member);
+              {groupMember.map((member, idx) => {
+                const isExist = false; // selectedMember.includes(member);
                 function memberClick() {
                   if (isExist) {
                     const filterd = selectedMember.filter(
@@ -245,7 +246,7 @@ export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
                     cursor={"pointer"}
                     p={"3px 9px"}
                   >
-                    {member}
+                    {member.nickname}
                   </Badge>
                 );
               })}

@@ -35,7 +35,8 @@ export default function Map() {
   const [ContainerHeightValue, setContainerHeightValue] = useState(0);
   const [isScriptLoading, setIsScriptLoading] = useState(true);
   const [selectedAddress, setSelectedAddress] = useState("");
-
+  //  로그인, 그룹의 회원인지 여부
+  const [isLoggined, setIsLoggined] = useState(false);
   //useContext로 관리할 상태
   const [isModalOn, setIsModalOn] = useState(false);
   const [mapDataFromDB, setMapDataFromDB] = useState();
@@ -117,26 +118,43 @@ export default function Map() {
     setScriptLoad();
   }, []);
 
+  function checkLoginStatus() {
+    if (session.status === "loading") {
+      return;
+    } else if (session.status === "unauthenticated") {
+      alert("로그인이 필요한 서비스 입니다.");
+    } else if (session.status === "authenticated") {
+      setIsLoggined(true);
+    }
+  }
+
+  //로그인 체크
+  useEffect(() => {
+    checkLoginStatus();
+  }, [session.status]);
+
   useEffect(() => {
     if (router?.query?.mapId === undefined) return;
     getMembersFromDB();
   }, [router?.query]);
 
-  useEffect(() => {
-    if (session.status === "unauthenticated") {
-      alert("로그인이 필요한 기능 입니다.");
-    }
+  // useEffect(() => {
+  //   if (session.status === "unauthenticated") {
+  //     alert("로그인이 필요한 기능 입니다.");
+  //   }
 
-    if (session.status === "unauthenticated" || session.status === "loading")
-      return;
-    checkUserGroupVerify();
-  }, [session.status]);
+  //   if (session.status === "unauthenticated" || session.status === "loading")
+  //     return;
+  //   checkUserGroupVerify();
+  // }, [session.status]);
 
-  useEffect(() => {
-    if (isGroupMember === false) {
-      alert("자신이 가입된 그룹에만 접근 할 수 있습니다.");
-    }
-  }, [isGroupMember]);
+  // useEffect(() => {
+  //   if (isGroupMember === false) {
+  //     alert("자신이 가입된 그룹에만 접근 할 수 있습니다.");
+  //   }
+  // }, [isGroupMember]);
+
+  console.log(session.status);
   return (
     <>
       <MapContainer heightvalue={`${ContainerHeightValue}px`}>

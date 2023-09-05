@@ -96,7 +96,7 @@ export default function Group() {
                 내 그룹
               </Tab>
               <Tab _selected={{ color: "black", fontWeight: "bold" }}>
-                테스트1
+                즐겨찾기
               </Tab>
             </TabList>
             <TabIndicator
