@@ -6,7 +6,7 @@ import {
 import { StateContext } from "@/util/StateContext";
 import axios from "axios";
 import { motion } from "framer-motion";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styled from "@emotion/styled";
 import { BiMap } from "react-icons/bi";
 import { AiOutlineCamera } from "react-icons/ai";
@@ -31,6 +31,7 @@ import {
   Textarea,
   VStack,
 } from "@chakra-ui/react";
+import { API_URL_THEME } from "@/pages/_app";
 
 const ModalBackground = styled(motion.div)`
   position: absolute;
@@ -129,6 +130,7 @@ export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
   const [selectedMember, setSelectedMember] = useState<string[]>([]);
   const [positionMemo, setPositionMemo] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
+  const [groupTheme, setGroupTheme] = useState([]);
 
   const {
     mapDataFromDB,
@@ -140,139 +142,20 @@ export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
     selectedPosition,
     selectedPlace,
   } = useContext(StateContext);
-  if (!isModalOn) return null;
-
-  // 테스트 후 이름 바꿔야함
-  function AddPositionModal() {
-    async function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
-      event.preventDefault();
-
-      const positionTemp: PositionT = {
-        title: positionTitle,
-        address: selectedAddress,
-        coords: coords,
-        // #issue id, addedBy 변경 해야함
-        id: 0,
-        addedBy: "세남", //issue: 이 부분 로그인 한 사람 자동 입력 (로그인 구현 후)
-        member: selectedMember,
-        positionMemo: positionMemo,
-      };
-
-      // const updatedMapData ={
-      //   ...mapDataFromDB[0],
-      //   theme:
-      // }
-    }
-
-    function handlePositionMemoText(
-      event: React.ChangeEvent<HTMLTextAreaElement>
-    ) {
-      setPositionMemo(event.target.value);
-    }
-
-    function handleTitleInput(event: React.ChangeEvent<HTMLInputElement>) {
-      setPositionTitle(event.target.value);
-
-      const positionTemp: PositionT = {
-        title: positionTitle,
-        address: selectedAddress,
-        coords: coords,
-        // #issue id, addedBy 변경 해야함
-        id: 2,
-        addedBy: "세남",
-        member: selectedMember,
-        positionMemo: positionMemo,
-      };
-
-      console.log(positionTemp);
-    }
-
-    function handleSelectedMember(event: any) {
-      const justClickedName: string = event.target.value;
-      const isExist = selectedMember.includes(justClickedName);
-      if (!isExist) {
-        setSelectedMember(prev => [...prev, justClickedName]);
-      } else {
-        const removedArr = selectedMember.filter(
-          name => name !== justClickedName
-        );
-        setSelectedMember(removedArr);
-      }
-    }
-
-    return (
-      <>
-        <form onSubmit={handleFormSubmit} className="submit-position-form">
-          <label>테마</label>
-          <select>
-            {/* {mapDataFromDB[0].theme.map((theme: ThemeT, idx: number) => (
-              <option key={idx}>{theme.themeTitle}</option>
-            ))} */}
-            <option>여행</option>
-          </select>
-          <label>장소의 별명</label>
-          <input
-            value={positionTitle}
-            onChange={handleTitleInput}
-            placeholder="장소의 별명을 입력하세요"
-            required
-          ></input>
-          <label>주소</label>
-          <span>{selectedAddress}</span>
-          <label>참여 멤버</label>
-          <div className="flex-row-div">
-            {selectedMember.map(name => (
-              <span key={name}>{name}</span>
-            ))}
-          </div>
-          <span></span>
-          <div className="flex-row-div">
-            <button
-              onClick={() => setSelectedMember(mapDataFromDB[0].member)}
-              type="button"
-            >
-              전체 선택
-            </button>
-            <button onClick={() => setSelectedMember([])} type="button">
-              전체 선택해제
-            </button>
-          </div>
-          <div className="flex-row-div">
-            {/* {mapDataFromDB[0].member.map((name: string, idx: number) => (
-              <NotionticMemberButton
-                onClick={handleSelectedMember}
-                key={idx}
-                type="button"
-                value={name}
-              >
-                {name}
-              </NotionticMemberButton>
-            ))} */}
-          </div>
-          <label>사진</label>
-          <button type="button">사진 추가하기</button>
-          <label>메모</label>
-          <textarea
-            onChange={handlePositionMemoText}
-            value={positionMemo}
-          ></textarea>
-
-          <button type="submit">등록하기!</button>
-        </form>
-      </>
-    );
-  }
-
-  //issue 모달 선택 (sideNavigator랑 다른 방식의 조건부 렌더링인데 추후 둘중 한가지 방식으로 통일 요망)
-  let ModalContents;
-
-  switch (selectedModal) {
-    case MODAL_TYPE_ADD_POSITION:
-      ModalContents = <AddPositionModal />;
-      break;
-  }
 
   const sampleAddress = "서울특별시 강동구 어쩌구저쩌구";
+
+  // 테스트 후 이름 바꿔야함
+  async function getThemeFromDB() {
+    const params = { groupId: mapDataFromDB.id };
+    const res = await axios.get(API_URL_THEME, { params: params });
+    console.log(res.data.theme);
+    setGroupTheme(res.data.theme);
+  }
+
+  useEffect(() => {
+    getThemeFromDB();
+  }, []);
 
   function setAllMember(isSetAll: boolean) {
     if (isSetAll) {
@@ -285,15 +168,11 @@ export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
   function consoleRef() {
     const dataRef = {};
   }
+
   function handleDateChange(e: any) {
     setSelectedDate(e.target.value);
     console.log(typeof selectedDate, selectedDate);
   }
-
-  console.log(selectedDate);
-  console.log(selectedMember);
-  console.log("배포를 위해");
-  console.log("배포를 위해2");
 
   return (
     <>
@@ -307,9 +186,9 @@ export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
           <ModalBody>
             <FormLabel>테마</FormLabel>
             <Select size="sm" mb={"15px"}>
-              {sampleTheme.map((theme, idx) => (
-                <option key={idx} value={theme}>
-                  {theme}
+              {groupTheme.map((theme: any, idx) => (
+                <option key={idx} value={theme.name}>
+                  {theme.name}
                 </option>
               ))}
             </Select>

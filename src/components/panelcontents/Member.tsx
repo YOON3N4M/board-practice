@@ -22,6 +22,7 @@ import axios from "axios";
 import { API_URL_INVITE } from "@/pages/_app";
 import { PiClipboardTextBold } from "react-icons/pi";
 import { UserT } from "@/@types/types";
+import { useRouter } from "next/router";
 
 const UserProfileImage = styled.div`
   width: 40px;
@@ -31,6 +32,7 @@ const UserProfileImage = styled.div`
 `;
 
 export default function Member() {
+  const router: any = useRouter();
   const { groupMember } = useContext(StateContext);
   const [isModalOn, setIsModalOn] = useState(false);
   const [inviteURL, setInviteURL] = useState("");
@@ -56,7 +58,7 @@ export default function Member() {
     const inviteCode = generateRandomString();
     const data = {
       inviteCode: inviteCode,
-      groupId: 6,
+      groupId: Number(router?.query?.mapId[0]),
       expired: "example",
     };
 
@@ -90,6 +92,7 @@ export default function Member() {
     copyToClipBoard(inviteURL);
   }
 
+  console.log(typeof router?.query?.mapId[0]);
   return (
     <>
       <Button

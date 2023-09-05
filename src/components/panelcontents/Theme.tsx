@@ -1,6 +1,6 @@
 import { ThemeT } from "@/@types/types";
 import { StateContext } from "@/util/StateContext";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { PaddingBox } from "../PanelContents";
 import { Input, Button, HStack } from "@chakra-ui/react";
 import styled from "@emotion/styled";
@@ -31,12 +31,12 @@ export default function Theme() {
   async function addNewTheme(event: any) {
     event.preventDefault();
     const themeTemp = {
-      themeTitle: newThemeName,
+      name: newThemeName,
       marker: STAR_MARKER,
       groupId: mapDataFromDB.id,
     };
 
-    await axios
+    const res = await axios
       .post(API_URL_THEME, themeTemp)
       .then((res: any) => {
         console.log("테마 생성 완료");
@@ -45,7 +45,16 @@ export default function Theme() {
       .catch((err: any) => console.log(err));
   }
 
-  console.log(mapDataFromDB.id);
+  async function getThemeFromDB() {
+    const params = { groupId: mapDataFromDB.id };
+    const res = await axios.get(API_URL_THEME, { params: params });
+    setGroupTheme(res.data.theme);
+  }
+
+  useEffect(() => {
+    if (mapDataFromDB.id === undefined) return;
+    getThemeFromDB();
+  }, [mapDataFromDB]);
   return (
     <>
       <PaddingBox>
@@ -72,13 +81,13 @@ export default function Theme() {
       </PaddingBox>
       {groupTheme.length !== 0
         ? groupTheme.map((theme: any) => (
-            <PaddingBox key={theme.themeTitle}>
+            <PaddingBox key={theme.name}>
               <div className="user-profile-image-box">
                 <BookmarkImage />
               </div>
               <div className="member-right">
                 <div>
-                  <span className="user-name">{theme.themeTitle}</span>
+                  <span className="user-name">{theme.name}</span>
                 </div>
                 <div>
                   <span className="user-added">

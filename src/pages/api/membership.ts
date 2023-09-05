@@ -22,7 +22,9 @@ export default async function handler(
     }
   } else if (req.method === "GET") {
     const { groupId, requestType, userId } = req.query;
-    const test: any = userId;
+    const anyUserId: any = userId;
+    const anyGroupId: any = Number(groupId);
+    console.log(anyGroupId, anyUserId);
     const toNumberParams = {
       numberGroupId: Number(groupId),
       numberRequestType: Number(requestType),
@@ -32,7 +34,7 @@ export default async function handler(
       try {
         const getMembershipArr = await prisma.membership.findMany({
           where: {
-            userId: test,
+            userId: anyUserId,
           },
           include: {
             group: true,
@@ -43,7 +45,7 @@ export default async function handler(
       } catch (err) {
         res.status(500).json({ message: "500, 등록 실패", err: err });
       }
-    } else {
+    } else if (toNumberParams.numberRequestType === 2) {
       //2면 로그인한 계정기준 계정이 속한 그룹을 모두 가져옴
       try {
         const getMembershipArr = await prisma.membership.findMany({
@@ -61,6 +63,19 @@ export default async function handler(
         const group = getMembershipArr.map(membership => membership.group);
         res.status(200).json({ userArr: users, group: group[0] });
       } catch (err) {
+        res.status(500).json({ message: "500, 등록 실패" });
+      }
+    } else if (toNumberParams.numberRequestType === 3) {
+      try {
+        const getMembership = await prisma.membership.findMany({
+          where: {
+            userId: anyUserId,
+            groupId: anyGroupId,
+          },
+        });
+        console.log(getMembership);
+        res.status(200).json({ res: getMembership });
+      } catch {
         res.status(500).json({ message: "500, 등록 실패" });
       }
     }

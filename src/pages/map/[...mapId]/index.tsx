@@ -15,6 +15,7 @@ import { useState, useEffect, useContext } from "react";
 import styled from "@emotion/styled";
 import { API_URL_CREATE_MEMBERSHIP } from "@/pages/_app";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 const MapContainer = styled.div<{ heightvalue: string }>`
   width: 100vw;
@@ -29,6 +30,7 @@ export const MODAL_TYPE_SHOW_POSITION = "showPosition";
 
 export default function Map() {
   const router: any = useRouter();
+  const session: any = useSession();
 
   const [ContainerHeightValue, setContainerHeightValue] = useState(0);
   const [isScriptLoading, setIsScriptLoading] = useState(true);
@@ -48,6 +50,7 @@ export default function Map() {
     lng: 127.9281444,
   });
   const [groupMember, setGroupMember] = useState();
+  const [isGroupMember, setIsGroupMember] = useState<undefined | boolean>();
 
   //자동으로 스크롤이 없는 지도를 만들기 위해 선언 (근데 가끔 스크롤이 생김 왜지?)
   function setHTMLHeight() {
@@ -91,6 +94,24 @@ export default function Map() {
       });
   }
 
+  async function checkUserGroupVerify() {
+    const params: MembershipAPIParams = {
+      groupId: router?.query?.mapId[0],
+      requestType: 3,
+      userId: session.data?.user?.id,
+    };
+    const response = await axios
+      .get(API_URL_CREATE_MEMBERSHIP, { params: params })
+      .then(res => {
+        console.log(res.data.res.length);
+        setIsGroupMember(res.data.res.length > 0 ? true : false);
+      })
+      .catch(() => {
+        console.log("error");
+      });
+    console.log(response);
+  }
+
   useEffect(() => {
     setHTMLHeight();
     setScriptLoad();
@@ -101,6 +122,21 @@ export default function Map() {
     getMembersFromDB();
   }, [router?.query]);
 
+  useEffect(() => {
+    if (session.status === "unauthenticated") {
+      alert("로그인이 필요한 기능 입니다.");
+    }
+
+    if (session.status === "unauthenticated" || session.status === "loading")
+      return;
+    checkUserGroupVerify();
+  }, [session.status]);
+
+  useEffect(() => {
+    if (isGroupMember === false) {
+      alert("자신이 가입된 그룹에만 접근 할 수 있습니다.");
+    }
+  }, [isGroupMember]);
   return (
     <>
       <MapContainer heightvalue={`${ContainerHeightValue}px`}>

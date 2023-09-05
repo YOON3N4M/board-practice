@@ -64,8 +64,8 @@ export interface GroupT {
 export interface MembershipAPIParams {
   groupId?: number;
   userId?: string;
-  /**1은 로그인 유저가 속한 그룹 (userId) , 2는 그룹에 속한 유저 (groupId) */
-  requestType?: number;
+  /**1은 로그인 유저가 속한 그룹 (userId) , 2는 그룹에 속한 유저 (groupId) 3은 해당 유저가 그룹에 가입 되어 있는지 */
+  requestType?: 1 | 2 | 3;
 }
 
 export interface UserT {
