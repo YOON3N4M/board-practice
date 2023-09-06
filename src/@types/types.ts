@@ -72,7 +72,8 @@ export interface UserT {
   email: string;
   emailVerified?: any;
   id?: string;
-  image?: string;
+  image: string;
   name?: string;
   nickname?: string;
+  profileColor?: string;
 }

@@ -35,6 +35,7 @@ import { API_URL_EDIT_PROFILE } from "../_app";
 import { AnimatePresence } from "framer-motion";
 import { FadeBox } from "../creategroup";
 import { SketchPicker } from "react-color";
+import { Image } from "@chakra-ui/next-js";
 
 export default function Profile() {
   const { data: session, status, update } = useSession();
@@ -192,7 +193,9 @@ export default function Profile() {
                           borderRadius={"50%"}
                           overflow={"hidden"}
                         >
-                          <img src={session?.user?.image} alt="google" />
+                          {session?.user?.image && (
+                            <Image src={session?.user?.image} alt="google" />
+                          )}
                         </Box>
                       </Center>
                     </>

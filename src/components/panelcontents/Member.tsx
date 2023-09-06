@@ -17,12 +17,15 @@ import {
   Text,
   Flex,
   AlertIcon,
+  Box,
+  Img,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { API_URL_INVITE } from "@/pages/_app";
 import { PiClipboardTextBold } from "react-icons/pi";
 import { UserT } from "@/@types/types";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 const UserProfileImage = styled.div`
   width: 40px;
@@ -107,7 +110,31 @@ export default function Member() {
         groupMember.map((member: UserT) => (
           <PaddingBox key={member.id}>
             <div className="user-profile-image-box">
-              <UserProfileImage />
+              {member.profileColor !== null ? (
+                <Box
+                  width={"40px"}
+                  height={"40px"}
+                  borderRadius={"50%"}
+                  bgColor={member.profileColor}
+                ></Box>
+              ) : (
+                <Box
+                  width={"40px"}
+                  height={"40px"}
+                  borderRadius={"50%"}
+                  bgColor={member.profileColor}
+                  overflow={"hidden"}
+                >
+                  {member.image && (
+                    <Img
+                      width={"40px"}
+                      height={"40px"}
+                      src={member.image}
+                      alt="profile"
+                    />
+                  )}
+                </Box>
+              )}
             </div>
             <div className="member-right">
               <div>

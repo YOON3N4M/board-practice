@@ -225,7 +225,7 @@ export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
               </Button>
             </ButtonGroup>
             <HStack flexWrap={"wrap"} wordBreak={"break-word"} mb={"15px"}>
-              {groupMember.map((member, idx) => {
+              {groupMember.map((member, idx): any => {
                 const isExist = false; // selectedMember.includes(member);
                 function memberClick() {
                   if (isExist) {

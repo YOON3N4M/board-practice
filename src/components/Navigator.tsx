@@ -61,7 +61,10 @@ export default function Navigator() {
                     session.data?.user.nickname}{" "}
                   님
                 </Text>
-                <button className="logout" onClick={() => signOut()}>
+                <button
+                  className="logout"
+                  onClick={() => signOut({ callbackUrl: "/" })}
+                >
                   로그아웃
                 </button>{" "}
               </HStack>
