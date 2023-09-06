@@ -1,6 +1,6 @@
 import Link from "next/link";
 import styled from "@emotion/styled";
-import { Center, Flex, HStack, Text } from "@chakra-ui/react";
+import { Button, Center, Flex, HStack, Text } from "@chakra-ui/react";
 import { signOut, useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -68,9 +68,14 @@ export default function Navigator() {
             </>
           ) : (
             <Center color="white">
-              <Link legacyBehavior href="/login">
-                <a>로그인</a>
-              </Link>
+              <Button
+                size={"sm"}
+                onClick={() => {
+                  router.push("/login");
+                }}
+              >
+                시작하기
+              </Button>
             </Center>
           )}
         </NavigatorContainer>

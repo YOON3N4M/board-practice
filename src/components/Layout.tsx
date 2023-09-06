@@ -7,6 +7,18 @@ import GlobalStyles from "@/styles/GlobalStyles";
 import styled from "@emotion/styled";
 import { useSession } from "next-auth/react";
 import Navigator from "./Navigator";
+import {
+  Button,
+  Flex,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+} from "@chakra-ui/react";
+import { routerPush } from "@/util/authUtils";
 
 const AppContainer = styled.div<{ $isMapPage: boolean }>`
   margin: 0;
@@ -25,6 +37,7 @@ export default function Layout({ children }: React.PropsWithChildren) {
   //그룹 데이터 관련 state 추후 리덕스로 빼야 할 수도....
   const [groupData, setGroupData] = useState({});
   const [inviteURL, setInviteURL] = useState();
+  const [isModalOn, setIsModalOn] = useState(false);
 
   //로그인 이후 닉네임 여부 확인 로직
 
@@ -36,11 +49,13 @@ export default function Layout({ children }: React.PropsWithChildren) {
     if (router.pathname === "/nickname") return;
 
     if (session.data.user.nickname === null) {
-      alert(
-        "원활한 서비스 이용을 위해 가입 이후 최초 닉네임 설정이 필요합니다. 닉네임 설정 화면으로 이동합니다."
-      );
-      router.push("/nickname");
+      setIsModalOn(true);
     }
+  }
+
+  function handleModalClose() {
+    setIsModalOn(false);
+    routerPush(router, "/nickname");
   }
 
   useEffect(() => {
@@ -54,6 +69,36 @@ export default function Layout({ children }: React.PropsWithChildren) {
       <GroupContext.Provider
         value={{ groupData, setGroupData, inviteURL, setInviteURL }}
       >
+        {isModalOn && (
+          <Modal
+            isOpen={isModalOn}
+            onClose={() => setIsModalOn(false)}
+            isCentered
+          >
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>프로필</ModalHeader>
+              <ModalBody>
+                원활한 서비스 이용을 위해, 최초 1회 프로필 설정이 필요합니다.
+              </ModalBody>
+              <ModalFooter>
+                <Flex alignItems={"center"} justifyContent={"center"}>
+                  <Text fontSize={"sm"} color={"gray.400"}>
+                    프로필 설정으로{" "}
+                  </Text>
+                  <Button
+                    bgColor={"blue.800"}
+                    color={"white"}
+                    onClick={() => handleModalClose()}
+                    ml={"10px"}
+                  >
+                    이동
+                  </Button>
+                </Flex>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+        )}
         <AppContainer $isMapPage={isMapPage}>{children}</AppContainer>
       </GroupContext.Provider>
     </>

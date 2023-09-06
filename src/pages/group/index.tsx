@@ -13,6 +13,13 @@ import {
   Center,
   VStack,
   Divider,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  Button,
+  ModalFooter,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
@@ -23,6 +30,7 @@ import { API_URL_CREATE_MEMBERSHIP } from "../_app";
 import { useState, useEffect, useContext, useRef } from "react";
 import { GroupT, MembershipAPIParams } from "@/@types/types";
 import { GroupContext } from "@/util/StateContext";
+import { routerPush } from "@/util/authUtils";
 
 export default function Group() {
   const router = useRouter();
@@ -35,6 +43,7 @@ export default function Group() {
   const [prevScrollX, setPrevScrollX] = useState(0);
   const [isDrag, setIsDrag] = useState(false);
   const [clickedScrollX, setClickedScrollX] = useState(0);
+  const [isModalOn, setIsModalOn] = useState(false);
 
   async function getOwnGroupByDB() {
     const params: MembershipAPIParams = {
@@ -47,10 +56,16 @@ export default function Group() {
       .then(res => setOwnGroup(res.data.groupArr));
   }
 
+  function handleModalButtonClick() {
+    setIsModalOn(false);
+    routerPush(router, "/login");
+  }
+
   useEffect(() => {
     if (session.status === "unauthenticated" || session.status === "loading") {
-      alert("로그인이 필요한 서비스 입니다.");
-      router.push("/login");
+      setIsModalOn(true);
+      //alert("로그인이 필요한 서비스 입니다.");
+      // router.push("/login");
     } else if (session.status === "authenticated") {
       getOwnGroupByDB();
     }
@@ -86,6 +101,7 @@ export default function Group() {
     }, 0);
   }
 
+  console.log(isModalOn);
   return (
     <>
       {session.status === "authenticated" && (
@@ -193,6 +209,30 @@ export default function Group() {
           </Text>
           <Divider borderBottomWidth={"3px"} borderColor={"black"} />
         </Flex>
+      )}
+      {isModalOn && (
+        <Modal
+          isOpen={isModalOn}
+          onClose={() => setIsModalOn(false)}
+          isCentered
+        >
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader></ModalHeader>
+            <ModalBody>
+              로그인이 필요한 서비스 입니다. 로그인 페이지로 이동합니다.
+            </ModalBody>
+            <ModalFooter>
+              <Button
+                bgColor={"blue.800"}
+                color={"white"}
+                onClick={() => handleModalButtonClick()}
+              >
+                이동
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
       )}
     </>
   );
