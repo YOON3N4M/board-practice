@@ -6,13 +6,14 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "PUT") {
-    const { email, nickname } = req.body;
+    const { email, nickname, color } = req.body;
 
     try {
       const user = await prisma.user.update({
         where: { email: email },
         data: {
           nickname: nickname,
+          profileColor: color !== null ? color : null,
         },
       });
       res.status(200).json({ message: "200, 등록 성공" });

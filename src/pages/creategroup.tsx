@@ -30,7 +30,7 @@ import { API_URL_CREATE_GROUP, API_URL_CREATE_MEMBERSHIP } from "./_app";
 import { BiParty } from "react-icons/bi";
 import { useRouter } from "next/router";
 
-const FadeBox = chakra(motion.div, {});
+export const FadeBox = chakra(motion.div, {});
 
 export default function CreateGroup() {
   const session: any = useSession();

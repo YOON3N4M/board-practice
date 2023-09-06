@@ -46,7 +46,7 @@ export default function Layout({ children }: React.PropsWithChildren) {
     //로그인 상태가 아니면 탈출
     if (session.status !== "authenticated") return;
     //로그인 설정 창이면 탈출
-    if (router.pathname === "/nickname") return;
+    if (router.pathname === "/profile/edit") return;
 
     if (session.data.user.nickname === null) {
       setIsModalOn(true);
@@ -55,7 +55,7 @@ export default function Layout({ children }: React.PropsWithChildren) {
 
   function handleModalClose() {
     setIsModalOn(false);
-    routerPush(router, "/nickname");
+    routerPush(router, "/profile/edit");
   }
 
   useEffect(() => {
