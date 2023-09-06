@@ -2,7 +2,7 @@ import { ThemeT } from "@/@types/types";
 import { StateContext } from "@/util/StateContext";
 import { useState, useContext, useEffect } from "react";
 import { PaddingBox } from "../PanelContents";
-import { Input, Button, HStack } from "@chakra-ui/react";
+import { Input, Button, HStack, Center, Text } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import axios from "axios";
 import { API_URL_THEME } from "@/pages/_app";
@@ -57,7 +57,7 @@ export default function Theme() {
   }, [mapDataFromDB]);
   return (
     <>
-      <PaddingBox>
+      <Center pt={"15px"}>
         {isOnAdd ? (
           <form onSubmit={addNewTheme}>
             <HStack>
@@ -65,20 +65,24 @@ export default function Theme() {
                 display={"inline"}
                 onChange={handleInputChange}
                 value={newThemeName}
+                size={"sm"}
               />
               <Button
                 type="submit"
                 backgroundColor={"blue.800"}
                 color={"white"}
+                size={"sm"}
               >
                 추가
               </Button>
             </HStack>
           </form>
         ) : (
-          <button onClick={() => setIsOnAdd(true)}>새 테마 추가하기 +</button>
+          <Button onClick={() => setIsOnAdd(true)} size={"sm"}>
+            새 테마 추가하기
+          </Button>
         )}
-      </PaddingBox>
+      </Center>
       {groupTheme.length !== 0
         ? groupTheme.map((theme: any) => (
             <PaddingBox key={theme.name}>
@@ -87,12 +91,12 @@ export default function Theme() {
               </div>
               <div className="member-right">
                 <div>
-                  <span className="user-name">{theme.name}</span>
+                  <Text fontSize={"15px"}>{theme.name}</Text>
                 </div>
                 <div>
-                  <span className="user-added">
+                  <Text fontSize={"11px"}>
                     장소 : {theme?.positions?.length} 개
-                  </span>
+                  </Text>
                 </div>
               </div>
             </PaddingBox>

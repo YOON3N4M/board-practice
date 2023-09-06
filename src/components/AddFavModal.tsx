@@ -1,4 +1,4 @@
-import { MapDataT, PositionT, ThemeT } from "@/@types/types";
+import { MapDataT, PositionT, ThemeT, UserT } from "@/@types/types";
 import {
   MODAL_TYPE_ADD_POSITION,
   MODAL_TYPE_SHOW_POSITION,
@@ -127,7 +127,7 @@ export const sampleTheme = ["여행", "카페"];
 export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
   //db에 올릴 정보
   const [positionTitle, setPositionTitle] = useState("");
-  const [selectedMember, setSelectedMember] = useState<string[]>([]);
+  const [selectedMember, setSelectedMember] = useState<UserT[]>([]);
   const [positionMemo, setPositionMemo] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [groupTheme, setGroupTheme] = useState([]);
@@ -144,8 +144,6 @@ export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
     groupMember,
   } = useContext(StateContext);
 
-  const sampleAddress = "서울특별시 강동구 어쩌구저쩌구";
-
   // 테스트 후 이름 바꿔야함
   async function getThemeFromDB() {
     const params = { groupId: mapDataFromDB.id };
@@ -160,7 +158,7 @@ export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
 
   function setAllMember(isSetAll: boolean) {
     if (isSetAll) {
-      setSelectedMember(sampleMember);
+      // setSelectedMember(sampleMember);
     } else {
       setSelectedMember([]);
     }
@@ -175,6 +173,7 @@ export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
     console.log(typeof selectedDate, selectedDate);
   }
 
+  console.log(selectedMember);
   return (
     <>
       <Modal isOpen={isModalOn} onClose={() => setIsModalOn(false)}>
@@ -225,12 +224,14 @@ export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
               </Button>
             </ButtonGroup>
             <HStack flexWrap={"wrap"} wordBreak={"break-word"} mb={"15px"}>
-              {groupMember.map((member: any, idx) => {
-                const isExist = false; // selectedMember.includes(member);
+              {groupMember.map((member: UserT, idx: number) => {
+                const isExist = selectedMember.some(
+                  selected => selected.id === member.id
+                );
                 function memberClick() {
                   if (isExist) {
                     const filterd = selectedMember.filter(
-                      selected => selected !== member
+                      selected => selected.id !== member.id
                     );
                     setSelectedMember(filterd);
                   } else {

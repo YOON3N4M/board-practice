@@ -103,6 +103,7 @@ export default function Member() {
         onClick={() => setIsModalOn(true)}
         m={"0 auto"}
         mt={"15px"}
+        size={"sm"}
       >
         새 멤버 초대하기
       </Button>
