@@ -62,10 +62,12 @@ export default function Group() {
   }
 
   useEffect(() => {
-    if (session.status === "unauthenticated" || session.status === "loading") {
-      setIsModalOn(true);
+    if (session.status === "loading") {
+      return;
       //alert("로그인이 필요한 서비스 입니다.");
       // router.push("/login");
+    } else if (session.status === "unauthenticated") {
+      setIsModalOn(true);
     } else if (session.status === "authenticated") {
       getOwnGroupByDB();
     }
