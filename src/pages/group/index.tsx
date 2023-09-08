@@ -20,6 +20,8 @@ import {
   ModalBody,
   Button,
   ModalFooter,
+  TabPanels,
+  TabPanel,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
@@ -44,6 +46,8 @@ export default function Group() {
   const [isDrag, setIsDrag] = useState(false);
   const [clickedScrollX, setClickedScrollX] = useState(0);
   const [isModalOn, setIsModalOn] = useState(false);
+  /** 1: 내 그룹, 2: 즐겨찾기 --- 즐겨찾기는 추후 변경 가능성 있음 */
+  const [selectedTabContents, setSelectedTabContents] = useState(1);
 
   async function getOwnGroupByDB() {
     const params: MembershipAPIParams = {
@@ -123,89 +127,98 @@ export default function Group() {
               bg="black"
               borderRadius="1px"
             />
-          </Tabs>
-          <HStack
-            spacing={"15px"}
-            width={"800px"}
-            bgColor={"gray.200"}
-            paddingY={"30px"}
-            pl="10px"
-            overflowX={"scroll"}
-            mb={"25px"}
-            className="horizontal-scroll"
-            ref={groupHorizonScroll}
-            onMouseDown={e => handleDragStart(e)}
-            onMouseUp={handleDragEnd}
-            onMouseMove={e => handleDrag(e)}
-          >
-            <Card
-              borderRadius={"4px"}
-              shadow={""}
-              bgColor="whiteAlpha.800"
-              minW="170px"
-              minH="180px"
-              justifyContent={"center"}
-              boxShadow={"md"}
-              cursor={"pointer"}
-              onClick={() => {
-                router.push("/creategroup");
-              }}
-            >
-              <Center w={"100%"} h={"100%"}>
-                <VStack spacing={"13px"}>
-                  <Center>
-                    <Center
-                      w="70px"
-                      h="70px"
-                      bgColor={"blackAlpha.600"}
-                      lineHeight="60px"
-                      borderRadius={"50%"}
-                    >
-                      <FiPlus size={"2em"} color="white" />
-                    </Center>
-                  </Center>
-                  <Box>
-                    <Text>새 그룹 만들기</Text>
-                  </Box>
-                </VStack>
-              </Center>
-            </Card>
-
-            {ownGroup.length !== 0 &&
-              ownGroup.map((group, idx) => (
-                <Card
-                  key={idx}
-                  borderRadius={"4px"}
-                  shadow={""}
-                  bgColor="whiteAlpha.800"
-                  minW="170px"
-                  minH="180px"
-                  justifyContent={"center"}
-                  boxShadow={"md"}
-                  cursor={"pointer"}
-                  onClick={() => {
-                    onGroupCardClick(group);
-                  }}
+            <TabPanels>
+              <TabPanel>
+                {" "}
+                <HStack
+                  spacing={"15px"}
+                  width={"800px"}
+                  bgColor={"gray.200"}
+                  paddingY={"30px"}
+                  pl="10px"
+                  overflowX={"scroll"}
+                  mb={"25px"}
+                  className="horizontal-scroll"
+                  ref={groupHorizonScroll}
+                  onMouseDown={e => handleDragStart(e)}
+                  onMouseUp={handleDragEnd}
+                  onMouseMove={e => handleDrag(e)}
                 >
-                  <Center w={"100%"} h={"100%"}>
-                    <VStack spacing={"13px"}>
-                      <Center>
-                        <Center
-                          w="70px"
-                          h="70px"
-                          bgColor={group.group_cover}
-                          lineHeight="60px"
-                          borderRadius={"50%"}
-                        ></Center>
-                      </Center>
-                      <Box>
-                        <Text>{group.name}</Text>
-                      </Box>
-                    </VStack>
-                  </Center>
-                </Card>
-              ))}
-          </HStack>
+                  <Card
+                    borderRadius={"4px"}
+                    shadow={""}
+                    bgColor="whiteAlpha.800"
+                    minW="170px"
+                    minH="180px"
+                    justifyContent={"center"}
+                    boxShadow={"md"}
+                    cursor={"pointer"}
+                    onClick={() => {
+                      router.push("/creategroup");
+                    }}
+                  >
+                    <Center w={"100%"} h={"100%"}>
+                      <VStack spacing={"13px"}>
+                        <Center>
+                          <Center
+                            w="70px"
+                            h="70px"
+                            bgColor={"blackAlpha.600"}
+                            lineHeight="60px"
+                            borderRadius={"50%"}
+                          >
+                            <FiPlus size={"2em"} color="white" />
+                          </Center>
+                        </Center>
+                        <Box>
+                          <Text>새 그룹 만들기</Text>
+                        </Box>
+                      </VStack>
+                    </Center>
+                  </Card>
+
+                  {ownGroup.length !== 0 &&
+                    ownGroup.map((group, idx) => (
+                      <Card
+                        key={idx}
+                        borderRadius={"4px"}
+                        shadow={""}
+                        bgColor="whiteAlpha.800"
+                        minW="170px"
+                        minH="180px"
+                        justifyContent={"center"}
+                        boxShadow={"md"}
+                        cursor={"pointer"}
+                        onClick={() => {
+                          onGroupCardClick(group);
+                        }}
+                      >
+                        <Center w={"100%"} h={"100%"}>
+                          <VStack spacing={"13px"}>
+                            <Center>
+                              <Center
+                                w="70px"
+                                h="70px"
+                                bgColor={group.group_cover}
+                                lineHeight="60px"
+                                borderRadius={"50%"}
+                              ></Center>
+                            </Center>
+                            <Box>
+                              <Text>{group.name}</Text>
+                            </Box>
+                          </VStack>
+                        </Center>
+                      </Card>
+                    ))}
+                </HStack>
+              </TabPanel>
+              <TabPanel>
+                <Flex w={"800px"}>개발중...🚧</Flex>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+
           <Text fontWeight={"bold"} mb={"10px"}>
             내 타임라인
           </Text>

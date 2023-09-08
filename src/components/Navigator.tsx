@@ -1,10 +1,22 @@
 import Link from "next/link";
 import styled from "@emotion/styled";
-import { Button, Center, Flex, HStack, Text } from "@chakra-ui/react";
+import {
+  Button,
+  Center,
+  Flex,
+  HStack,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Text,
+} from "@chakra-ui/react";
 import { signOut, useSession } from "next-auth/react";
 import { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 import { GlobalContext } from "@/util/StateContext";
+import { BiChevronDown } from "react-icons/bi";
+import { routerPush } from "@/util/authUtils";
 
 const NavigatorContainer = styled.div`
   position: fixed;
@@ -36,7 +48,7 @@ export default function Navigator() {
               <a>헨젤</a>
             </Link>
           </Center>
-          <Flex justifyContent={"space-between"} w="30%">
+          <Flex justifyContent={"space-between"} alignItems={"center"} w="30%">
             {isLogin === "authenticated" && (
               <>
                 {" "}
@@ -50,15 +62,21 @@ export default function Navigator() {
             <>
               {" "}
               <HStack>
-                <Text color={"black"}>
-                  {sessionUser.nickname !== null && sessionUser.nickname} 님
-                </Text>
-                <button
-                  className="logout"
-                  onClick={() => signOut({ callbackUrl: "/" })}
-                >
-                  로그아웃
-                </button>{" "}
+                <Menu>
+                  <MenuButton as={Button} rightIcon={<BiChevronDown />}>
+                    {sessionUser.nickname}
+                  </MenuButton>
+                  <MenuList>
+                    <MenuItem
+                      onClick={() => routerPush(router, "/profile/edit")}
+                    >
+                      프로필
+                    </MenuItem>
+                    <MenuItem onClick={() => signOut({ callbackUrl: "/" })}>
+                      로그아웃
+                    </MenuItem>
+                  </MenuList>
+                </Menu>{" "}
               </HStack>
             </>
           ) : (

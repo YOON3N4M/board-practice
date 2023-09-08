@@ -1,5 +1,5 @@
 import { API_URL_CREATE_MEMBERSHIP, API_URL_INVITE } from "@/pages/_app";
-import { GroupContext } from "@/util/StateContext";
+import { GlobalContext } from "@/util/StateContext";
 import {
   Alert,
   AlertIcon,
@@ -31,8 +31,8 @@ interface groupData {
 export default function Invite() {
   const router: any = useRouter();
   const session: any = useSession();
-  const context = useContext(GroupContext);
-  const { setInviteURL } = context;
+
+  const { setInviteURL } = useContext(GlobalContext);
   const [inviteId, setInviteId] = useState("");
   const [groupData, setGroupData] = useState<groupData>();
   const [isModalOn, setIsModalOn] = useState(false);
