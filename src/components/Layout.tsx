@@ -48,7 +48,9 @@ export default function Layout({ children }: React.PropsWithChildren) {
       return;
     } else if (session.status === "unauthenticated") {
       if (router.pathname === "/login") return;
+      if (router.pathname === "/") return;
       alert("로그인이 필요한 서비스 입니다.");
+      router.push("/login");
     } else if (session.status === "authenticated") {
       setIsLogin("authenticated");
       setSessionUser(session.data.user);
@@ -81,7 +83,6 @@ export default function Layout({ children }: React.PropsWithChildren) {
     checkSessionInfo();
   }, [session.data]);
 
-  console.log(sessionUser);
   return (
     <>
       <GlobalStyles />

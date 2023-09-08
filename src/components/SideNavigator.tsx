@@ -78,7 +78,6 @@ export default function SideNavigator({
     }
   }
 
-  console.log(mapDataFromDB);
   return (
     <>
       <FloatingContainer heightvalue={`${ContainerHeightValue}px`}>

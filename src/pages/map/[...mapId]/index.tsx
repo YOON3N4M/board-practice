@@ -8,7 +8,7 @@ import KakaoMap from "@/components/KakaoMap";
 import AddFavModal from "@/components/AddFavModal";
 import SideNavigator from "@/components/SideNavigator";
 
-import { StateContext } from "@/util/StateContext";
+import { GlobalContext, StateContext } from "@/util/StateContext";
 
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
@@ -16,6 +16,7 @@ import styled from "@emotion/styled";
 import { API_URL_CREATE_MEMBERSHIP } from "@/pages/_app";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
+import { routerPush } from "@/util/authUtils";
 
 const MapContainer = styled.div<{ heightvalue: string }>`
   width: 100vw;
@@ -31,6 +32,7 @@ export const MODAL_TYPE_SHOW_POSITION = "showPosition";
 export default function Map() {
   const router: any = useRouter();
   const session: any = useSession();
+  const { isLogin, sessionUser } = useContext(GlobalContext);
 
   const [ContainerHeightValue, setContainerHeightValue] = useState(0);
   const [isScriptLoading, setIsScriptLoading] = useState(true);
@@ -80,6 +82,8 @@ export default function Map() {
   }
 
   async function getMembersFromDB() {
+    if (isLogin === "unauthenticated") return;
+
     console.log(typeof router?.query?.mapId[0]);
     const params: MembershipAPIParams = {
       groupId: router?.query?.mapId[0],
@@ -94,21 +98,30 @@ export default function Map() {
   }
 
   async function checkUserGroupVerify() {
+    if (isLogin === "unauthenticated") return;
     const params: MembershipAPIParams = {
       groupId: router?.query?.mapId[0],
       requestType: 3,
-      userId: session.data?.user?.id,
+      userId: sessionUser.id,
     };
+
     const response = await axios
       .get(API_URL_CREATE_MEMBERSHIP, { params: params })
       .then(res => {
         console.log(res.data.res);
-        setIsGroupMember(res.data.res.length > 0 ? true : false);
+        setIsGroupMember(
+          res.data.res.length > 0
+            ? //응답 값인 배열의 길이가 1 이상 (=해당 그룹에 속함.)
+              () => {
+                getMembersFromDB();
+                return true;
+              }
+            : false
+        );
       })
       .catch(() => {
         console.log("error");
       });
-    console.log(response);
   }
 
   useEffect(() => {
@@ -118,9 +131,18 @@ export default function Map() {
 
   useEffect(() => {
     if (router?.query?.mapId === undefined) return;
-    getMembersFromDB();
-    checkUserGroupVerify();
   }, [router?.query]);
+
+  useEffect(() => {
+    checkUserGroupVerify();
+  }, [isLogin]);
+
+  useEffect(() => {
+    if (isGroupMember === false) {
+      alert("해당 그룹에 접근 권한이 없습니다.");
+      routerPush(router, "/group");
+    }
+  }, [isGroupMember]);
 
   // useEffect(() => {
   //   if (session.status === "unauthenticated") {
@@ -138,7 +160,6 @@ export default function Map() {
   //   }
   // }, [isGroupMember]);
 
-  console.log(isGroupMember);
   return (
     <>
       <MapContainer heightvalue={`${ContainerHeightValue}px`}>
