@@ -2,7 +2,7 @@ import { ChangeEvent, useState, useContext } from "react";
 import { AuthForm, AuthFormWrapper, FormBox } from "./register";
 import GoogleLogin from "@/components/login/GoogleLogin";
 import { VStack } from "@chakra-ui/react";
-import { GroupContext } from "@/util/StateContext";
+import { GlobalContext } from "@/util/StateContext";
 
 export default function Register() {
   const [userAccount, setUserAccount] = useState("");
@@ -22,8 +22,7 @@ export default function Register() {
     }
   }
 
-  const context = useContext(GroupContext);
-  const { inviteURL } = context;
+  const { inviteURL } = useContext(GlobalContext);
 
   console.log(inviteURL);
   return (

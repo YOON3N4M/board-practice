@@ -73,6 +73,7 @@ export default async function handler(
             groupId: anyGroupId,
           },
         });
+
         console.log(getMembership);
         res.status(200).json({ res: getMembership });
       } catch {

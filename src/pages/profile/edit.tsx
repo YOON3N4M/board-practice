@@ -29,19 +29,19 @@ import { useRouter } from "next/router";
 import axios from "axios";
 
 import { BiParty } from "react-icons/bi";
-import { GroupContext } from "@/util/StateContext";
+import { GlobalContext } from "@/util/StateContext";
 import { AuthForm, AuthFormWrapper, FormBox } from "../register";
 import { API_URL_EDIT_PROFILE } from "../_app";
 import { AnimatePresence } from "framer-motion";
 import { FadeBox } from "../creategroup";
 import { SketchPicker } from "react-color";
 import { Image } from "@chakra-ui/next-js";
+import { UserT } from "@/@types/types";
 
 export default function Profile() {
   const { data: session, status, update } = useSession();
   const router = useRouter();
-  const context = useContext(GroupContext);
-  const { inviteURL } = context;
+  const { inviteURL, isLogin, setSessionUser } = useContext(GlobalContext);
 
   const [nickname, setNickname] = useState("");
   const [isModalOn, setIsModalOn] = useState(false);
@@ -54,8 +54,8 @@ export default function Profile() {
   }
 
   function CheckIsLoggedin() {
-    if (session === undefined) return;
-    if (status !== "authenticated") {
+    if (isLogin === "unauthenticated") return;
+    if (isLogin !== "authenticated") {
       alert("로그인이 필요한 서비스 입니다.");
       router.push("/login");
     }
@@ -77,6 +77,9 @@ export default function Profile() {
     const response = await axios
       .put(API_URL_EDIT_PROFILE, bodyRef)
       .then(() => {
+        setSessionUser((prev: UserT) => {
+          return { ...prev, profileColor: color, nickname };
+        });
         setIsModalOn(true);
       })
       .catch(err => alert("닉네임 설정에 실패했습니다."));

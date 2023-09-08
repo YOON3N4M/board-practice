@@ -35,8 +35,6 @@ export default function Map() {
   const [ContainerHeightValue, setContainerHeightValue] = useState(0);
   const [isScriptLoading, setIsScriptLoading] = useState(true);
   const [selectedAddress, setSelectedAddress] = useState("");
-  //  로그인, 그룹의 회원인지 여부
-  const [isLoggined, setIsLoggined] = useState(false);
   //useContext로 관리할 상태
   const [isModalOn, setIsModalOn] = useState(false);
   const [mapDataFromDB, setMapDataFromDB] = useState();
@@ -104,7 +102,7 @@ export default function Map() {
     const response = await axios
       .get(API_URL_CREATE_MEMBERSHIP, { params: params })
       .then(res => {
-        console.log(res.data.res.length);
+        console.log(res.data.res);
         setIsGroupMember(res.data.res.length > 0 ? true : false);
       })
       .catch(() => {
@@ -118,24 +116,10 @@ export default function Map() {
     setScriptLoad();
   }, []);
 
-  function checkLoginStatus() {
-    if (session.status === "loading") {
-      return;
-    } else if (session.status === "unauthenticated") {
-      alert("로그인이 필요한 서비스 입니다.");
-    } else if (session.status === "authenticated") {
-      setIsLoggined(true);
-    }
-  }
-
-  //로그인 체크
-  useEffect(() => {
-    checkLoginStatus();
-  }, [session.status]);
-
   useEffect(() => {
     if (router?.query?.mapId === undefined) return;
     getMembersFromDB();
+    checkUserGroupVerify();
   }, [router?.query]);
 
   // useEffect(() => {
@@ -154,7 +138,7 @@ export default function Map() {
   //   }
   // }, [isGroupMember]);
 
-  console.log(session.status);
+  console.log(isGroupMember);
   return (
     <>
       <MapContainer heightvalue={`${ContainerHeightValue}px`}>

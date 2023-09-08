@@ -47,6 +47,7 @@ export default function Layout({ children }: React.PropsWithChildren) {
     if (session.status === "loading") {
       return;
     } else if (session.status === "unauthenticated") {
+      if (router.pathname === "/login") return;
       alert("로그인이 필요한 서비스 입니다.");
     } else if (session.status === "authenticated") {
       setIsLogin("authenticated");

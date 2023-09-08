@@ -5,12 +5,12 @@ import styled from "@emotion/styled";
 
 import { useSession, signIn, signOut } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
-import { GroupContext } from "@/util/StateContext";
+import { GlobalContext } from "@/util/StateContext";
 
 export default function GoogleLogin() {
   const { data: session } = useSession();
-  const context = useContext(GroupContext);
-  const { inviteURL } = context;
+
+  const { inviteURL } = useContext(GlobalContext);
   const [callBackURL, setCallBackURL] = useState<any>();
 
   useEffect(() => {
