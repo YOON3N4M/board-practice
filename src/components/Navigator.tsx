@@ -2,8 +2,9 @@ import Link from "next/link";
 import styled from "@emotion/styled";
 import { Button, Center, Flex, HStack, Text } from "@chakra-ui/react";
 import { signOut, useSession } from "next-auth/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
+import { GlobalContext } from "@/util/StateContext";
 
 const NavigatorContainer = styled.div`
   position: fixed;
@@ -23,15 +24,8 @@ const NavigatorContainer = styled.div`
 export default function Navigator() {
   const session: any = useSession();
   const router = useRouter();
-  const [isSignIn, setIsSignIn] = useState(false);
 
-  useEffect(() => {
-    if (session.data == undefined || null) {
-      setIsSignIn(false);
-    } else {
-      setIsSignIn(true);
-    }
-  }, [session.data]);
+  const { isLogin, sessionUser } = useContext(GlobalContext);
 
   return (
     <>
@@ -43,7 +37,7 @@ export default function Navigator() {
             </Link>
           </Center>
           <Flex justifyContent={"space-between"} w="30%">
-            {isSignIn && (
+            {isLogin === "authenticated" && (
               <>
                 {" "}
                 <Link legacyBehavior href="/group">
@@ -52,14 +46,12 @@ export default function Navigator() {
               </>
             )}
           </Flex>
-          {isSignIn ? (
+          {isLogin === "authenticated" ? (
             <>
               {" "}
               <HStack>
                 <Text color={"black"}>
-                  {session.data?.user.nickname !== null &&
-                    session.data?.user.nickname}{" "}
-                  님
+                  {sessionUser.nickname !== null && sessionUser.nickname} 님
                 </Text>
                 <button
                   className="logout"

@@ -29,14 +29,14 @@ import { API_URL_CREATE_MEMBERSHIP } from "../_app";
 
 import { useState, useEffect, useContext, useRef } from "react";
 import { GroupT, MembershipAPIParams } from "@/@types/types";
-import { GroupContext } from "@/util/StateContext";
+import { GlobalContext } from "@/util/StateContext";
 import { routerPush } from "@/util/authUtils";
 
 export default function Group() {
   const router = useRouter();
   const session: any = useSession();
   const groupHorizonScroll: any = useRef(null);
-  const contextData = useContext(GroupContext);
+  const contextData = useContext(GlobalContext);
 
   const [ownGroup, setOwnGroup] = useState<GroupT[]>([]);
   const [isScrollActive, setIsScrollActive] = useState(false);

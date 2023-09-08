@@ -47,18 +47,26 @@ const defaultState = {
   groupMember: undefined,
 };
 
-const groupState = {
+const globalState = {
   groupData: undefined,
   setGroupData: undefined,
   inviteURL: undefined,
   setInviteURL: undefined,
+  isLogin: undefined,
+  setIsLogin: undefined,
+  sessionUser: undefined,
+  setSessionUser: undefined,
 };
 
-interface GroupStateT {
+interface GlobalStateT {
   groupData: any;
   setGroupData: any;
   inviteURL: any;
   setInviteURL: any;
+  isLogin: any;
+  setIsLogin: any;
+  sessionUser: any;
+  setSessionUser: any;
 }
 export const StateContext = createContext<StateContextT>(defaultState);
-export const GroupContext = createContext<GroupStateT>(groupState);
+export const GlobalContext = createContext<GlobalStateT>(globalState);

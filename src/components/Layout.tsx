@@ -1,4 +1,4 @@
-import { GroupContext, StateContext } from "@/util/StateContext";
+import { GlobalContext, StateContext } from "@/util/StateContext";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -19,6 +19,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { routerPush } from "@/util/authUtils";
+import { UserT } from "@/@types/types";
 
 const AppContainer = styled.div<{ $isMapPage: boolean }>`
   margin: 0;
@@ -38,13 +39,26 @@ export default function Layout({ children }: React.PropsWithChildren) {
   const [groupData, setGroupData] = useState({});
   const [inviteURL, setInviteURL] = useState();
   const [isModalOn, setIsModalOn] = useState(false);
+  const [isLogin, setIsLogin] = useState("unauthenticated");
+  const [sessionUser, setSessionUser] = useState<UserT>();
+
+  //로그인 여부 체크 로직
+  function checkSessionInfo() {
+    if (session.status === "loading") {
+      return;
+    } else if (session.status === "unauthenticated") {
+      alert("로그인이 필요한 서비스 입니다.");
+    } else if (session.status === "authenticated") {
+      setIsLogin("authenticated");
+      setSessionUser(session.data.user);
+    }
+  }
 
   //로그인 이후 닉네임 여부 확인 로직
-
   function checkIsExistNicknameDB() {
-    if (session.data === undefined) return;
+    if (isLogin === "loading") return;
     //로그인 상태가 아니면 탈출
-    if (session.status !== "authenticated") return;
+    if (isLogin === "unauthenticated") return;
     //로그인 설정 창이면 탈출
     if (router.pathname === "/profile/edit") return;
 
@@ -60,15 +74,30 @@ export default function Layout({ children }: React.PropsWithChildren) {
 
   useEffect(() => {
     checkIsExistNicknameDB();
+  }, [isLogin]);
+
+  useEffect(() => {
+    checkSessionInfo();
   }, [session.data]);
 
+  console.log(sessionUser);
   return (
     <>
       <GlobalStyles />
-      <Navigator />
-      <GroupContext.Provider
-        value={{ groupData, setGroupData, inviteURL, setInviteURL }}
+
+      <GlobalContext.Provider
+        value={{
+          groupData,
+          setGroupData,
+          inviteURL,
+          setInviteURL,
+          isLogin,
+          setIsLogin,
+          sessionUser,
+          setSessionUser,
+        }}
       >
+        <Navigator />
         {isModalOn && (
           <Modal
             isOpen={isModalOn}
@@ -100,7 +129,7 @@ export default function Layout({ children }: React.PropsWithChildren) {
           </Modal>
         )}
         <AppContainer $isMapPage={isMapPage}>{children}</AppContainer>
-      </GroupContext.Provider>
+      </GlobalContext.Provider>
     </>
   );
 }
