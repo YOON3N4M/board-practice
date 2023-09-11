@@ -17,6 +17,11 @@ import { API_URL_CREATE_MEMBERSHIP } from "@/pages/_app";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { routerPush } from "@/util/authUtils";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+
+interface MapPropsT {
+  query: any;
+}
 
 const MapContainer = styled.div<{ heightvalue: string }>`
   width: 100vw;
@@ -29,9 +34,10 @@ export const API_URL_MAP = "http://localhost:4000/map";
 export const MODAL_TYPE_ADD_POSITION = "addPosition";
 export const MODAL_TYPE_SHOW_POSITION = "showPosition";
 
-export default function Map() {
+export default function Map({ query }: any) {
   const router: any = useRouter();
   const session: any = useSession();
+
   const { isLogin, sessionUser } = useContext(GlobalContext);
 
   const [ContainerHeightValue, setContainerHeightValue] = useState(0);
@@ -84,9 +90,8 @@ export default function Map() {
   async function getMembersFromDB() {
     if (isLogin === "unauthenticated") return;
 
-    console.log(typeof router?.query?.mapId[0]);
     const params: MembershipAPIParams = {
-      groupId: router?.query?.mapId[0],
+      groupId: query.mapId[0],
       requestType: 2,
     };
     const res = await axios
@@ -100,7 +105,7 @@ export default function Map() {
   async function checkUserGroupVerify() {
     if (isLogin === "unauthenticated") return;
     const params: MembershipAPIParams = {
-      groupId: router?.query?.mapId[0],
+      groupId: query.mapId[0],
       requestType: 3,
       userId: sessionUser.id,
     };
@@ -128,10 +133,6 @@ export default function Map() {
     setHTMLHeight();
     setScriptLoad();
   }, []);
-
-  useEffect(() => {
-    if (router?.query?.mapId === undefined) return;
-  }, [router?.query]);
 
   useEffect(() => {
     checkUserGroupVerify();
@@ -199,4 +200,10 @@ export default function Map() {
       </MapContainer>
     </>
   );
+}
+
+export async function getServerSideProps(context: any) {
+  return {
+    props: { query: context.query },
+  };
 }
