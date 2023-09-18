@@ -23,7 +23,7 @@ interface MapPropsT {
   query: any;
 }
 
-const MapContainer = styled.div<{ heightvalue: string }>`
+const MapContainer = styled.div`
   width: 100vw;
   height: 100vh;
   overflow: hidden;
@@ -58,18 +58,6 @@ export default function Map({ query }: any) {
   });
   const [groupMember, setGroupMember] = useState();
   const [isGroupMember, setIsGroupMember] = useState<undefined | boolean>();
-
-  //자동으로 스크롤이 없는 지도를 만들기 위해 선언 (근데 가끔 스크롤이 생김 왜지?)
-  function setHTMLHeight() {
-    const naviElement: HTMLElement | null = document.querySelector(".navi");
-
-    if (naviElement === null) {
-      setContainerHeightValue(window.innerHeight);
-    } else {
-      const ContainerHeight = window.innerHeight - naviElement.offsetHeight;
-      setContainerHeightValue(ContainerHeight);
-    }
-  }
 
   function setScriptLoad() {
     const kakaoMapScript = document.createElement("script");
@@ -130,7 +118,6 @@ export default function Map({ query }: any) {
   }
 
   useEffect(() => {
-    setHTMLHeight();
     setScriptLoad();
   }, []);
 
@@ -164,7 +151,7 @@ export default function Map({ query }: any) {
   console.log(query);
   return (
     <>
-      <MapContainer heightvalue={`${ContainerHeightValue}px`}>
+      <MapContainer>
         <StateContext.Provider
           value={{
             setIsModalOn,
@@ -193,10 +180,8 @@ export default function Map({ query }: any) {
           {isModalOn && (
             <AddFavModal isModalOn={isModalOn} setIsModalOn={setIsModalOn} />
           )}
-          <SideNavigator ContainerHeightValue={ContainerHeightValue} />
-          {ContainerHeightValue !== 0 && isScriptLoading === false ? (
-            <KakaoMap />
-          ) : null}
+          <SideNavigator />
+          {isScriptLoading === false ? <KakaoMap /> : null}
         </StateContext.Provider>
       </MapContainer>
     </>

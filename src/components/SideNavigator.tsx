@@ -8,14 +8,14 @@ import { BiHomeAlt2 } from "react-icons/bi";
 import { Box, Divider, Flex, VStack, Text, Center } from "@chakra-ui/react";
 import { StateContext } from "@/util/StateContext";
 
-const FloatingContainer = styled.div<{ heightvalue: string }>`
+const FloatingContainer = styled.div`
   display: flex;
   height: 100vh;
   position: absolute;
   z-index: 1000;
 `;
 
-const SideNavigatorContainer = styled.div<{ heightvalue: string }>`
+const SideNavigatorContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 80px;
@@ -30,7 +30,7 @@ const SideNavigatorContainer = styled.div<{ heightvalue: string }>`
   }
 `;
 
-const PanelContainer = styled(motion.div)<{ heightvalue: string }>`
+const PanelContainer = styled(motion.div)`
   display: flex;
   flex-direction: column;
   width: 400px;
@@ -46,16 +46,10 @@ const PanelContainer = styled(motion.div)<{ heightvalue: string }>`
   }
 `;
 
-interface SideNavigatorProps {
-  ContainerHeightValue: number;
-}
-
 export const CONTENTS_MEMBER = "멤버";
 export const CONTENTS_SEARCH = "검색";
 
-export default function SideNavigator({
-  ContainerHeightValue,
-}: SideNavigatorProps) {
+export default function SideNavigator() {
   const router = useRouter();
   const [isPanelOn, setIsPanelOn] = useState(false);
   const [selectedContents, setSelectedContents] = useState("");
@@ -80,8 +74,8 @@ export default function SideNavigator({
 
   return (
     <>
-      <FloatingContainer heightvalue={`${ContainerHeightValue}px`}>
-        <SideNavigatorContainer heightvalue={`${ContainerHeightValue}px`}>
+      <FloatingContainer>
+        <SideNavigatorContainer>
           <VStack spacing={"30px"}>
             <Flex direction={"column"} position={"relative"}>
               <button name="홈" onClick={event => onMenuClick(event)}>
@@ -139,7 +133,6 @@ export default function SideNavigator({
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 1, x: -1000 }}
               transition={{ duration: 0.5 }}
-              heightvalue={`${ContainerHeightValue}px`}
             >
               <PanelContents selectedContents={selectedContents} />
               <button

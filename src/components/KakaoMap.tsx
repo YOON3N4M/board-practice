@@ -108,6 +108,7 @@ export default function KakaoMap() {
     }
   }, [coords]);
 
+  console.log("맵 있다~");
   return (
     <>
       <Map
