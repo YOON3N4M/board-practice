@@ -10,7 +10,7 @@ import { StateContext } from "@/util/StateContext";
 
 const FloatingContainer = styled.div<{ heightvalue: string }>`
   display: flex;
-  height: ${props => props.heightvalue};
+  height: 100vh;
   position: absolute;
   z-index: 1000;
 `;
@@ -19,7 +19,7 @@ const SideNavigatorContainer = styled.div<{ heightvalue: string }>`
   display: flex;
   flex-direction: column;
   width: 80px;
-  max-height: ${props => props.heightvalue};
+  max-height: 100vh;
   background-color: #ffffffc5;
   backdrop-filter: blur(10px);
   z-index: 1100;
@@ -34,7 +34,7 @@ const PanelContainer = styled(motion.div)<{ heightvalue: string }>`
   display: flex;
   flex-direction: column;
   width: 400px;
-  height: ${props => props.heightvalue};
+  height: 100vh;
   background-color: #ffffff;
   z-index: 1000;
   .panel-hide-button {

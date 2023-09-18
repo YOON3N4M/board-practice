@@ -25,7 +25,7 @@ interface MapPropsT {
 
 const MapContainer = styled.div<{ heightvalue: string }>`
   width: 100vw;
-  height: ${props => props.heightvalue};
+  height: 100vh;
   overflow: hidden;
 `;
 //임시 api URL
@@ -161,6 +161,7 @@ export default function Map({ query }: any) {
   //   }
   // }, [isGroupMember]);
 
+  console.log(query);
   return (
     <>
       <MapContainer heightvalue={`${ContainerHeightValue}px`}>
