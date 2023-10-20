@@ -28,6 +28,7 @@ export default function Theme() {
     "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
   const MARKER_SIZE_REGULAR = { width: 24, height: 35 };
+
   async function addNewTheme(event: any) {
     event.preventDefault();
     const themeTemp = {

@@ -126,11 +126,12 @@ export const sampleTheme = ["여행", "카페"];
 
 export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
   //db에 올릴 정보
-  const [positionTitle, setPositionTitle] = useState("");
+  const [favoriteTitle, setFavoriteTitle] = useState("");
   const [selectedMember, setSelectedMember] = useState<UserT[]>([]);
   const [positionMemo, setPositionMemo] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [groupTheme, setGroupTheme] = useState([]);
+  const [selectedTheme, setSelectedTheme] = useState();
 
   const {
     mapDataFromDB,
@@ -150,6 +151,7 @@ export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
     const res = await axios.get(API_URL_THEME, { params: params });
     console.log(res.data.theme);
     setGroupTheme(res.data.theme);
+    setSelectedTheme(res.data.theme[0].id);
   }
 
   useEffect(() => {
@@ -173,7 +175,30 @@ export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
     console.log(typeof selectedDate, selectedDate);
   }
 
-  console.log(selectedMember);
+  function handleTitleChange(e: any) {
+    setFavoriteTitle(e.target.value);
+  }
+
+  function handleThemeChange(event: any) {
+    console.log(event);
+  }
+
+  async function uploadFavoriteOnDB() {
+    const favoriteTemp = {
+      name: favoriteTitle,
+      groupId: mapDataFromDB.id,
+      themeId: selectedTheme,
+      address: selectedAddress,
+      participant: "세남",
+      author: "세남",
+      date: selectedDate,
+      placeName: selectedPlace,
+    };
+    console.log(favoriteTemp);
+    //const res = await axios.post(API_URL_THEME);
+  }
+
+  console.log(mapDataFromDB);
   return (
     <>
       <Modal isOpen={isModalOn} onClose={() => setIsModalOn(false)}>
@@ -185,15 +210,20 @@ export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
           <ModalCloseButton />
           <ModalBody>
             <FormLabel>테마</FormLabel>
-            <Select size="sm" mb={"15px"}>
+            <Select size="sm" mb={"15px"} onChange={handleThemeChange}>
               {groupTheme.map((theme: any, idx) => (
-                <option key={idx} value={theme.name}>
+                <option key={theme.id} value={theme.name}>
                   {theme.name}
                 </option>
               ))}
             </Select>
             <FormLabel>즐겨찾기 이름</FormLabel>
-            <Input size={"sm"} mb={"15px"}></Input>
+            <Input
+              size={"sm"}
+              mb={"15px"}
+              value={favoriteTitle}
+              onChange={handleTitleChange}
+            ></Input>
             <FormLabel>주소</FormLabel>
             <InputGroup mb={"15px"}>
               <InputLeftElement>
@@ -260,7 +290,12 @@ export default function AddFavModal({ isModalOn, setIsModalOn }: Props) {
             <Textarea size={"sm"}></Textarea>
           </ModalBody>
           <ModalFooter>
-            <Button bgColor={"blue.800"} color={"white"} mr={"10px"}>
+            <Button
+              bgColor={"blue.800"}
+              color={"white"}
+              mr={"10px"}
+              onClick={() => uploadFavoriteOnDB()}
+            >
               등록
             </Button>
             <Button onClick={() => setIsModalOn(false)}>취소</Button>

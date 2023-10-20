@@ -23,7 +23,6 @@ export default async function handler(
     try {
       const user = await prisma.favorite.create({
         data: {
-          id: id,
           name: name,
           // groupid: groupid,
           themeId: themeId,

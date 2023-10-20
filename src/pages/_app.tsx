@@ -9,6 +9,7 @@ export const API_URL_CREATE_GROUP = "/api/group";
 export const API_URL_CREATE_MEMBERSHIP = "/api/membership";
 export const API_URL_INVITE = "/api/invite";
 export const API_URL_THEME = "/api/theme";
+export const API_URL_FAVORITE = "/api/favorite";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
