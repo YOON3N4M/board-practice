@@ -1,12 +1,15 @@
 import { Html, Head, Main, NextScript } from "next/document";
 import Script from "next/script";
 
-const KAKAO_API_SERVICE_URL = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.KAKAO_API_KEY}&autoload=false&libraries=services`;
 export default function Document() {
-  const KAKAO_API_URL = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.KAKAO_API_KEY}&autoload=false&libraries=services`;
   return (
     <Html lang="en">
-      <Head />
+      <Head>
+        <script
+          type="text/javascript"
+          src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=QiLKpy0gOOCMTer9uOeM6pa7ZzyNIT8Psj1ozzrQ"
+        ></script>
+      </Head>
       <body>
         <Main />
         <NextScript />

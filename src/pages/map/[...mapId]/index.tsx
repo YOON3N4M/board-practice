@@ -4,7 +4,7 @@ import {
   PositionT,
   coordsT,
 } from "@/@types/types";
-import KakaoMap from "@/components/KakaoMap";
+import KakaoMap from "@/components/map/KakaoMap";
 import AddFavModal from "@/components/AddFavModal";
 import SideNavigator from "@/components/SideNavigator";
 
