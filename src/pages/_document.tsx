@@ -5,10 +5,11 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <script
+        <Script
           type="text/javascript"
-          src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=QiLKpy0gOOCMTer9uOeM6pa7ZzyNIT8Psj1ozzrQ"
-        ></script>
+          src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=f8ijn3o0md"
+          strategy="beforeInteractive"
+        ></Script>
       </Head>
       <body>
         <Main />

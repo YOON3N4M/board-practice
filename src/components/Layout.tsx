@@ -23,7 +23,7 @@ import { UserT } from "@/@types/types";
 
 const AppContainer = styled.div<{ $isMapPage: boolean }>`
   margin: 0;
-  padding-top: ${props => (props.$isMapPage ? "0px" : "80px")};
+
   display: flex;
   flex-direction: column;
   justify-content: center;
