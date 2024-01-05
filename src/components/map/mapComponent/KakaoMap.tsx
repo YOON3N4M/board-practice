@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
 import styled from "@emotion/styled";
-import SimpleAddressBox from "../SimpleAddressBox";
+import SimpleAddressBox from "../../SimpleAddressBox";
 import { StateContext } from "@/util/StateContext";
 import { MapDataT, PositionT, ThemeT, coordsT } from "@/@types/types";
 import { MODAL_TYPE_SHOW_POSITION } from "@/pages/map/[...mapId]";
