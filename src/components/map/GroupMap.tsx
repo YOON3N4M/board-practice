@@ -1,6 +1,7 @@
 import { Box, Center, Input } from "@chakra-ui/react";
 import MapNavigator from "./mapComponent/MapNavigator";
 import NaverMap from "./mapComponent/NaverMap";
+import SearchAddress from "./mapComponent/SearchAddress";
 
 export default function GroupMap() {
   return (
@@ -14,7 +15,7 @@ export default function GroupMap() {
           w={"100%"}
           zIndex={99}
         >
-          <Input w={"200px"} bgColor={"white"} placeholder="검색"></Input>
+          <SearchAddress />
         </Center>
         <Box
           className="map-container"
