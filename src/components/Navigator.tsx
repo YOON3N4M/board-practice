@@ -41,7 +41,7 @@ export default function Navigator() {
 
   return (
     <>
-      {router.pathname.includes("map") ? null : (
+      {router.pathname.includes("test") ? null : (
         <NavigatorContainer className="navi">
           <Center>
             <Link legacyBehavior href="/">
