@@ -2,6 +2,7 @@ import Layout from "@/components/Layout";
 import { ChakraProvider } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
 import AuthContext from "@/context/AuthContext";
+import { theme } from "@/styles/theme";
 
 export const API_URL_USER_DATA = "/api/user-data";
 export const API_URL_EDIT_PROFILE = "/api/profile";
@@ -13,7 +14,7 @@ export const API_URL_FAVORITE = "/api/favorite";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <AuthContext>
         <Layout>
           <Component {...pageProps} />
