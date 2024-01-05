@@ -7,7 +7,7 @@ export default function Document() {
       <Head>
         <Script
           type="text/javascript"
-          src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=f8ijn3o0md"
+          src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NAVER_API_KEY}`}
           strategy="beforeInteractive"
         ></Script>
       </Head>
