@@ -1,4 +1,11 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
 import { StateContext } from "@/util/StateContext";
 
@@ -32,12 +39,18 @@ interface AddressResult {
   };
 }
 
+interface Props {
+  setIsMapLoad: Dispatch<SetStateAction<boolean>>;
+}
+
 export const UNDEFINED_ADDRESS = "주소 정보가 없습니다.";
 
-export default function KakaoMap() {
+export default function KakaoMap(props: Props) {
+  const { setIsMapLoad } = props;
+
   const contextData = useContext(StateContext);
   const [addressInfo, setAddressInfo] = useState<any>();
-  const customOverlayContainer: any = useRef(null);
+  const [map, setMap] = useState<any>();
 
   //이벤트 버블링 현상때문에 작동에 제한을 두기 위함.
 
@@ -87,6 +100,10 @@ export default function KakaoMap() {
   return (
     <>
       <Map
+        onCreate={mapObject => {
+          setMap(mapObject);
+          setIsMapLoad(true);
+        }}
         center={{ lat: 33.450701, lng: 126.570667 }}
         style={{ width: "100%", height: "100%", zIndex: 0 }}
         level={12}

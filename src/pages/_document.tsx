@@ -5,14 +5,14 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <Script
+        {/* <Script
           type="text/javascript"
           src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NAVER_API_KEY}&submodules=geocoder`}
           strategy="beforeInteractive"
-        ></Script>
+        ></Script> */}
         <Script
           type="text/javascript"
-          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.KAKAO_API_KEY}&autoload=false&libraries=services`}
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.KAKAO_API_KEY}&autoload=false&libraries=services&autoload=false`}
           strategy="beforeInteractive"
         ></Script>
       </Head>

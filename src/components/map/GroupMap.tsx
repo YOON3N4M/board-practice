@@ -1,10 +1,16 @@
 import { Box, Center, Input } from "@chakra-ui/react";
 import MapNavigator from "./mapComponent/MapNavigator";
 import NaverMap from "./mapComponent/NaverMap";
-import SearchAddress from "./mapComponent/SearchAddress";
+import LocalSearch from "./mapComponent/LocalSearch";
 import KakaoMap from "./mapComponent/KakaoMap";
+import { useEffect, useState } from "react";
 
 export default function GroupMap() {
+  const [isMapLoad, setIsMapLoad] = useState(false);
+
+  useEffect(() => {
+    console.log(isMapLoad);
+  }, [isMapLoad]);
   return (
     <>
       <Box position={"relative"} w={"100vw"} h={"100vh"} bgColor={"black"}>
@@ -16,7 +22,7 @@ export default function GroupMap() {
           w={"100%"}
           zIndex={99}
         >
-          <SearchAddress />
+          {isMapLoad && <LocalSearch />}
         </Center>
         <Box
           className="map-container"
@@ -25,7 +31,7 @@ export default function GroupMap() {
           bgColor={"black"}
         >
           {/* <NaverMap /> */}
-          <KakaoMap />
+          <KakaoMap setIsMapLoad={setIsMapLoad} />
         </Box>
       </Box>
     </>

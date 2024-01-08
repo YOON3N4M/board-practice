@@ -2,7 +2,7 @@ import { Input } from "@chakra-ui/react";
 import axios from "axios";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
-export default function SearchAddress() {
+export default function LocalSearch() {
   const [keyword, setKeyword] = useState("");
   const [searchResult, setSearchResult] = useState();
 
@@ -18,7 +18,9 @@ export default function SearchAddress() {
     setKeyword(e.target.value);
   }
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const places = new kakao.maps.services.Places();
+  }, []);
 
   return (
     <>
