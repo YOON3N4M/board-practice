@@ -1,26 +1,37 @@
+import { PlaceResult } from "@/types/map";
 import { Input } from "@chakra-ui/react";
 import axios from "axios";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 
-export default function LocalSearch() {
+interface Props {
+  setSearchResult: Dispatch<SetStateAction<PlaceResult | undefined>>;
+}
+
+export default function LocalSearch(props: Props) {
+  const { setSearchResult } = props;
+
+  const places = new kakao.maps.services.Places();
   const [keyword, setKeyword] = useState("");
-  const [searchResult, setSearchResult] = useState();
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // places.keywordSearch(keyword, (result, status) => {
-    //   if (status === kakao.maps.services.Status.OK) {
-    //   }
-    // });
+    places.keywordSearch(keyword, (result: any, status) => {
+      if (status === kakao.maps.services.Status.OK) {
+        setSearchResult(result);
+      }
+    });
   }
 
   function onChange(e: ChangeEvent<HTMLInputElement>) {
     setKeyword(e.target.value);
   }
-
-  useEffect(() => {
-    const places = new kakao.maps.services.Places();
-  }, []);
 
   return (
     <>
