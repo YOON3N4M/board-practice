@@ -7,13 +7,12 @@ export default async function handler(
 ) {
   if (req.method === "GET") {
     console.log(req.query.keyword);
-    const url = "https://openapi.naver.com/v1/search/local";
+    const url = "https://openapi.naver.com/v1/search/local?";
     const params = {
       query: req.query.keyword,
-      display: 100,
-      start: 1,
+      start: 2,
+      display: 10,
       sort: "random",
-      total: 10,
     };
 
     const headers = {
@@ -32,6 +31,6 @@ export default async function handler(
         console.log("error", error.response.data);
       });
   } else {
-    res.status(405).json({ message: "405, 메소드가 없어" });
+    res.status(405).json({ message: "405, 메소드 없음" });
   }
 }

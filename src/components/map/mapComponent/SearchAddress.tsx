@@ -1,29 +1,24 @@
 import { Input } from "@chakra-ui/react";
 import axios from "axios";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
 export default function SearchAddress() {
   const [keyword, setKeyword] = useState("");
+  const [searchResult, setSearchResult] = useState();
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
-    getSearchApi();
+    // places.keywordSearch(keyword, (result, status) => {
+    //   if (status === kakao.maps.services.Status.OK) {
+    //   }
+    // });
   }
 
   function onChange(e: ChangeEvent<HTMLInputElement>) {
     setKeyword(e.target.value);
   }
 
-  async function getSearchApi() {
-    const url = "/api/naver/search";
-    try {
-      const res = await axios.get(url, { params: { keyword } });
-      console.log(res.data);
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  useEffect(() => {}, []);
 
   return (
     <>

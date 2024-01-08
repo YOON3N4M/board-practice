@@ -33,6 +33,7 @@ export default function Search() {
   const callback = function (result: any, status: any) {
     if (status === kakao.maps.services.Status.OK) {
       setSearchResult(result);
+      console.log(result);
     }
   };
 
